@@ -14,18 +14,18 @@ Scope {
   }
 
   property real volume: Pipewire.defaultAudioSink?.audio.volume ?? 0
-  property string iconPath
+  property string iconName
 
   Connections {
     target: Pipewire.defaultAudioSink?.audio
 
     function changeIcon() {
       if (volumeOSD.volume > 2/3) {
-        volumeOSD.iconPath = "audio-volume-high-symbolic";
+        volumeOSD.iconName = "audio-volume-high-symbolic";
       } else if (volumeOSD.volume > 1/3) {
-        volumeOSD.iconPath = "audio-volume-medium-symbolic";
+        volumeOSD.iconName = "audio-volume-medium-symbolic";
       } else {
-        volumeOSD.iconPath = "audio-volume-low-symbolic";
+        volumeOSD.iconName = "audio-volume-low-symbolic";
       }
     }
 
@@ -38,7 +38,7 @@ Scope {
       volumeOSD.shouldShowOSD = true;
 
       if (Pipewire.defaultAudioSink?.audio.muted) {
-        volumeOSD.iconPath = "audio-volume-muted-symbolic";
+        volumeOSD.iconName = "audio-volume-muted-symbolic";
       } else {
         changeIcon();
       }
@@ -81,7 +81,7 @@ Scope {
 
           IconImage {
             implicitSize: 50
-            source: Quickshell.iconPath(volumeOSD.iconPath)
+            source: Quickshell.iconPath(volumeOSD.iconName)
           }
 
           Rectangle {
