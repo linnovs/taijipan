@@ -32,6 +32,7 @@ Scope {
     function onVolumeChanged() {
       volumeOSD.shouldShowOSD = true;
       changeIcon();
+      hideTimer.restart();
     }
 
     function onMutedChanged() {
@@ -42,6 +43,7 @@ Scope {
       } else {
         changeIcon();
       }
+      hideTimer.restart();
     }
   }
 
