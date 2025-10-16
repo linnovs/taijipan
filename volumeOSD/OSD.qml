@@ -20,9 +20,9 @@ Scope {
     target: Pipewire.defaultAudioSink?.audio
 
     function changeIcon() {
-      if (volumeOSD.volume > 2/3) {
+      if (volumeOSD.volume >= 2/3) {
         volumeOSD.iconName = "audio-volume-high-symbolic";
-      } else if (volumeOSD.volume > 1/3) {
+      } else if (volumeOSD.volume >= 1/3) {
         volumeOSD.iconName = "audio-volume-medium-symbolic";
       } else {
         volumeOSD.iconName = "audio-volume-low-symbolic";
