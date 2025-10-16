@@ -20,6 +20,11 @@ Scope {
     target: Pipewire.defaultAudioSink?.audio
 
     function changeIcon() {
+      if (Pipewire.defaultAudioSink?.audio.muted) {
+        volumeOSD.iconName = "audio-volume-muted-symbolic";
+        return;
+      }
+
       if (volumeOSD.volume >= 2/3) {
         volumeOSD.iconName = "audio-volume-high-symbolic";
       } else if (volumeOSD.volume >= 1/3) {
@@ -37,12 +42,7 @@ Scope {
 
     function onMutedChanged() {
       volumeOSD.shouldShowOSD = true;
-
-      if (Pipewire.defaultAudioSink?.audio.muted) {
-        volumeOSD.iconName = "audio-volume-muted-symbolic";
-      } else {
-        changeIcon();
-      }
+      changeIcon();
       hideTimer.restart();
     }
   }
