@@ -10,7 +10,7 @@ Item {
   id: root
 
   property real volume: Pipewire.defaultAudioSink?.audio.volume ?? 0
-  property string iconName: ''
+  property string iconName: "system-audio-volume-medium-symbolic"
   property bool shouldShowOSD: false
 
   PwObjectTracker {
