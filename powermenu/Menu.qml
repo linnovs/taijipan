@@ -66,26 +66,27 @@ Variants {
           Repeater {
             model: buttons
             delegate: Rectangle {
+              id: button
               required property LogoutButton modelData;
 
               Layout.fillWidth: true
               Layout.fillHeight: true
 
-              color: ma.containsMouse ? buttonHoverColor : buttonColor
-              border.color: "black"
+              color: ma.containsMouse ? root.buttonHoverColor : root.buttonColor
+              border.color: "#11111b"
               border.width: ma.containsMouse ? 0 : 1
 
               MouseArea {
                 id: ma
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: modelData.exec()
+                onClicked: { button.modelData.exec(); root.close() }
               }
 
               Image {
                 id: icon
                 anchors.centerIn: parent
-                source: Quickshell.iconPath(modelData.icon)
+                source: Quickshell.iconPath(button.modelData.icon)
                 width: parent.width * 0.25
                 height: parent.width * 0.25
               }
@@ -97,7 +98,7 @@ Variants {
                   horizontalCenter: parent.horizontalCenter
                 }
 
-                text: modelData.text
+                text: button.modelData.text
                 font.pointSize: 20
                 color: "#cdd6f4"
               }
