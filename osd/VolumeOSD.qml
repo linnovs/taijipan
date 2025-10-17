@@ -9,7 +9,7 @@ import Quickshell.Widgets
 Item {
   id: root
 
-  property real volume: Pipewire.defaultAudioSink.audio.volume ?? 0
+  property real volume: Pipewire.defaultAudioSink?.audio.volume ?? 0
   property string iconName: ''
   property bool shouldShowOSD: false
 
@@ -18,6 +18,8 @@ Item {
   }
 
   Connections {
+    target: Pipewire.defaultAudioSink.audio
+
     function changeIcon() {
       if (Pipewire.defaultAudioSink.audio.muted) {
         root.iconName = "audio-volume-muted-symbolic";
@@ -40,8 +42,6 @@ Item {
       changeIcon();
       hideTimer.restart();
     }
-
-    target: Pipewire.defaultAudioSink.audio
   }
 
   Timer {
