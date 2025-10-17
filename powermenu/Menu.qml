@@ -8,12 +8,15 @@ import Quickshell.Wayland
 
 Variants {
   id: root
+
+  signal close()
   property color backgroundColor: "#e61e1e2e"
   property color buttonColor: "#1e1e2e"
   property color buttonHoverColor: "#cba6f7"
   default property list<LogoutButton> buttons
 
   model: Quickshell.screens
+
   PanelWindow {
     id: w
 
@@ -29,12 +32,12 @@ Variants {
     contentItem {
       focus: true
       Keys.onPressed: event => {
-        if (event.key == Qt.Key_Escape) Qt.quit();
+        if (event.key == Qt.Key_Escape) root.close();
         else {
-          for (let i = 0; i < buttons.length; i++) {
-            let button = buttons[i];
+          for (let i = 0; i < root.buttons.length; i++) {
+            let button = root.buttons[i];
             if (button.shifted && !(event.modifiers & Qt.ShiftModifier)) continue;
-            if (event.key == button.keybind) button.exec();
+            if (event.key == button.keybind) { button.exec(); root.close() };
           }
         }
       }
@@ -48,12 +51,12 @@ Variants {
     }
 
     Rectangle {
-      color: backgroundColor;
+      color: root.backgroundColor;
       anchors.fill: parent
 
       MouseArea {
         anchors.fill: parent
-        onClicked: Qt.quit()
+        onClicked: root.close()
 
         GridLayout {
           anchors.centerIn: parent
@@ -66,7 +69,8 @@ Variants {
           rowSpacing: 0
 
           Repeater {
-            model: buttons
+            model: root.buttons
+
             delegate: Rectangle {
               id: button
               required property LogoutButton modelData;
