@@ -100,7 +100,7 @@ Scope {
                 bottom: parent.bottom
               }
 
-              implicitWidth: volumeOSD.volume <= 1 ? parent.width * volumeOSD.volume : parent.width
+              implicitWidth: Math.min(parent.width, parent.width * volumeOSD.volume)
               radius: height / 2
             }
           }
