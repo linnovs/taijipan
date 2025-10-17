@@ -1,11 +1,8 @@
 import QtQuick
 import Quickshell
-import qs.osd
 
 ShellRoot {
-  OSD {}
+  id: root
 
-  Variants {
-    model: Quickshell.screens;
-  }
+  TJPShell {}
 }
