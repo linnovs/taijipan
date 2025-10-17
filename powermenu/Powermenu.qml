@@ -1,8 +1,15 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 
-ShellRoot {
-  WLogout {
+Scope {
+  id: root
+
+  signal close()
+
+  Menu {
+    onClose: root.close()
+
     LogoutButton {
       command: "swaylock"
       keybind: Qt.Key_Return
