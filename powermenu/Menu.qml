@@ -36,8 +36,10 @@ Variants {
         else {
           for (let i = 0; i < root.buttons.length; i++) {
             let button = root.buttons[i];
-            if (button.shifted && !(event.modifiers & Qt.ShiftModifier)) continue;
-            if (event.key == button.keybind) { button.exec(); root.close() };
+            let shifted = !!(event.modifiers & Qt.ShiftModifier);
+            let matched = event.key == button.keybind;
+
+            if (button.shifted == shifted && matched) { button.exec(); root.close() };
           }
         }
       }
