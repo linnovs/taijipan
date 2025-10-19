@@ -92,7 +92,7 @@ Variants {
               Image {
                 id: icon
                 anchors.centerIn: parent
-                source: Quickshell.iconPath(button.modelData.icon)
+                source: `icons/${button.modelData.icon}.png`
                 width: parent.width * 0.25
                 height: parent.width * 0.25
               }

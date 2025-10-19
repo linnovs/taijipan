@@ -14,28 +14,28 @@ Scope {
       command: "swaylock"
       keybind: Qt.Key_Return
       text: "Lock"
-      icon: "system-lock-screen-symbolic"
+      icon: "lockscreen"
     }
 
     LogoutButton {
       command: "loginctl terminate-user $USER"
       keybind: Qt.Key_L
       text: "Logout"
-      icon: "system-log-out-symbolic"
+      icon: "logout"
     }
 
     LogoutButton {
       command: "systemctl suspend"
       keybind: Qt.Key_S
       text: "Suspend"
-      icon: "system-suspend-symbolic"
+      icon: "suspend"
     }
 
     LogoutButton {
       command: "systemctl hibernate"
       keybind: Qt.Key_H
       text: "Hibernate"
-      icon: "system-suspend-hibernate-symbolic"
+      icon: "hibernate"
     }
 
     LogoutButton {
@@ -43,14 +43,14 @@ Scope {
       keybind: Qt.Key_S
       shifted: true
       text: "Shutdown"
-      icon: "system-shutdown-symbolic"
+      icon: "shutdown"
     }
 
     LogoutButton {
       command: "systemctl reboot"
       keybind: Qt.Key_R
       text: "Reboot"
-      icon: "system-reboot-symbolic"
+      icon: "reboot"
     }
   }
 }
