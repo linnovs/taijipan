@@ -1,14 +1,38 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Io
 
 Scope {
   id: root
 
   signal close()
 
+  property string currentUptime
+
+  Process {
+    id: uptime
+    command: ["uptime", "-p"]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        root.currentUptime = this.text.trim().replace("up ", "")
+      }
+    }
+  }
+
+  Timer {
+    interval: 60 * 1000
+    repeat: true
+    running: true
+    triggeredOnStart: true
+    onTriggered: {
+      uptime.running = true
+    }
+  }
+
   Menu {
     onClose: root.close()
+    uptimeText: root.currentUptime
 
     LogoutButton {
       command: "swaylock"

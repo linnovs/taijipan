@@ -9,11 +9,16 @@ import Quickshell.Wayland
 Variants {
   id: root
 
+  required property string uptimeText
+  default property list<LogoutButton> buttons
+
   signal close()
   property color backgroundColor: "#e61e1e2e"
+  property color paneColor: "#11111b"
+  property color textBarColor: "#313244"
   property color buttonColor: "#1e1e2e"
   property color buttonHoverColor: "#cba6f7"
-  default property list<LogoutButton> buttons
+  readonly property color textColor: "#cdd6f4"
 
   model: Quickshell.screens
 
@@ -60,55 +65,113 @@ Variants {
         anchors.fill: parent
         onClicked: root.close()
 
-        GridLayout {
+        Rectangle {
           anchors.centerIn: parent
+          width: parent.width * 0.4
+          height: parent.height * 0.2
+          color: root.paneColor
 
-          width: parent.width * 0.75
-          height: parent.height * 0.75
+          ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 20
 
-          columns: 3
-          columnSpacing: 0
-          rowSpacing: 0
-
-          Repeater {
-            model: root.buttons
-
-            delegate: Rectangle {
-              id: button
-              required property LogoutButton modelData;
-
+            RowLayout {
               Layout.fillWidth: true
-              Layout.fillHeight: true
+              Layout.fillHeight: false
+              Layout.preferredHeight: parent.height * 0.2
 
-              color: ma.containsMouse ? root.buttonHoverColor : root.buttonColor
-              border.color: "#11111b"
-              border.width: ma.containsMouse ? 0 : 1
+              Rectangle {
+                Layout.fillHeight: true
+                Layout.fillWidth: false
+                Layout.preferredWidth: uptimeText.width + uptimeText.anchors.leftMargin * 2
 
-              MouseArea {
-                id: ma
-                anchors.fill: parent
-                hoverEnabled: true
-                onClicked: { button.modelData.exec(); root.close() }
-              }
+                color: root.buttonHoverColor
 
-              Image {
-                id: icon
-                anchors.centerIn: parent
-                source: `icons/${button.modelData.icon}.png`
-                width: parent.width * 0.25
-                height: parent.width * 0.25
-              }
+                Text {
+                  id: uptimeText
 
-              Text {
-                anchors {
-                  top: icon.bottom
-                  topMargin: 20
-                  horizontalCenter: parent.horizontalCenter
+                  anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    leftMargin: 10
+                  }
+
+                  text: "Uptime"
+                  color: root.textColor
+                  font.pixelSize: parent.height * 0.5
+                  font.weight: Font.Bold
                 }
+              }
 
-                text: button.modelData.text
-                font.pointSize: 20
-                color: "#cdd6f4"
+              Rectangle {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                color: root.textBarColor
+
+                Text {
+                  anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    leftMargin: 10
+                  }
+
+                  text: root.uptimeText
+                  color: root.textColor
+                  font.pixelSize: parent.height * 0.5
+                }
+              }
+            }
+
+            RowLayout {
+              spacing: 4
+
+              Layout.alignment: Qt.AlignBottom
+              Layout.fillWidth: true
+              Layout.fillHeight: false
+              Layout.preferredHeight: parent.height * 0.7
+
+              Repeater {
+                model: root.buttons
+
+                delegate: Rectangle {
+                  id: button
+                  required property LogoutButton modelData;
+
+                  Layout.fillWidth: true
+                  Layout.fillHeight: false
+                  Layout.preferredHeight: this.width
+
+                  color: ma.containsMouse ? root.buttonHoverColor : root.buttonColor
+
+                  MouseArea {
+                    id: ma
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: { button.modelData.exec(); root.close() }
+                  }
+
+                  Image {
+                    id: icon
+                    anchors.centerIn: parent
+                    source: `icons/${button.modelData.icon}.png`
+                    width: parent.width * 0.5
+                    height: parent.width * 0.5
+                  }
+
+                  Text {
+                    anchors {
+                      bottom: parent.bottom
+                      bottomMargin: parent.height * 0.1
+                      horizontalCenter: parent.horizontalCenter
+                    }
+
+                    text: button.modelData.text
+                    font.pixelSize: parent.width * 0.12
+                    font.weight: Font.Bold
+                    color: root.textColor
+                  }
+                }
               }
             }
           }
