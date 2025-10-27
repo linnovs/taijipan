@@ -100,6 +100,15 @@ Item {
               radius: height / 2
             }
           }
+
+          Text {
+            Layout.alignment: Qt.AlignVCenter
+            Layout.minimumWidth: 45
+
+            text: `${ Math.round(root.volume * 100) }%`.padStart(4)
+            font.bold: true
+            color: "#ffffff"
+          }
         }
       }
     }
