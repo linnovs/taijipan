@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 
@@ -61,6 +62,8 @@ Item {
       implicitWidth: 400
       implicitHeight: 70
       color: "transparent"
+
+      WlrLayershell.layer: WlrLayer.Overlay
 
       mask: Region {
       }
