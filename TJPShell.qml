@@ -2,8 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import qs.powermenu
-import qs.osd
+import qs.Powermenu
+import qs.OSD
+import qs.Lock
 
 Item {
   id: root
