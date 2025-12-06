@@ -27,9 +27,8 @@ Item {
         return ;
       }
 
-      if (root.volume >= 2 / 3) root.iconName = "audio-volume-high-symbolic";
-      else if (root.volume >= 1 / 3) root.iconName = "audio-volume-medium-symbolic";
-      else root.iconName = "audio-volume-low-symbolic";
+      if (root.volume >= 0.5) root.iconName = "audio-volume-high-symbolic";
+      else root.iconName = "audio-volume-medium-symbolic";
     }
 
     function onVolumeChanged() {
