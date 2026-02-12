@@ -1,10 +1,10 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Quickshell
 import qs.Powermenu
 import qs.OSD
 import qs.Lock
+import qs.TJPBar
 
 Item {
   id: root
@@ -24,4 +24,6 @@ Item {
   }
 
   VolumeOSD {}
+
+  TJPBar {}
 }
