@@ -97,13 +97,11 @@ Item {
             Repeater {
               model: menuOpener.children
               delegate: DelegateChooser {
-                id: chooser
                 role: "isSeparator"
                 DelegateChoice {
                   roleValue: true
                   MenuSeparator {
                     contentItem: Rectangle {
-                      id: separatorRect
                       implicitHeight: 1
                       color: Theme.surfaceSecondary
                     }
