@@ -4,10 +4,9 @@ import QtQuick.Layouts
 Item {
   id: root
 
-  width: childrenRect.width
-
   RowLayout {
     anchors.verticalCenter: parent.verticalCenter
+    anchors.horizontalCenter: parent.horizontalCenter
 
     DateTime {}
   }

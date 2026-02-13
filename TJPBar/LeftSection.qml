@@ -9,9 +9,6 @@ Item {
     anchors.left: parent.left
     anchors.verticalCenter: parent.verticalCenter
 
-    Layout.fillWidth: true
-    Layout.fillHeight: true
-
     Text {
       text: "Left Section"
       color: Theme.blue
