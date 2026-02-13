@@ -11,23 +11,26 @@ Item {
   anchors.rightMargin: Theme.spacing
 
   LeftSection {
+    height: barContent.barWindow.height
+
     anchors {
       left: parent.left
-      verticalCenter: parent.verticalCenter
     }
   }
 
   CenterSection {
+    height: barContent.barWindow.height
+
     anchors {
-      verticalCenter: parent.verticalCenter
       horizontalCenter: parent.horizontalCenter
     }
   }
 
   RightSection {
+    height: barContent.barWindow.height
+
     anchors {
       right: parent.right
-      verticalCenter: parent.verticalCenter
     }
   }
 }

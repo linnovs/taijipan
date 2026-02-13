@@ -5,11 +5,7 @@ import qs.Common
 Item {
   id: root
 
-  height: parent.height
-
   RowLayout {
-    id: rowComp
-
     anchors.left: parent.left
     anchors.verticalCenter: parent.verticalCenter
 
