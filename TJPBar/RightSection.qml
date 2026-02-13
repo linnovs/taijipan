@@ -20,5 +20,9 @@ Item {
       width: Theme.iconSize
       height: Theme.iconSize
     }
+
+    SystemTray {
+      height: root.height
+    }
   }
 }
