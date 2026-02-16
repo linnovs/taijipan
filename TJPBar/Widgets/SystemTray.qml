@@ -17,6 +17,10 @@ Item {
   width: allItems.length * (Theme.iconSize + Theme.spacing) - Theme.spacing
   visible: allItems.length > 0
 
+  TrayMenu {
+    id: trayMenu
+  }
+
   RowLayout {
     anchors.fill: parent
     spacing: Theme.spacing
@@ -73,22 +77,10 @@ Item {
             if (mouse.button === Qt.LeftButton) {
               trayItem.modelData.activate();
             } else if (mouse.button === Qt.RightButton && trayItem.modelData.hasMenu) {
-              trayTooltip.visible = false;
-              contextMenu.popup();
+              trayMenu.open(trayItem)
             } else if (mouse.button === Qt.MiddleButton) {
               trayItem.modelData.secondaryActivate();
             }
-          }
-
-          TrayMenu {
-            id: contextMenu
-
-            QsMenuOpener {
-              id: menuOpener
-              menu: trayItem.modelData.menu
-            }
-
-            menuOpener: menuOpener
           }
         }
 
