@@ -3,7 +3,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Quickshell
 import Quickshell.Services.SystemTray
 import qs.Common
 
@@ -14,16 +13,25 @@ Item {
     return SystemTray.items.values
   }
 
-  width: allItems.length * (Theme.iconSize + Theme.spacing) - Theme.spacing
+  width: allItems.length * (Theme.iconSize + Theme.spacing) - Theme.spacing + Theme.spacing * 4
   visible: allItems.length > 0
 
   TrayMenu {
     id: trayMenu
   }
 
+  Rectangle {
+    anchors.fill: parent
+    color: Theme.mantle
+    radius: Theme.radiusRound
+  }
+
   RowLayout {
+    id: trayRow
     anchors.fill: parent
     spacing: Theme.spacing
+    anchors.leftMargin: Theme.spacing * 2
+    anchors.rightMargin: Theme.spacing * 2
 
     Repeater {
       model: root.allItems
@@ -40,7 +48,7 @@ Item {
           id: trayTooltip
           popupType: Popup.Window
           x: trayItem.width / 2 - width / 2
-          y: trayItem.height + Theme.spacing * 2
+          y: trayItem.height + Theme.spacing * 3
 
           contentItem: Column {
             Text {

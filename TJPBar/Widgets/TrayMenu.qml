@@ -166,7 +166,7 @@ Item {
 
   function updatePosition() {
     menu.menuComp.x = menu.parent.width / 2 - menu.menuComp.width / 2
-    menu.menuComp.y = menu.parent.height + Theme.spacing * 2
+    menu.menuComp.y = menu.parent.height + Theme.spacing * 3
   }
 
   function changeMenuHandle(menuHandle) {
@@ -196,6 +196,6 @@ Item {
     if (!menu)
       return
 
-    menu.menuComp.popup(trayItem.width / 2 - menu.menuComp.width / 2, trayItem.height + Theme.spacing * 2)
+    menu.menuComp.popup(trayItem.width / 2 - menu.menuComp.width / 2, trayItem.height + Theme.spacing * 3)
   }
 }
