@@ -9,9 +9,11 @@ Item {
   anchors.fill: parent
   anchors.leftMargin: Theme.spacing
   anchors.rightMargin: Theme.spacing
+  anchors.topMargin: Theme.spacing
+  anchors.bottomMargin: Theme.spacing
 
   LeftSection {
-    height: barContent.barWindow.height
+    height: Theme.barRealHeight
 
     anchors {
       left: parent.left
@@ -19,7 +21,7 @@ Item {
   }
 
   CenterSection {
-    height: barContent.barWindow.height
+    height: Theme.barRealHeight
 
     anchors {
       horizontalCenter: parent.horizontalCenter
@@ -27,7 +29,7 @@ Item {
   }
 
   RightSection {
-    height: barContent.barWindow.height
+    height: Theme.barRealHeight
 
     anchors {
       right: parent.right

@@ -37,7 +37,11 @@ Singleton {
   property color crust:             "#11111b"
 
   property real spacing: 4
-  property real barHeight: 32
+  property real barHeight: 40
+  property real barRealHeight: 32
   property real iconSize: 24
   property real radiusS: 4
+  property real radiusM: 8
+  property real radiusL: 12
+  property real radiusRound: 9999
 }
