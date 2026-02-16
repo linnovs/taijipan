@@ -94,7 +94,14 @@ Item {
 
         Image {
           anchors.centerIn: parent
-          source: trayItem.modelData.icon
+          source: {
+            const icon = trayItem.modelData.icon
+
+            if (icon.startsWith("image://qsimage")) return icon
+
+            const regex = /-symbolic$/i;
+            return icon.replace(regex, "")
+          }
           width: Theme.iconSize
           height: trayItem.height
           sourceSize.width: width
