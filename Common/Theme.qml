@@ -43,5 +43,5 @@ Singleton {
   property real radiusS: 4
   property real radiusM: 8
   property real radiusL: 12
-  property real radiusRound: 9999
+  property real radiusRound: 100
 }
