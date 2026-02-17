@@ -28,7 +28,7 @@ Item {
   Timer {
     id: hideTimer
 
-    interval: 1000
+    interval: 3000
     onTriggered: root.shouldShowOSD = false
   }
 
@@ -52,7 +52,7 @@ Item {
         anchors.fill: parent
         radius: Theme.radiusRound
         color: Theme.overlay
-        opacity: 0.8
+        opacity: 0.9
 
         RowLayout {
           anchors {
