@@ -12,7 +12,7 @@ PanelWindow {
   WlrLayershell.namespace: "tjp:bar"
 
   screen: modelData
-  color: Theme.base
+  color: "transparent"
   implicitHeight: Theme.barHeight
   implicitWidth: modelData.width
 
@@ -28,8 +28,18 @@ PanelWindow {
     anchors.fill: parent
     layer.enabled: true
 
-    TJPBarContent {
-      barWindow: barWindow
+    Rectangle {
+      anchors.fill: parent
+      anchors.topMargin: Theme.spacing
+      anchors.leftMargin: Theme.spacing
+      anchors.rightMargin: Theme.spacing
+      color: Theme.base
+      opacity: 0.8
+      radius: Theme.radiusRound
+
+      TJPBarContent {
+        barWindow: barWindow
+      }
     }
   }
 }
