@@ -4,44 +4,25 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
-import Quickshell.Services.Pipewire
-import Quickshell.Widgets
+import qs.Services
+import qs.Common
+import qs.Widgets
 
 Item {
   id: root
 
-  property real volume: Pipewire.defaultAudioSink?.audio.volume ?? 0
-  property string iconName: "system-audio-volume-medium-symbolic"
   property bool shouldShowOSD: false
 
-  PwObjectTracker {
-    objects: [Pipewire.defaultAudioSink]
+  function show() {
+    shouldShowOSD = true;
+    hideTimer.restart();
   }
 
   Connections {
-    target: Pipewire.defaultAudioSink.audio
+    target: AudioService
 
-    function changeIcon() {
-      if (Pipewire.defaultAudioSink.audio.muted) {
-        root.iconName = "audio-volume-muted-symbolic";
-        return ;
-      }
-
-      if (root.volume >= 0.5) root.iconName = "audio-volume-high-symbolic";
-      else root.iconName = "audio-volume-medium-symbolic";
-    }
-
-    function onVolumeChanged() {
-      root.shouldShowOSD = true;
-      changeIcon();
-      hideTimer.restart();
-    }
-
-    function onMutedChanged() {
-      root.shouldShowOSD = true;
-      changeIcon();
-      hideTimer.restart();
-    }
+    function onVolumeChanged() { root.show() }
+    function onMutedChanged() { root.show() }
   }
 
   Timer {
@@ -58,8 +39,8 @@ Item {
       anchors.bottom: true
       margins.bottom: screen.height / 5
       exclusiveZone: 0
-      implicitWidth: 400
-      implicitHeight: 70
+      implicitWidth: Theme.osdWidth
+      implicitHeight: Theme.osdHeight
       color: "transparent"
 
       WlrLayershell.layer: WlrLayer.Overlay
@@ -69,8 +50,9 @@ Item {
 
       Rectangle {
         anchors.fill: parent
-        radius: height / 2
-        color: "#b21e1e2e"
+        radius: Theme.radiusRound
+        color: Theme.overlay
+        opacity: 0.8
 
         RowLayout {
           anchors {
@@ -79,17 +61,19 @@ Item {
             rightMargin: 15
           }
 
-          IconImage {
-            implicitSize: 50
-            source: Quickshell.iconPath(root.iconName)
+          ColorImageIcon {
+            width: Theme.iconSizeL
+            height: Theme.iconSizeL
+            name: AudioService.iconName
+            color: Theme.text
           }
 
           Rectangle {
             Layout.fillWidth: true
 
-            implicitHeight: 20
+            implicitHeight: Theme.spacing * 5
             radius: height / 2
-            color: "#50ffffff"
+            color: Theme.overlay
 
             Rectangle {
               anchors {
@@ -98,8 +82,9 @@ Item {
                 bottom: parent.bottom
               }
 
-              implicitWidth: Math.min(parent.width, parent.width * root.volume)
-              radius: height / 2
+              implicitWidth: Math.min(parent.width, parent.width * AudioService.volume)
+              radius: Theme.radiusRound
+              color: Theme.text
             }
           }
 
@@ -107,9 +92,9 @@ Item {
             Layout.alignment: Qt.AlignVCenter
             Layout.minimumWidth: 45
 
-            text: `${ Math.round(root.volume * 100) }%`.padStart(4)
+            text: `${ Math.round(AudioService.volume * 100) }%`.padStart(4)
             font.bold: true
-            color: "#ffffff"
+            color: Theme.text
           }
         }
       }
