@@ -13,26 +13,17 @@ Item {
   anchors.bottomMargin: Theme.spacing
 
   LeftSection {
-    height: Theme.barRealHeight
-
-    anchors {
-      left: parent.left
-    }
+    height: parent.height
+    anchors.left: parent.left
   }
 
   CenterSection {
-    height: Theme.barRealHeight
-
-    anchors {
-      horizontalCenter: parent.horizontalCenter
-    }
+    height: parent.height
+    anchors.horizontalCenter: parent.horizontalCenter
   }
 
   RightSection {
-    height: Theme.barRealHeight
-
-    anchors {
-      right: parent.right
-    }
+    height: parent.height
+    anchors.right: parent.right
   }
 }

@@ -38,7 +38,8 @@ Singleton {
 
   property real spacing: 4
   property real barHeight: 40
-  property real barRealHeight: 32
+  property real barInnerHeight: barHeight - spacing * 2
+  property real barItemHeight: barInnerHeight - spacing * 2
   property real iconSize: 24
   property real radiusS: 4
   property real radiusM: 8

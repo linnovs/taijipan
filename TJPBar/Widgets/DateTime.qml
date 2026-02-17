@@ -10,10 +10,12 @@ Item {
     precision: SystemClock.Seconds
   }
 
-  width: childrenRect.width
+  implicitWidth: childrenRect.width
+  implicitHeight: Theme.barItemHeight
 
   Text {
     anchors.verticalCenter: parent.verticalCenter
+    height: dateTime.height
 
     text: Qt.formatDateTime(clock.date, "ddd, dd MMM hh:mm:ss")
     color: Theme.text

@@ -13,25 +13,18 @@ Item {
     return SystemTray.items.values
   }
 
-  width: allItems.length * (Theme.iconSize + Theme.spacing) - Theme.spacing + Theme.spacing * 4
+  implicitWidth: allItems.length * (Theme.iconSize + Theme.spacing) - Theme.spacing
+  implicitHeight: Theme.barItemHeight
   visible: allItems.length > 0
 
   TrayMenu {
     id: trayMenu
   }
 
-  Rectangle {
-    anchors.fill: parent
-    color: Theme.mantle
-    radius: Theme.radiusRound
-  }
-
   RowLayout {
     id: trayRow
     anchors.fill: parent
     spacing: Theme.spacing
-    anchors.leftMargin: Theme.spacing * 2
-    anchors.rightMargin: Theme.spacing * 2
 
     Repeater {
       model: root.allItems
@@ -40,7 +33,7 @@ Item {
 
         required property var modelData
         width: Theme.iconSize
-        height: root.height - Theme.spacing * 2
+        height: root.height
         radius: Theme.radiusS
         color: "transparent"
 

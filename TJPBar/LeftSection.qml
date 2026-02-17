@@ -1,23 +1,32 @@
 import QtQuick
-import QtQuick.Layouts
 import qs.Common
 
 Item {
   id: root
 
-  RowLayout {
+  SectionComponent {
     anchors.left: parent.left
-    anchors.verticalCenter: parent.verticalCenter
+    items: ObjectModel {
+      Component {
+        Item {
+          width: childrenRect.width
+          height: Theme.barItemHeight
 
-    Text {
-      text: "Left Section"
-      color: Theme.blue
-    }
+          Row {
+            spacing: Theme.spacing
+            Text {
+              text: "Left section"
+              color: Theme.blue
+            }
 
-    Rectangle {
-      color: Theme.green
-      width: Theme.iconSize
-      height: Theme.iconSize
+            Rectangle {
+              color: Theme.green
+              width: Theme.iconSize
+              height: Theme.barItemHeight
+            }
+          }
+        }
+      }
     }
   }
 }

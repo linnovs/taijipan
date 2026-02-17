@@ -13,7 +13,7 @@ PanelWindow {
 
   screen: modelData
   color: "transparent"
-  implicitHeight: Theme.barHeight
+  implicitHeight: Theme.barHeight + Theme.spacing * 2
   implicitWidth: modelData.width
 
   anchors {
@@ -33,6 +33,7 @@ PanelWindow {
       anchors.topMargin: Theme.spacing
       anchors.leftMargin: Theme.spacing
       anchors.rightMargin: Theme.spacing
+      anchors.bottomMargin: Theme.spacing
       color: Theme.base
       opacity: 0.8
       radius: Theme.radiusRound

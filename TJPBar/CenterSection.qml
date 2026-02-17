@@ -5,10 +5,10 @@ import qs.TJPBar.Widgets
 Item {
   id: root
 
-  RowLayout {
-    anchors.verticalCenter: parent.verticalCenter
+  SectionComponent {
     anchors.horizontalCenter: parent.horizontalCenter
-
-    DateTime {}
+    items: ObjectModel {
+      Component { DateTime {} }
+    }
   }
 }
