@@ -9,6 +9,7 @@ Item {
     anchors.right: parent.right
     items: ObjectModel {
       Component { SystemTray {} }
+      Component { ControlPanel {} }
     }
   }
 }

@@ -65,4 +65,8 @@ Singleton {
   Component.onCompleted: {
     Qt.callLater(root.createSoundPlayer)
   }
+
+  function adjustVolume(delta) {
+    Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1, root.volume + delta/100));
+  }
 }
