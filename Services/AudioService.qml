@@ -15,7 +15,7 @@ Singleton {
   Component {
     id: volumeChangeSoundComponent
     MediaPlayer {
-      source: "../assets/sounds/audio-volume-change.mp3"
+      source: "../assets/sounds/audio-volume-change.ogg"
       autoPlay: false
       audioOutput: AudioOutput{}
     }
