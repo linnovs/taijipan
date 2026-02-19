@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 pragma Singleton
 
 import QtQuick
@@ -10,14 +12,36 @@ Singleton {
 
   property real volume: Pipewire.defaultAudioSink?.audio.volume ?? 0
   property bool muted: Pipewire.defaultAudioSink?.audio.muted ?? false
+  property var mediaDevices: null
+  property var mediaDevicesConnections: null
   property var volumeChangeSound: null
+
+  Component {
+    id: mediaDevicesComponent
+    MediaDevices {}
+  }
+
+  Component {
+    id: mediaDevicesConnectionsComponent
+    Connections {
+      property var mediaDevices: null
+      target: mediaDevices
+      function onDefaultAudioOutputChanged() {
+        root.createSoundPlayer()
+      }
+    }
+  }
+
+  Component {
+    id: audioOutputComponent
+    AudioOutput {}
+  }
 
   Component {
     id: volumeChangeSoundComponent
     MediaPlayer {
       source: "../assets/sounds/audio-volume-change.ogg"
       autoPlay: false
-      audioOutput: AudioOutput{}
     }
   }
 
@@ -39,19 +63,32 @@ Singleton {
   }
 
   function createSoundPlayer() {
+    if (mediaDevices) {
+      mediaDevices.destroy();
+      mediaDevices = null;
+    }
+
+    if (mediaDevicesConnections) {
+      mediaDevicesConnections.destroy();
+      mediaDevicesConnections = null;
+    }
+
     if (volumeChangeSound) {
       volumeChangeSound.destroy();
       volumeChangeSound = null;
     }
 
+    mediaDevices = mediaDevicesComponent.createObject(root);
+    mediaDevicesConnections = mediaDevicesConnectionsComponent.createObject(root, { mediaDevices: mediaDevices });
     volumeChangeSound = volumeChangeSoundComponent.createObject(root);
+    volumeChangeSound.audioOutput = audioOutputComponent.createObject(root, { "output": mediaDevices.defaultAudioOutput });
   }
 
   Connections {
     target: Pipewire
 
     function onDefaultAudioSinkChanged() {
-      Qt.callLater(root.createSoundPlayer)
+      root.createSoundPlayer()
     }
   }
 
@@ -63,7 +100,7 @@ Singleton {
   }
 
   Component.onCompleted: {
-    Qt.callLater(root.createSoundPlayer)
+    root.createSoundPlayer()
   }
 
   function adjustVolume(delta) {
