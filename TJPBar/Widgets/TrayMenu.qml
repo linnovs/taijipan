@@ -105,7 +105,8 @@ Item {
         popupType: Popup.Window
         topPadding: Theme.spacing
         bottomPadding: Theme.spacing
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside | Popup.CloseOnPressOutsideParent
 
         width: {
           var result = background.implicitWidth
