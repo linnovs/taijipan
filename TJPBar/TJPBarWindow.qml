@@ -36,7 +36,7 @@ PanelWindow {
       anchors.bottomMargin: Theme.spacing
       color: Theme.base
       opacity: 0.8
-      radius: Theme.radiusRound
+      radius: Theme.radiusL
 
       TJPBarContent {
         barWindow: barWindow

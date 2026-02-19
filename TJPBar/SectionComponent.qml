@@ -18,7 +18,7 @@ RowLayout {
       required property int index
 
       color: mouse.hovered ? Theme.surfaceVariant : Theme.surface
-      radius: Theme.radiusRound
+      radius: Theme.radiusL
       Layout.preferredWidth: itemLoader.width + Theme.spacing * 4
       Layout.preferredHeight: parent.height
 
