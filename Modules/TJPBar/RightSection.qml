@@ -1,6 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
-import qs.TJPBar.Widgets
+import qs.Modules.TJPBar.Widgets
 
 Item {
   id: root
@@ -10,6 +9,7 @@ Item {
     items: ObjectModel {
       Component { SystemTray {} }
       Component { Status {} }
+      Component { Notifications {} }
     }
   }
 }
