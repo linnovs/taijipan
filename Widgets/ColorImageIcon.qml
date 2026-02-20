@@ -7,13 +7,14 @@ Item {
 
   required property string name
   required property color color
+  property bool isIcon: true
 
   Image {
     id: iconImage
     anchors.centerIn: parent
     width: parent.width
     height: parent.height
-    source: Quickshell.iconPath(root.name)
+    source: root.isIcon ? Quickshell.iconPath(root.name) : root.name
     sourceSize: Qt.size(width, height)
     mirror: true
     visible: false

@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
@@ -30,7 +29,7 @@ Scope {
     }
   }
 
-  Menu {
+  ScreenLayout {
     onClose: root.close()
     uptimeText: root.currentUptime
 
