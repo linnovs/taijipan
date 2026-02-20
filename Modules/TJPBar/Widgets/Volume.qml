@@ -13,7 +13,7 @@ Item {
   MouseArea {
     id: ma
     anchors.fill: parent
-    onWheel: AudioService.adjustVolume(wheel.angleDelta.y > 0 ? 5 : -5)
+    onWheel: (wheel) => AudioService.adjustVolume(wheel.angleDelta.y > 0 ? 5 : -5)
   }
 
   RowLayout {
