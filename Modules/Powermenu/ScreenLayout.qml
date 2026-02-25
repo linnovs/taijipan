@@ -1,11 +1,9 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.Common
-import qs.Widgets
 
 Variants {
   id: root
@@ -67,6 +65,7 @@ Variants {
       anchors.centerIn: parent
       uptimeText: root.uptimeText
       buttons: root.buttons
+      onClose: root.close()
     }
   }
 }

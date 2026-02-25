@@ -1,10 +1,15 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
 import qs.Widgets
 import qs.Common
 
 Rectangle {
   id: menu
+
+  signal close()
 
   required property string uptimeText
   property list<LogoutButton> buttons
@@ -57,7 +62,7 @@ Rectangle {
             leftMargin: 10
           }
 
-          text: root.uptimeText
+          text: menu.uptimeText
           color: Theme.text
           font.pixelSize: Theme.powerMenuStatuslineTextSize
         }
@@ -70,7 +75,7 @@ Rectangle {
       Layout.alignment: Qt.AlignBottom
 
       Repeater {
-        model: root.buttons
+        model: menu.buttons
 
         delegate: Rectangle {
           id: button
@@ -84,7 +89,7 @@ Rectangle {
             id: ma
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: { button.modelData.exec(); root.close() }
+            onClicked: { button.modelData.exec(); menu.close() }
           }
 
           ColumnLayout {
@@ -94,7 +99,7 @@ Rectangle {
             ColorImageIcon {
               Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
-              name: `icons/${button.modelData.icon}.png`
+              name: `${Quickshell.shellDir}/assets/icons/${button.modelData.icon}.png`
               isIcon: false
               width: Theme.powerMenuButtonIconSize
               height: Theme.powerMenuButtonIconSize
