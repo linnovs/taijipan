@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import qs.Common
+import qs.Commons
 
 RowLayout {
   id: root

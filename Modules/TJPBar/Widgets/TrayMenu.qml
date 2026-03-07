@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import qs.Common
+import qs.Commons
 
 Item {
   id: root

@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.Services
-import qs.Common
+import qs.Commons
 import qs.Widgets
 
 Item {

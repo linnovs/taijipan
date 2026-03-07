@@ -1,5 +1,5 @@
 import QtQuick
-import qs.Common
+import qs.Commons
 
 Item {
   id: barContent

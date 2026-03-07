@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.Widgets
-import qs.Common
+import qs.Commons
 
 Rectangle {
   id: menu

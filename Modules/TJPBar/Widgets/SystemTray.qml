@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.SystemTray
-import qs.Common
+import qs.Commons
 
 Item {
   id: root

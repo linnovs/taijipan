@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import qs.Common
+import qs.Commons
 
 Item {
   id: dateTime
