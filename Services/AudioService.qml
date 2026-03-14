@@ -1,109 +1,75 @@
-pragma ComponentBehavior: Bound
-
 pragma Singleton
 
 import QtQuick
-import QtMultimedia
 import Quickshell
 import Quickshell.Services.Pipewire
 
 Singleton {
   id: root
 
-  property real volume: Pipewire.defaultAudioSink?.audio.volume ?? 0
-  property bool muted: Pipewire.defaultAudioSink?.audio.muted ?? false
-  property var mediaDevices: null
-  property var mediaDevicesConnections: null
-  property var volumeChangeSound: null
-
-  Component {
-    id: mediaDevicesComponent
-    MediaDevices {}
-  }
-
-  Component {
-    id: mediaDevicesConnectionsComponent
-    Connections {
-      property var mediaDevices: null
-      target: mediaDevices
-      function onDefaultAudioOutputChanged() {
-        root.createSoundPlayer()
-      }
-    }
-  }
-
-  Component {
-    id: audioOutputComponent
-    AudioOutput {}
-  }
-
-  Component {
-    id: volumeChangeSoundComponent
-    MediaPlayer {
-      source: "../assets/sounds/audio-volume-change.ogg"
-      autoPlay: false
-    }
-  }
+  property PwNode sink: null
+  property PwNodeAudio audio: null
+  property real volume: 0
+  property bool muted: false
+  property bool isAvailable: sink !== null
+  property bool initialized: false
+  property bool firstUpdate: true
 
   readonly property string iconName: {
-    if (Pipewire.defaultAudioSink.audio.muted) {
+    if (muted) {
      return "audio-volume-muted"
     }
 
     return volume >= 0.5 ? "audio-volume-high" : "audio-volume-medium"
   }
 
+  Component.onCompleted: {
+    root.sink = Pipewire.defaultAudioSink
+    root.audio = root.sink ? root.sink.audio : null
+    if (root.audio) {
+      root.volume = root.audio.volume
+      root.muted = root.audio.muted
+    }
+    initialized = true
+  }
+
   PwObjectTracker {
     objects: [Pipewire.defaultAudioSink]
-  }
-
-  Binding {
-    root.volume: Pipewire.defaultAudioSink.audio.volume
-    root.muted: Pipewire.defaultAudioSink.audio.muted
-  }
-
-  function createSoundPlayer() {
-    if (mediaDevices) {
-      mediaDevices.destroy();
-      mediaDevices = null;
-    }
-
-    if (mediaDevicesConnections) {
-      mediaDevicesConnections.destroy();
-      mediaDevicesConnections = null;
-    }
-
-    if (volumeChangeSound) {
-      volumeChangeSound.destroy();
-      volumeChangeSound = null;
-    }
-
-    mediaDevices = mediaDevicesComponent.createObject(root);
-    mediaDevicesConnections = mediaDevicesConnectionsComponent.createObject(root, { mediaDevices: mediaDevices });
-    volumeChangeSound = volumeChangeSoundComponent.createObject(root);
-    volumeChangeSound.audioOutput = audioOutputComponent.createObject(root, { "output": mediaDevices.defaultAudioOutput });
   }
 
   Connections {
     target: Pipewire
 
     function onDefaultAudioSinkChanged() {
-      root.createSoundPlayer()
+      root.sink = Pipewire.defaultAudioSink
+      root.audio = root.sink ? root.sink.audio : null
+    }
+  }
+
+  Connections {
+    target: root.audio
+
+    function onVolumeChanged() {
+      root.volume = root.audio.volume
+    }
+
+    function onMutedChanged() {
+      root.muted = root.audio.muted
     }
   }
 
   onVolumeChanged: {
-    if (volumeChangeSound) {
-      volumeChangeSound.stop();
-      volumeChangeSound.play();
+    if (!initialized || !isAvailable || typeof volume !== "number") return
+    if (firstUpdate) {
+      firstUpdate = false
+      return
     }
-  }
 
-  Component.onCompleted: {
-    root.createSoundPlayer()
+    AudioFeedbackService.playSound(`${Quickshell.shellDir}/assets/sounds/audio-volume-change.ogg`, volume);
   }
 
   function adjustVolume(delta) {
+    if (!isAvailable) return
     Pipewire.defaultAudioSink.audio.volume = Math.max(0, Math.min(1, root.volume + delta/100));
   }
 }
