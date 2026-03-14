@@ -27,8 +27,8 @@ Singleton {
     }
 
     onLoaded: {
-      root.isLoaded = true
       Logger.d("ShellState", "State loaded from " + root.statePath)
+      root.isLoaded = true
     }
 
     onLoadFailed: error => {
