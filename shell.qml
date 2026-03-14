@@ -12,9 +12,9 @@ ShellRoot {
   Connections {
     target: ShellState ? ShellState : null
     function onIsLoadedChanged() {
-      if (!ShellState.isLoaded) return
-      Logger.d("Shell", "State initialized. Shell is ready.")
-      root.stateLoaded = true
+      if (!ShellState.isLoaded) return;
+      Logger.d("Shell", "State initialized. Shell is ready.");
+      root.stateLoaded = true;
     }
   }
 
