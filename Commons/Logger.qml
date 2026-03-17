@@ -7,7 +7,7 @@ Singleton {
   id: root
 
   function _format(...args) {
-    const maxLen = 12;
+    const maxLen = 16;
     const t = new Date().toISOString()
     var module = ""
 
