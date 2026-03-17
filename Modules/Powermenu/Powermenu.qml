@@ -30,6 +30,7 @@ Loader {
 
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.namespace: "taijipan-powermenu-" + (screen?.name || "unknown")
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
         color: "transparent"
