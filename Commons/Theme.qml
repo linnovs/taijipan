@@ -41,13 +41,8 @@ Singleton {
   property real barInnerHeight: barHeight - spacing * 2
   property real barItemHeight: barInnerHeight - spacing * 2
 
-  property real powerMenuWidth: spacing * 240
-  property real powerMenuHeight: spacing * 65
-  property real powerMenuStatuslineHeight: spacing * 12
-  property real powerMenuStatuslineTextSize: spacing * 6
-  property real powerMenuButtonSize: spacing * 35
-  property real powerMenuButtonIconSize: spacing * 24
-  property real powerMenuButtonTextSize: spacing * 5
+  property real powermenuButtonSize: spacing * 30
+  property real powermenuUserIconSize: spacing * 23
 
   property real osdWidth: spacing * 100
   property real osdHeight: spacing * 18

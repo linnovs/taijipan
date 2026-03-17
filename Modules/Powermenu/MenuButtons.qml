@@ -26,8 +26,8 @@ RowLayout {
       id: buttonContainer
       required property var modelData
 
-      implicitWidth: 120
-      implicitHeight: 120
+      implicitWidth: Theme.powermenuButtonSize
+      implicitHeight: Theme.powermenuButtonSize
       color: buttonMa.containsMouse ? Theme.mauve : Theme.mantle
 
       ColorImageIcon {

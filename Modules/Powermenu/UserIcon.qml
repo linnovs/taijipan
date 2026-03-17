@@ -6,8 +6,8 @@ import qs.Commons
 Item {
   id: root
 
-  height: 90
-  width: 90
+  implicitHeight: Theme.powermenuUserIconSize
+  implicitWidth: Theme.powermenuUserIconSize
 
   Image {
     id: userIcon
