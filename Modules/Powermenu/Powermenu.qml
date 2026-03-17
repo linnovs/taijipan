@@ -25,7 +25,7 @@ Loader {
 
       PanelWindow {
         id: powermenuWindow
-        property var modelData
+        required property ShellScreen modelData
         screen: modelData
 
         exclusionMode: ExclusionMode.Ignore
