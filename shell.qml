@@ -1,8 +1,10 @@
 import QtQuick
 import Quickshell
 import qs.Commons
+import qs.Modules.Powermenu
 import qs.Modules.TJPBar
 import qs.Modules.OSD
+import qs.Services
 
 ShellRoot {
   id: root
@@ -22,9 +24,14 @@ ShellRoot {
     active: root.stateLoaded
     sourceComponent: Item {
       Component.onCompleted: {
-        Logger.d("Shell", "Main UI loaded.")
+        Qt.callLater(() => {
+          IPCServices.init();
+        });
+
+        Logger.d("Shell", "Main UI loaded.");
       }
 
+      Powermenu {}
       VolumeOSD {}
       TJPBar {}
     }

@@ -1,79 +1,94 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
+import Quickshell.Wayland
+import qs.Services
+import qs.Commons
 
-Scope {
+Loader {
   id: root
+  active: false
 
-  signal close()
+  Component.onCompleted: {
+    PanelService.powermenu = this
+    Logger.d("Powermenu", "Power menu initialized.")
+  }
 
-  property string currentUptime
+  sourceComponent: Component {
+    Variants {
+      id: powermenuContainer
 
-  Process {
-    id: uptime
-    command: ["uptime", "-p"]
-    stdout: StdioCollector {
-      onStreamFinished: {
-        root.currentUptime = this.text.trim().replace("up ", "")
+      model: Quickshell.screens
+      property var activeScreen: null
+
+      PanelWindow {
+        id: powermenuWindow
+        property var modelData
+        screen: modelData
+
+        exclusionMode: ExclusionMode.Ignore
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+
+        color: "transparent"
+
+        contentItem {
+          focus: true
+          Keys.onPressed: event => {
+            if (event.key === Qt.Key_Escape) root.active = false;
+          }
+        }
+
+        anchors {
+          top: true
+          right: true
+          bottom: true
+          left: true
+        }
+
+        Rectangle {
+          color: Theme.base
+          opacity: 0.9
+          anchors.fill: parent
+        }
+
+        MouseArea {
+          id: ma
+          anchors.fill: parent
+          hoverEnabled: true
+          onClicked: root.active = false
+          onEntered: {
+            if (powermenuContainer.activeScreen !== powermenuWindow.screen) {
+              powermenuContainer.activeScreen = powermenuWindow.screen
+            }
+          }
+        }
+
+        Loader {
+          active: powermenuContainer.activeScreen === powermenuWindow.screen
+          anchors.centerIn: parent
+          sourceComponent: ColumnLayout {
+            anchors.centerIn: parent
+            spacing: Theme.spacing * 4
+
+            UserIcon {
+              Layout.alignment: Qt.AlignHCenter
+              Layout.bottomMargin: Theme.spacing * 4
+            }
+
+            MenuButtons {
+              Layout.alignment: Qt.AlignHCenter
+              onCommandExecuted: root.active = false
+            }
+
+            Uptime {
+              Layout.alignment: Qt.AlignHCenter
+            }
+          }
+        }
       }
-    }
-  }
-
-  Timer {
-    interval: 60 * 1000
-    repeat: true
-    running: true
-    triggeredOnStart: true
-    onTriggered: {
-      uptime.running = true
-    }
-  }
-
-  ScreenLayout {
-    onClose: root.close()
-    uptimeText: root.currentUptime
-
-    LogoutButton {
-      command: "swaylock"
-      keybind: Qt.Key_Return
-      text: "Lock"
-      icon: "lockscreen"
-    }
-
-    LogoutButton {
-      command: "loginctl terminate-user $USER"
-      keybind: Qt.Key_L
-      text: "Logout"
-      icon: "logout"
-    }
-
-    LogoutButton {
-      command: "systemctl suspend"
-      keybind: Qt.Key_S
-      text: "Suspend"
-      icon: "suspend"
-    }
-
-    LogoutButton {
-      command: "systemctl hibernate"
-      keybind: Qt.Key_H
-      text: "Hibernate"
-      icon: "hibernate"
-    }
-
-    LogoutButton {
-      command: "systemctl poweroff"
-      keybind: Qt.Key_S
-      shifted: true
-      text: "Shutdown"
-      icon: "shutdown"
-    }
-
-    LogoutButton {
-      command: "systemctl reboot"
-      keybind: Qt.Key_R
-      text: "Reboot"
-      icon: "reboot"
     }
   }
 }
