@@ -7,9 +7,21 @@ import qs.Commons
 PanelWindow {
   id: root
 
+  property bool isPanelOpen: (PanelService.openedPanel !== null && PanelService.openedPanel.screen === screen)
+  property bool isAnyPanelOpen: (PanelService.openedPanel !== null)
+
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.namespace: "taijipan-panelscreen-" + (screen?.name || "unknown")
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
+  WlrLayershell.keyboardFocus: {
+    if (!root.isAnyPanelOpen) return WlrKeyboardFocus.None;
+
+    if (root.isPanelOpen) {
+      return PanelService.openedPanel.exclusiveKeyboard ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand;
+    }
+
+    return WlrKeyboardFocus.OnDemand
+  }
 
   Component.onCompleted: {
     Logger.d("MainWindow", "Window created for screen:", screen?.name, "- Dimensions:", screen?.width, "x", screen?.height);
@@ -21,9 +33,6 @@ PanelWindow {
     bottom: true
     left: true
   }
-
-  property bool isPanelOpen: (PanelService.openedPanel !== null && PanelService.openedPanel.screen === screen)
-  property bool isAnyPanelOpen: (PanelService.openedPanel !== null)
 
   color: {
     if (isAnyPanelOpen) {
@@ -68,5 +77,11 @@ PanelWindow {
         }
       }
     }
+  }
+
+  Shortcut {
+    sequence: "Esc"
+    enabled: root.isPanelOpen && (PanelService.openedPanel.onEscapePressed !== undefined)
+    onActivated: PanelService.openedPanel.onEscapePressed()
   }
 }
