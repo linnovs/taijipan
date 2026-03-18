@@ -37,7 +37,7 @@ Singleton {
   property color crust:             "#11111b"
 
   property real spacing: 4
-  property real barHeight: spacing * 10
+  property real barHeight: spacing * 8
   property real barInnerHeight: barHeight - spacing * 2
   property real barItemHeight: barInnerHeight - spacing * 2
 
