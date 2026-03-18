@@ -36,22 +36,22 @@ Singleton {
   property color mantle:            "#181825"
   property color crust:             "#11111b"
 
-  property real spacing: 4
-  property real barHeight: spacing * 8
-  property real barInnerHeight: barHeight - spacing * 2
-  property real barItemHeight: barInnerHeight - spacing * 2
+  property int spacing: 4
+  property int barHeight: spacing * 8
+  property int barInnerHeight: barHeight - spacing * 2
+  property int barItemHeight: barInnerHeight - spacing * 2
 
-  property real powermenuButtonSize: spacing * 30
-  property real powermenuUserIconSize: spacing * 23
+  property int powermenuButtonSize: spacing * 30
+  property int powermenuUserIconSize: spacing * 23
 
-  property real osdWidth: spacing * 100
-  property real osdHeight: spacing * 18
+  property int osdWidth: spacing * 100
+  property int osdHeight: spacing * 18
 
-  property real iconSize: spacing * 6
-  property real iconSizeL: spacing * 12
+  property int iconSize: spacing * 6
+  property int iconSizeL: spacing * 12
 
-  property real radiusS: spacing
-  property real radiusM: spacing * 2
-  property real radiusL: spacing * 4
-  property real radiusRound: spacing * 25
+  property int radiusS: spacing
+  property int radiusM: spacing * 2
+  property int radiusL: spacing * 4
+  property int radiusRound: spacing * 25
 }
