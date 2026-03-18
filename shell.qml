@@ -11,6 +11,18 @@ ShellRoot {
 
   property bool stateLoaded: false
 
+  Component.onCompleted: {
+    Logger.i("Shell", "------------------------------------")
+    Logger.i("Shell", "Starting TaiJiPan Shell...")
+  }
+
+  Connections {
+    target: Quickshell
+    function onReloadCompleted() {
+      Quickshell.inhibitReloadPopup();
+    }
+  }
+
   Connections {
     target: ShellState ? ShellState : null
     function onIsLoadedChanged() {
@@ -24,6 +36,7 @@ ShellRoot {
     active: root.stateLoaded
     sourceComponent: Item {
       Component.onCompleted: {
+        Logger.i("Shell", "------------------------------------")
         Qt.callLater(() => {
           IPCServices.init();
         });
