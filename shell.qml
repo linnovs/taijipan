@@ -38,7 +38,7 @@ ShellRoot {
       Component.onCompleted: {
         Logger.i("Shell", "------------------------------------")
         Qt.callLater(() => {
-          IPCServices.init();
+          IPCServices.init(screenDetector);
         });
 
         Logger.d("Shell", "Main UI loaded.");
@@ -46,6 +46,10 @@ ShellRoot {
 
       VolumeOSD {}
       PanelScreens {}
+
+      CurrentScreenDetector {
+        id: screenDetector
+      }
     }
   }
 }
