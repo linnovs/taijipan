@@ -8,6 +8,7 @@ Singleton {
   id: root
 
   property var registeredPanels: ({})
+  property var openedPanel: null
 
   function registerPanel(panel) {
     registeredPanels[panel.objectName] = panel;
@@ -23,5 +24,19 @@ Singleton {
 
     Logger.w("PanelService", "Panel not found:", panelKey);
     return null;
+  }
+
+  function willOpenPanel(panel) {
+    if (openedPanel && openedPanel !== panel) {
+      openedPanel.close();
+    }
+
+    openedPanel = panel;
+  }
+
+  function closedPanel(panel) {
+    if (openedPanel && openedPanel === panel) {
+      openedPanel = null;
+    }
   }
 }
