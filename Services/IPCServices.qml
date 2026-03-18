@@ -3,12 +3,16 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.Services
 import qs.Commons
 
 Singleton {
   id: root
 
-  function init() {
+  property var screenDetector: null
+
+  function init(detector) {
+    screenDetector = detector;
     Logger.d("IPCService", "IPC Service initialized")
   }
 
@@ -16,9 +20,10 @@ Singleton {
     target: "powermenu"
 
     function open() {
-      if (PanelService.powermenu && !PanelService.powermenu.active) {
-        PanelService.powermenu.active = true
-      }
+      root.screenDetector.withCurrentScreen(screen=>{
+        var powermenuPanel = PanelService.getPanel("powermenu", screen);
+        powermenuPanel?.toggle();
+      })
     }
   }
 }
