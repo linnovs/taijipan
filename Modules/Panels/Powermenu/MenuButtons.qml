@@ -32,7 +32,7 @@ RowLayout {
       color: buttonMa.containsMouse ? Theme.mauve : Theme.mantle
 
       ColorImageIcon {
-        name: `${Quickshell.shellDir}/assets/icons/${buttonContainer.modelData.icon}.png`
+        name: `${Paths.icons}/${buttonContainer.modelData.icon}.png`
         anchors.centerIn: parent
         implicitHeight: parent.height * 0.5
         implicitWidth: parent.width * 0.5

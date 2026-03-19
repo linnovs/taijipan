@@ -17,6 +17,10 @@ Singleton {
 
   readonly property url imagecache: `${cache}/images`
 
+  readonly property url assets: `${Quickshell.shellDir}/assets`
+  readonly property url sounds: `${assets}/sounds`
+  readonly property url icons: `${assets}/icons`
+
   function stringify(path: url): string {
       return path.toString().replace(/%20/g, " ");
   }

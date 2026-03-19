@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
+import qs.Commons
 
 Singleton {
   id: root
@@ -65,7 +66,7 @@ Singleton {
       return
     }
 
-    AudioFeedbackService.playSound(`${Quickshell.shellDir}/assets/sounds/audio-volume-change.ogg`, volume);
+    AudioFeedbackService.playSound(`${Paths.sounds}/audio-volume-change.ogg`, volume);
   }
 
   function adjustVolume(delta) {
