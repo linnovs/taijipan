@@ -43,7 +43,7 @@ ShellRoot {
         Logger.d("Shell", "Main UI loaded.");
       }
 
-      VolumeOSD {}
+      OSD {}
       PanelScreens {}
 
       CurrentScreenDetector {
