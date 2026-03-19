@@ -1,6 +1,5 @@
 import QtQuick
 import QtMultimedia
-import qs.Commons
 
 MediaPlayer {
   id: root
@@ -18,7 +17,6 @@ MediaPlayer {
 
   onPlaybackStateChanged: {
     if (!playing) {
-      Logger.d("MediaPlayer", "Audio playback finished, destroying player");
       destroy();
     }
   }

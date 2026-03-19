@@ -28,7 +28,7 @@ Singleton {
     }
 
     mediaPlayerComponent = Qt.createComponent(`${Quickshell.shellDir}/assets/qmls/MediaPlayer.qml`);
-    Logger.d("SoundService", "SoundService initialized");
+    Logger.d("SoundService", "MediaPlayer initialized");
   }
 
   Item {
