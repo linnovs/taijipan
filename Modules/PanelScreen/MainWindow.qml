@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import qs.Modules.Panels.Powermenu
 import qs.Services
 import qs.Commons
 
@@ -76,6 +77,12 @@ PanelWindow {
           PanelService.openedPanel.close();
         }
       }
+    }
+
+    Powermenu {
+      id: powermenuPanel
+      objectName: "powermenu-" + (root.screen?.name || "unknown")
+      screen: root.screen
     }
   }
 

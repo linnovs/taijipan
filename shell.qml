@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
 import qs.Commons
-import qs.Modules.Powermenu
 import qs.Modules.OSD
 import qs.Modules.PanelScreen
 import qs.Services
