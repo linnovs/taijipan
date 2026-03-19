@@ -10,10 +10,6 @@ Singleton {
   property bool hasMediaSupport: false
   property var mediaPlayerComponent: null
 
-  Item {
-    id: playerContainer
-  }
-
   Component.onCompleted: {
     try {
       const testComp = Qt.createQmlObject(`
@@ -24,25 +20,31 @@ Singleton {
       if (testComp) {
         hasMediaSupport = true;
         testComp.destroy();
+        Logger.d("SoundService", "Media support is available");
       }
     } catch (e) {
-      Logger.e("AudioFeedback", "Media support is not available:", e);
+      Logger.e("SoundService", "Media support is not available:", e);
       return;
     }
 
     mediaPlayerComponent = Qt.createComponent(`${Quickshell.shellDir}/assets/qmls/MediaPlayer.qml`);
+    Logger.d("SoundService", "SoundService initialized");
+  }
+
+  Item {
+    id: playerContainer
   }
 
   function playSound(source, volume) {
     if (!hasMediaSupport) return;
 
     if (!source || source === "") {
-      Logger.w("AudioFeedback", "No audio source provided");
+      Logger.w("SoundService", "No audio source provided");
       return;
     }
 
     if (!mediaPlayerComponent) {
-      Logger.e("AudioFeedback", "MediaPlayer component is not available");
+      Logger.e("SoundService", "MediaPlayer component is not available");
       return;
     }
 

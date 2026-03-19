@@ -67,7 +67,7 @@ Singleton {
 
   onVolumeChanged: {
     if (!initialized || !isAvailable || typeof volume !== "number") return
-    AudioFeedbackService.playSound(`${Paths.sounds}/audio-volume-change.ogg`, volume);
+    SoundService.playSound(`${Paths.sounds}/audio-volume-change.ogg`, volume);
   }
 
   function adjustVolume(delta) {
