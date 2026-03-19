@@ -14,7 +14,6 @@ Singleton {
   property bool muted: false
   property bool isAvailable: sink !== null
   property bool initialized: false
-  property bool firstUpdate: true
 
   readonly property string iconName: {
     if (muted) {
@@ -24,6 +23,14 @@ Singleton {
     return volume >= 0.5 ? "audio-volume-high" : "audio-volume-medium"
   }
 
+  Timer {
+    interval: 500
+    running: true
+    onTriggered: {
+      root.initialized = true
+    }
+  }
+
   Component.onCompleted: {
     root.sink = Pipewire.defaultAudioSink
     root.audio = root.sink ? root.sink.audio : null
@@ -31,7 +38,6 @@ Singleton {
       root.volume = root.audio.volume
       root.muted = root.audio.muted
     }
-    initialized = true
   }
 
   PwObjectTracker {
@@ -61,11 +67,6 @@ Singleton {
 
   onVolumeChanged: {
     if (!initialized || !isAvailable || typeof volume !== "number") return
-    if (firstUpdate) {
-      firstUpdate = false
-      return
-    }
-
     AudioFeedbackService.playSound(`${Paths.sounds}/audio-volume-change.ogg`, volume);
   }
 
