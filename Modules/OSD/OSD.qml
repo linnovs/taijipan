@@ -14,8 +14,7 @@ Variants {
 
   enum Type {
     Volume,
-    CapLock,
-    NumLock
+    LockKey
   }
 
   delegate: Loader {
@@ -28,7 +27,6 @@ Variants {
 
     readonly property real currentVolume: AudioService.volume
     readonly property bool isMuted: AudioService.muted
-    readonly property int displayDuration: 3 * 1000
 
     function getIcon() {
       switch (currentOSDType) {
@@ -36,6 +34,15 @@ Variants {
         return AudioService.iconName;
       default:
         return "action-unavailable";
+      }
+    }
+
+    function getPercentage() {
+      switch (currentOSDType) {
+      case OSD.Type.Volume:
+        return isMuted ? 0 : currentVolume;
+      default:
+        return 0;
       }
     }
 
@@ -74,183 +81,13 @@ Variants {
       }
     }
 
-    sourceComponent: PanelWindow {
-      id: panel
-      screen: root.modelData
-      margins.bottom: Theme.marginL
-      anchors.bottom: true
-
-      implicitWidth: Theme.osdWidth
-      implicitHeight: Theme.osdHeight
-      color: "transparent"
-
-      WlrLayershell.layer: WlrLayer.Overlay
-      WlrLayershell.namespace: "taijipan-osd-" + (screen?.name || "unknown")
-      WlrLayershell.exclusionMode: ExclusionMode.Ignore
-      WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-
-      Item {
-        id: osdItem
-        anchors.fill: parent
-        visible: false
-        opacity: 0
-        scale: 0.85
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: Theme.animationNormal
-            easing.type: Easing.InOutQuad
-          }
-        }
-
-        Behavior on scale {
-          NumberAnimation {
-            duration: Theme.animationNormal
-            easing.type: Easing.InOutQuad
-          }
-        }
-
-        Timer {
-          id: showDelayTimer
-          interval: 30
-          onTriggered: {
-            panel.margins.bottom = Theme.marginL
-            osdItem.visible = true;
-            osdItem.opacity = 1.0;
-            osdItem.scale = 1.0;
-            loadingBar.width = 0;
-            hideTimer.start();
-          }
-        }
-
-        Timer {
-          id: hideTimer
-          interval: root.displayDuration
-          onTriggered: osdItem.hide()
-        }
-
-        Timer {
-          id: visibilityTimer
-          interval: Theme.animationNormal
-          onTriggered: {
-            osdItem.visible = false;
-            root.currentOSDType = -1;
-            root.active = false;
-          }
-        }
-
-        Rectangle {
-          id: background
-          anchors.fill: parent
-          anchors.margins: Theme.spacing
-          radius: Theme.radiusM
-          color: Qt.alpha(Theme.overlay, 0.95)
-          border.color: Qt.alpha(Theme.overlaySecondary, 0.95)
-          border.width: 2
-
-          Rectangle {
-            id: loadingBar
-            anchors.top: parent.top
-            anchors.topMargin: 2
-            anchors.horizontalCenter: parent.horizontalCenter
-            color: Qt.alpha(Theme.mauve, 0.95)
-            height: Theme.spacing
-            radius: height / 2
-            width: parent.width
-
-            Behavior on width {
-              NumberAnimation {
-                duration: root.displayDuration
-                easing.type: Easing.InOutQuad
-              }
-            }
-          }
-        }
-
-        DropShadow {
-          anchors.fill: background
-          source: background
-          autoPaddingEnabled: true
-        }
-
-        RowLayout {
-          anchors.fill: background
-          anchors.leftMargin: Theme.marginM
-          anchors.rightMargin: Theme.marginM
-          spacing: Theme.marginS
-
-          TextMetrics {
-            id: percentageMetrics
-            font.family: Theme.fontFamily
-            font.pointSize: Theme.fontSizeS
-            text: "150%"
-          }
-
-          ColorImageIcon {
-            width: Theme.iconSizeL
-            height: Theme.iconSizeL
-            name: root.getIcon()
-            color: Theme.text
-          }
-
-          Rectangle {
-            visible: root.currentOSDType !== OSD.Type.NumLock && root.currentOSDType !== OSD.Type.CapLock
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignVCenter
-            height: Theme.spacing * 2
-            radius: height / 2
-            color: Theme.overlaySecondary
-
-            Rectangle {
-              anchors.left: parent.left
-              anchors.top: parent.top
-              anchors.bottom: parent.bottom
-              width: parent.width * root.currentVolume
-              radius: parent.radius
-              color: Theme.text
-
-              Behavior on width {
-                NumberAnimation {
-                  duration: Theme.animationNormal
-                  easing.type: Easing.InOutQuad
-                }
-              }
-            }
-          }
-
-          Text {
-            visible: root.currentOSDType !== OSD.Type.NumLock && root.currentOSDType !== OSD.Type.CapLock
-            text: `${Math.round(root.currentVolume * 100)}%`.padStart(4)
-            color: Theme.text
-            font.family: Theme.fontFamily
-            font.pointSize: Theme.fontSizeS
-            font.weight: Font.Medium
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-            horizontalAlignment: Text.AlignRight
-            verticalAlignment: Text.AlignVCenter
-            Layout.fillWidth: false
-            Layout.preferredWidth: Math.ceil(percentageMetrics.width)
-          }
-        }
-
-        function show() {
-          hideTimer.stop();
-          visibilityTimer.stop();
-          loadingBar.width = background.width;
-          showDelayTimer.start();
-        }
-
-        function hide() {
-          hideTimer.stop();
-          visibilityTimer.stop();
-          osdItem.opacity = 0;
-          osdItem.scale = 0.85;
-          visibilityTimer.start();
-        }
-      }
-
-      function showOSD() {
-        osdItem.show()
+    sourceComponent: OSDPanel {
+      currentOSDType: root.currentOSDType
+      iconName: root.getIcon()
+      percentage: root.getPercentage()
+      onHidden: {
+        root.currentOSDType = -1;
+        root.active = false;
       }
     }
   }

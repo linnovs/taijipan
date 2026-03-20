@@ -37,13 +37,13 @@ Singleton {
   property color crust:             "#11111b"
 
   property int spacing: 4
-  property int blurMax: 32
+  property int blurMax: 22
 
-  property real shadowBlur: 1.0
-  property real shadowOpacity: 0.85
-  property color shadowColor: "#000000"
-  property real shadowHorizontalOffset: 3
-  property real shadowVerticalOffset: 3
+  property real   shadowBlur: 1.0
+  property real   shadowOpacity: 0.85
+  property color  shadowColor: "black"
+  property real   shadowHorizontalOffset: 3
+  property real   shadowVerticalOffset: 3
 
   property int barHeight: spacing * 8
   property int barInnerHeight: barHeight - spacing * 2
@@ -52,8 +52,8 @@ Singleton {
   property int powermenuButtonSize: spacing * 30
   property int powermenuUserIconSize: spacing * 23
 
-  property int osdWidth: spacing * 80
-  property int osdHeight: spacing * 20
+  property int osdWidth: spacing * 90
+  property int osdHeight: spacing * 25
 
   property int animationFast: 150
   property int animationNormal: 300
