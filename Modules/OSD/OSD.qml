@@ -28,6 +28,7 @@ Variants {
 
     readonly property real currentVolume: AudioService.volume
     readonly property bool isMuted: AudioService.muted
+    readonly property int displayDuration: 3 * 1000
 
     function getIcon() {
       switch (currentOSDType) {
@@ -117,13 +118,14 @@ Variants {
             osdItem.visible = true;
             osdItem.opacity = 1.0;
             osdItem.scale = 1.0;
+            loadingBar.width = 0;
             hideTimer.start();
           }
         }
 
         Timer {
           id: hideTimer
-          interval: 3 * 1000
+          interval: root.displayDuration
           onTriggered: osdItem.hide()
         }
 
@@ -145,6 +147,24 @@ Variants {
           color: Qt.alpha(Theme.overlay, 0.95)
           border.color: Qt.alpha(Theme.mauve, 0.95)
           border.width: 2
+
+          Rectangle {
+            id: loadingBar
+            anchors.top: parent.top
+            anchors.topMargin: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: Qt.alpha(Theme.mauve, 0.95)
+            height: Theme.spacing
+            radius: height / 2
+            width: parent.width
+
+            Behavior on width {
+              NumberAnimation {
+                duration: root.displayDuration
+                easing.type: Easing.InOutQuad
+              }
+            }
+          }
         }
 
         DropShadow {
@@ -216,6 +236,7 @@ Variants {
         function show() {
           hideTimer.stop();
           visibilityTimer.stop();
+          loadingBar.width = background.width;
           showDelayTimer.start();
         }
 
