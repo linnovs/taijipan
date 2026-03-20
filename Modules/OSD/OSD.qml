@@ -46,10 +46,10 @@ Variants {
       if (!root.active) root.active = true;
 
       if (root.item) {
-        root.item.showOSD();
+        root.item.showOSD(); // qmllint disable missing-property
       } else {
         Qt.callLater(() => {
-          if (root.item) root.item.showOSD();
+          if (root.item) root.item.showOSD(); // qmllint disable missing-property
         })
       }
     }
