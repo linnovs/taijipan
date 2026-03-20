@@ -34,7 +34,7 @@ Variants {
       case OSD.Type.Volume:
         return AudioService.iconName;
       default:
-        return "";
+        return "action-unavailable";
       }
     }
 
