@@ -145,7 +145,7 @@ Variants {
           anchors.margins: Theme.spacing
           radius: Theme.radiusM
           color: Qt.alpha(Theme.overlay, 0.95)
-          border.color: Qt.alpha(Theme.mauve, 0.95)
+          border.color: Qt.alpha(Theme.overlaySecondary, 0.95)
           border.width: 2
 
           Rectangle {
