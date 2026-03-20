@@ -12,7 +12,7 @@ Singleton {
 
   function init(detector) {
     screenDetector = detector;
-    Logger.d("IPCService", "IPC Service initialized")
+    Logger.i("IPCService", "IPC Service initialized")
   }
 
   IpcHandler {
