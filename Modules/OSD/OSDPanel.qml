@@ -6,8 +6,8 @@ import qs.Commons
 
 PanelWindow {
   id: root
-  margins.bottom: Theme.marginXL
-  anchors.bottom: true
+  margins.top: Theme.barHeight + Theme.marginM
+  anchors.top: true
 
   property int currentOSDType: -1
   property string iconName: ""
