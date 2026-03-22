@@ -6,7 +6,7 @@ import qs.Commons
 
 PanelWindow {
   id: root
-  margins.top: Theme.barHeight + Theme.marginM
+  margins.top: 0
   anchors.top: true
 
   property int currentOSDType: -1
@@ -25,6 +25,13 @@ PanelWindow {
   WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
   signal hidden
+
+  Behavior on margins.top {
+    NumberAnimation {
+      duration: Theme.animationSlow
+      easing.type: Easing.Linear
+    }
+  }
 
   Item {
     id: osdItem
@@ -54,22 +61,23 @@ PanelWindow {
         osdItem.visible = true;
         osdItem.opacity = 1.0;
         osdItem.scale = 1.0;
+        root.margins.top = Theme.barHeight + Theme.marginL;
         hideTimer.start();
       }
     }
 
     Timer {
       id: hideTimer
-      interval: root.displayDuration
+      interval: root.displayDuration + Theme.animationNormal
       onTriggered: osdItem.hide()
     }
 
     Timer {
       id: visibilityTimer
-      interval: Theme.animationNormal
+      interval: Theme.animationSlow + 50
       onTriggered: {
         osdItem.visible = false;
-        hidden();
+        root.hidden();
       }
     }
 
@@ -105,6 +113,7 @@ PanelWindow {
     function hide() {
       hideTimer.stop();
       visibilityTimer.stop();
+      root.margins.top = -root.height;
       osdItem.opacity = 0;
       osdItem.scale = 0.85;
       visibilityTimer.start();

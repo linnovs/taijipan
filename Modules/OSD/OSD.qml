@@ -1,12 +1,8 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
-import Quickshell.Wayland
 import qs.Services
-import qs.Widgets
-import qs.Commons
 
 Variants {
   id: osd

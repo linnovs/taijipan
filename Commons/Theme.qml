@@ -55,9 +55,11 @@ Singleton {
   property int osdWidth: spacing * 90
   property int osdHeight: spacing * 25
 
+  property int animationFaster: 75
   property int animationFast: 150
   property int animationNormal: 300
   property int animationSlow: 450
+  property int animationSlower: 750
 
   property int fontSizeS: 12
   property int fontSizeM: 14
