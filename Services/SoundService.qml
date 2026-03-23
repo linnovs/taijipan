@@ -1,6 +1,7 @@
 pragma Singleton
 
 import QtQuick
+import QtMultimedia
 import Quickshell
 import qs.Commons
 
@@ -31,8 +32,8 @@ Singleton {
     Logger.i("SoundService", "MediaPlayer initialized");
   }
 
-  Item {
-    id: playerContainer
+  SoundEffect {
+    id: mediaPlayer
   }
 
   function playSound(source, volume) {
@@ -43,14 +44,7 @@ Singleton {
       return;
     }
 
-    if (!mediaPlayerComponent) {
-      Logger.e("SoundService", "MediaPlayer component is not available");
-      return;
-    }
-
-    mediaPlayerComponent.createObject(playerContainer, {
-      source: source,
-      volume: volume
-    });
+    mediaPlayer.source = source;
+    mediaPlayer.play();
   }
 }
