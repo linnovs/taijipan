@@ -12,6 +12,7 @@ PanelWindow {
   property int currentOSDType: -1
   property string iconName: ""
   property real percentage: 0.0
+  property string displayText: ""
 
   readonly property int displayDuration: 3 * 1000
 
@@ -102,6 +103,12 @@ PanelWindow {
       currentOSDType: root.currentOSDType
       iconName: root.iconName
       percentage: root.percentage
+      displayText: {
+        if (root.displayText === "") {
+          return `${Math.round(root.percentage * 100)}%`.padStart(4);
+        }
+        return root.displayText;
+      }
     }
 
     function show() {

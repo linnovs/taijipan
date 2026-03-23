@@ -9,6 +9,7 @@ RowLayout {
   property Item background: null
   property int currentOSDType: -1
   property real percentage: 0.0
+  property string displayText: ""
   property string iconName: ""
 
   anchors.fill: background
@@ -30,8 +31,21 @@ RowLayout {
     color: Theme.text
   }
 
-  Rectangle {
-    visible: root.currentOSDType !== OSD.Type.LockKey
+  Text {
+    visible: root.currentOSDType === OSD.Type.NumLock || root.currentOSDType === OSD.Type.CapsLock || root.currentOSDType === OSD.Type.ScrollLock
+    text: root.displayText
+    color: Theme.text
+    font.family: Theme.fontFamily
+    font.pointSize: Theme.fontSizeM
+    font.weight: Font.Medium
+    Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
+    Layout.fillWidth: true
+  }
+
+  Rectangle { // percentage bar
+    visible: root.currentOSDType === OSD.Type.Volume
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignVCenter
     height: Theme.spacing * 2
@@ -42,7 +56,7 @@ RowLayout {
       anchors.left: parent.left
       anchors.top: parent.top
       anchors.bottom: parent.bottom
-      width: parent.width * root.percentage
+      width: parent.width * Math.min(1.0, root.percentage)
       radius: parent.radius
       color: Theme.text
 
@@ -55,9 +69,9 @@ RowLayout {
     }
   }
 
-  Text {
-    visible: root.currentOSDType !== OSD.Type.LockKey
-    text: `${Math.round(root.percentage * 100)}%`.padStart(4)
+  Text { // percentage text
+    visible: root.currentOSDType === OSD.Type.Volume
+    text: root.displayText
     color: Theme.text
     font.family: Theme.fontFamily
     font.pointSize: Theme.fontSizeS

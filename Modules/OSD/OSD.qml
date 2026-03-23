@@ -10,7 +10,9 @@ Variants {
 
   enum Type {
     Volume,
-    LockKey
+    NumLock,
+    CapsLock,
+    ScrollLock
   }
 
   delegate: Loader {
@@ -28,6 +30,8 @@ Variants {
       switch (currentOSDType) {
       case OSD.Type.Volume:
         return AudioService.iconName;
+      case OSD.Type.NumLock:
+        return LockKeysService.numLockState ? "numlock-on" : "numlock-off";
       default:
         return "action-unavailable";
       }
@@ -39,6 +43,21 @@ Variants {
         return isMuted ? 0 : currentVolume;
       default:
         return 0;
+      }
+    }
+
+    function getDisplayText() {
+      switch (currentOSDType) {
+      case OSD.Type.Volume:
+        return "";
+      case OSD.Type.NumLock:
+        return LockKeysService.numLockState ? qsTr("Num Lock On") : qsTr("Num Lock Off");
+      case OSD.Type.CapsLock:
+        return LockKeysService.capsLockState ? qsTr("Caps Lock On") : qsTr("Caps Lock Off");
+      case OSD.Type.ScrollLock:
+        return LockKeysService.scrollLockState ? qsTr("Scroll Lock On") : qsTr("Scroll Lock Off");
+      default:
+        return "";
       }
     }
 
@@ -67,6 +86,14 @@ Variants {
       }
     }
 
+    Component.onCompleted: {
+      LockKeysService.register("osd-" + (modelData?.name || "unknown"));
+    }
+
+    Component.onDestruction: {
+      LockKeysService.unregister("osd-" + (modelData?.name || "unknown"));
+    }
+
     Connections {
       target: AudioService
       function onVolumeChanged() {
@@ -77,10 +104,24 @@ Variants {
       }
     }
 
+    Connections {
+      target: LockKeysService
+      function onNumLockChanged() {
+        root.showOSD(OSD.Type.NumLock);
+      }
+      function onCapsLockChanged() {
+        root.showOSD(OSD.Type.CapsLock);
+      }
+      function onScrollLockChanged() {
+        root.showOSD(OSD.Type.ScrollLock);
+      }
+    }
+
     sourceComponent: OSDPanel {
       currentOSDType: root.currentOSDType
       iconName: root.getIcon()
       percentage: root.getPercentage()
+      displayText: root.getDisplayText()
       onHidden: {
         root.currentOSDType = -1;
         root.active = false;
