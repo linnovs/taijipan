@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
+import qs.Widgets
 
 Item {
   id: root
@@ -28,6 +29,11 @@ Item {
           windowRef: root.windowRef
           shapeContainer: barBackgroundShape
         }
+      }
+
+      DropShadow {
+        anchors.fill: parent
+        source: barBackgroundShape
       }
     }
   }
