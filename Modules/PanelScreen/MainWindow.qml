@@ -42,6 +42,13 @@ PanelWindow {
     return "transparent";
   }
 
+  Behavior on color {
+    ColorAnimation {
+      duration: Theme.animationNormal
+      easing.type: Easing.InOutQuad
+    }
+  }
+
   mask: Region {
     id: clickthroughMask
     x: 0; y: 0; width: root.width; height: root.height
