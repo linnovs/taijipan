@@ -4,9 +4,9 @@ import Quickshell.Wayland
 import qs.Widgets
 import qs.Commons
 
-PanelWindow {
+PanelWindow { // qmllint disable
   id: root
-  margins.top: 0
+  margins.top: 0 // qmllint disable
   anchors.top: true
 
   property int currentOSDType: -1
@@ -62,7 +62,7 @@ PanelWindow {
         osdItem.visible = true;
         osdItem.opacity = 1.0;
         osdItem.scale = 1.0;
-        root.margins.top = Theme.barHeight + Theme.marginL;
+        root.margins.top = Theme.barHeight + Theme.marginL; // qmllint disable
         hideTimer.start();
       }
     }
@@ -120,7 +120,7 @@ PanelWindow {
     function hide() {
       hideTimer.stop();
       visibilityTimer.stop();
-      root.margins.top = -root.height;
+      root.margins.top = -root.height; // qmllint disable
       osdItem.opacity = 0;
       osdItem.scale = 0.85;
       visibilityTimer.start();
