@@ -67,6 +67,13 @@ PanelWindow {
     width: root.width
     height: root.height
 
+    Background {
+      anchors.fill: parent
+      barRef: barPlaceholder.barItem || null
+      windowRef: root
+      z: 0
+    }
+
     MouseArea {
       anchors.fill: parent
       enabled: root.isAnyPanelOpen
@@ -83,6 +90,15 @@ PanelWindow {
       id: powermenuPanel
       objectName: "powermenu-" + (root.screen?.name || "unknown")
       screen: root.screen
+    }
+
+    Item {
+      id: barPlaceholder
+      readonly property var barItem: barPlaceholder
+      property ShellScreen screen: root.screen
+      x: root.width * 0.1; y: 0
+      width: root.width - root.width * 0.2
+      height: Theme.barHeight
     }
   }
 
