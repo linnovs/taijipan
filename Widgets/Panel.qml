@@ -6,15 +6,15 @@ import qs.Commons
 Item {
   id: root
 
-  property ShellScreen screen: null
-  property Component panelContent: null
-  property bool isOpen: false
-  property bool isVisible: false
+  property ShellScreen  screen: null
+  property Component    panelContent: null
+  property bool         isOpen: false
+  property bool         isVisible: false
 
-  property bool useButtonPosition: false
-  property point buttonPosition: Qt.point(0, 0)
-  property int buttonWidth: 0
-  property int buttonHeight: 0
+  property bool   useButtonPosition: false
+  property point  buttonPosition: Qt.point(0, 0)
+  property int    buttonWidth: 0
+  property int    buttonHeight: 0
 
   property bool panelAnchorHorizontalCenter: false
   property bool panelAnchorVerticalCenter: false
@@ -26,9 +26,11 @@ Item {
   property bool exclusiveKeyboard: true
   property bool closeOnEscape: true
 
-  visible: isVisible
-  width: parent ? parent.width : 0
-  height: parent ? parent.height : 0
+  readonly property var panelRegion: panelContainer.geometryPlaceholder
+
+  visible:  isVisible
+  width:    parent ? parent.width : 0
+  height:   parent ? parent.height : 0
 
   function onEscapePressed() {
     if (closeOnEscape) close();
@@ -128,6 +130,8 @@ Item {
   Item {
     id: panelContainer
     anchors.fill: parent
+
+    property alias geometryPlaceholder: panelBackground
 
     Item {
       id: panelBackground
