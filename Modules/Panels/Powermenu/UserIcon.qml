@@ -12,7 +12,7 @@ Item {
   Image {
     id: userIcon
     anchors.fill: parent
-    source: Paths.home + "/.face"
+    source: Settings.data.general.avatarImage // qmllint disable
     fillMode: Image.PreserveAspectCrop
 
     layer.enabled: true

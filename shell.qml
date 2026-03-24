@@ -8,6 +8,7 @@ import qs.Services
 ShellRoot {
   id: root
 
+  property bool settingsLoaded: false
   property bool stateLoaded: false
 
   Component.onCompleted: {
@@ -23,19 +24,27 @@ ShellRoot {
   }
 
   Connections {
+    target: Settings ? Settings : null
+    function onSettingsLoaded() {
+      root.settingsLoaded = true;
+    }
+  }
+
+  Connections {
     target: ShellState ? ShellState : null
     function onIsLoadedChanged() {
       if (!ShellState.isLoaded) return;
-      Logger.d("Shell", "State initialized. Shell is ready.");
       root.stateLoaded = true;
     }
   }
 
   Loader {
-    active: root.stateLoaded
+    active: root.settingsLoaded && root.stateLoaded
     sourceComponent: Item {
       Component.onCompleted: {
         Logger.i("Shell", "------------------------------------")
+        NiriService.init();
+
         Qt.callLater(() => {
           IPCServices.init(screenDetector);
         });
