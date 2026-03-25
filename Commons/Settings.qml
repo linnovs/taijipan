@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.Commons.Migrations
 
 Singleton {
   id: root
@@ -16,6 +17,7 @@ Singleton {
 
   signal settingsLoaded
   signal settingsSaved
+  signal settingsReloaded
 
   Timer {
     id: saveTimer
@@ -46,8 +48,23 @@ Singleton {
     onLoaded: {
       if (!root.isLoaded) {
         Logger.i("Settings", "Settings file loaded:", root.settingsFile);
+
+        var rawJson = null
+        try {
+          rawJson = JSON.parse(settingsFileView.text());
+        } catch (e) {
+          Logger.e("Settings", "Failed to parse settings file:", e);
+        }
+
+        if (root.runMigrations(rawJson)) {
+          adapter.version = root.version;
+        }
+
         root.isLoaded = true;
         root.settingsLoaded();
+      } else {
+        Logger.d("Settings", "Settings file changed, reloading...");
+        root.settingsReloaded();
       }
     }
 
@@ -78,6 +95,45 @@ Singleton {
 
     directoriesCreated = true;
     settingsFileView.adapter = adapter;
+  }
+
+  function runMigrations(rawJson) {
+    if (!rawJson) {
+      Logger.i("Settings", "Empty settings, skipping migrations.");
+      return
+    }
+
+    const currentVersion = adapter.version;
+    const migrations = MigrationAgent.migrations;
+
+    Logger.i("Settings", "Current settings version:", currentVersion);
+
+    const versions = Object.keys(migrations).map(v => parseInt(v)).sort((a, b) => a - b);
+
+    for (const version of versions) {
+      Logger.d("Settings", "Checking migration for version:", version);
+      if (currentVersion < version) {
+        const migrationComp = migrations[version];
+        const migration = migrationComp.createObject();
+
+        if (migration && typeof migration.migrate === "function") {
+          const success = migration.migrate(adapter, Logger, rawJson);
+          if (!success) {
+            Logger.e("Settings", "Migration to version", version, "failed. Aborting further migrations.");
+            return false;
+          }
+        } else {
+          Logger.e("Settings", "Invalid migration component for v" + version);
+          return false;
+        }
+
+        if (migration) {
+          migration.destroy();
+        }
+      }
+    }
+
+    return true;
   }
 
   function save() {
