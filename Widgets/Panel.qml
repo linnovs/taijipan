@@ -75,7 +75,6 @@ Item {
       return;
     }
 
-    // qmllint disable missing-property
     var w;
     if (contentLoader.item && contentLoader.item.preferredWidth !== undefined) {
       w = contentLoader.item.preferredWidth;
@@ -85,7 +84,6 @@ Item {
     if (contentLoader.item && contentLoader.item.preferredHeight !== undefined) {
       h = contentLoader.item.preferredHeight;
     }
-    // qmllint enable missing-property
 
     panelBackground.targetWidth = w;
     panelBackground.targetHeight = h;

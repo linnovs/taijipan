@@ -5,7 +5,7 @@ import qs.Modules.Panels.Powermenu
 import qs.Services
 import qs.Commons
 
-PanelWindow { // qmllint disable
+PanelWindow {
   id: root
 
   property bool isPanelOpen: (PanelService.openedPanel !== null && PanelService.openedPanel.screen === screen)

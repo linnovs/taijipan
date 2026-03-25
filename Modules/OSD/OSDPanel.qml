@@ -4,7 +4,7 @@ import Quickshell.Wayland
 import qs.Widgets
 import qs.Commons
 
-PanelWindow { // qmllint disable
+PanelWindow {
   id: root
   margins.top: 0 // qmllint disable
   anchors.top: true

@@ -87,11 +87,9 @@ Singleton {
 
   Component.onCompleted: {
     // create config/cache/data directories if they don't exist
-    // qmllint disable
     Quickshell.execDetached(["mkdir", "-p", Paths.strip(Paths.data)]);
     Quickshell.execDetached(["mkdir", "-p", Paths.strip(Paths.cache)]);
     Quickshell.execDetached(["mkdir", "-p", Paths.strip(Paths.config)]);
-    // qmllint enable
 
     directoriesCreated = true;
     settingsFileView.adapter = adapter;
