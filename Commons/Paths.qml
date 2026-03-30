@@ -34,4 +34,16 @@ Singleton {
   function toFileUrl(path: string): url {
     return path.startsWith("file://") ? path : "file://" + path;
   }
+
+  readonly property string homeDir: strip(home)
+  readonly property string picturesDir: strip(pictures)
+  readonly property string dataDir: strip(data)
+  readonly property string stateDir: strip(state)
+  readonly property string cacheDir: strip(cache)
+  readonly property string configDir: strip(config)
+  readonly property string imagecacheDir: strip(imagecache)
+  readonly property string scriptsDir: strip(scripts)
+  readonly property string assetsDir: strip(assets)
+  readonly property string soundsDir: strip(sounds)
+  readonly property string iconsDir: strip(icons)
 }

@@ -81,15 +81,15 @@ Singleton {
     property int version: 0
 
     property JsonObject general: JsonObject {
-      property string avatarImage: Paths.strip(`${Paths.home}/.face`)
+      property string avatarImage: `${Paths.homeDir}/.face`
     }
   }
 
   Component.onCompleted: {
     // create config/cache/data directories if they don't exist
-    Quickshell.execDetached(["mkdir", "-p", Paths.strip(Paths.data)]);
-    Quickshell.execDetached(["mkdir", "-p", Paths.strip(Paths.cache)]);
-    Quickshell.execDetached(["mkdir", "-p", Paths.strip(Paths.config)]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.dataDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.cacheDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.configDir]);
 
     directoriesCreated = true;
     settingsFileView.adapter = adapter;
