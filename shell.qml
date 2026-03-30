@@ -43,7 +43,8 @@ ShellRoot {
     sourceComponent: Item {
       Component.onCompleted: {
         Logger.i("Shell", "------------------------------------")
-        NiriService.init();
+
+        ColorService.init();
 
         Qt.callLater(() => {
           IPCServices.init(screenDetector);
