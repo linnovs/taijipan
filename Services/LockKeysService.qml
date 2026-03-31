@@ -42,7 +42,7 @@ Singleton {
 
   Process {
     id: lockKeysProcess
-    command: [Paths.scripts + "/lockKeys.sh"]
+    command: [Paths.joinDir(Paths.scripts, "lockKeys.sh")]
     stdout: StdioCollector {
       onStreamFinished: {
         try {

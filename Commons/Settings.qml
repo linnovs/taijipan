@@ -13,7 +13,7 @@ Singleton {
 
   readonly property alias data: adapter
   readonly property int version: 1
-  readonly property string settingsFile: `${Paths.config}/settings.json`
+  readonly property string settingsFile: Paths.joinDir(Paths.config, "settings.json")
 
   signal settingsLoaded
   signal settingsSaved
@@ -81,7 +81,7 @@ Singleton {
     property int version: 0
 
     property JsonObject general: JsonObject {
-      property string avatarImage: `${Paths.homeDir}/.face`
+      property string avatarImage: Paths.joinDir(Paths.home, ".face")
     }
 
     property JsonObject bar: JsonObject {

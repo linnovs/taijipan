@@ -31,7 +31,7 @@ RowLayout {
       color: buttonMa.containsMouse ? Colors.mPrimary : Colors.mBackground
 
       ColorImageIcon {
-        name: `${Paths.icons}/${buttonContainer.modelData.icon}.png`
+        name: Paths.joinDir(Paths.icons, `${buttonContainer.modelData.icon}.png`)
         anchors.centerIn: parent
         implicitHeight: parent.height * 0.5
         implicitWidth: parent.width * 0.5

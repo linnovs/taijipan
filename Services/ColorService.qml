@@ -8,7 +8,7 @@ import qs.Commons
 Singleton {
   id: root
 
-  property string jsonFilePath: Paths.assetsDir + "/colors.json"
+  property string jsonFilePath: Paths.joinDir(Paths.assets, "colors.json")
   readonly property alias data: adapter
 
   function init() {

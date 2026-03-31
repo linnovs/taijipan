@@ -35,6 +35,10 @@ Singleton {
     return path.startsWith("file://") ? path : "file://" + path;
   }
 
+  function joinDir(...parts): string {
+    return parts.map(part => strip(part)).join("/");
+  }
+
   readonly property string homeDir: strip(home)
   readonly property string picturesDir: strip(pictures)
   readonly property string dataDir: strip(data)
