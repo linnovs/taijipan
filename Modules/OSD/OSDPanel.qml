@@ -87,8 +87,8 @@ PanelWindow {
       anchors.fill: parent
       anchors.margins: Theme.marginM * 1.5
       radius: Theme.radiusM
-      color: Qt.alpha(Theme.base, 0.95)
-      border.color: Qt.alpha(Theme.mantle, 0.95)
+      color: Qt.alpha(Colors.mBackground, 0.95)
+      border.color: Qt.alpha(Colors.onOutline, 0.95)
       border.width: 2
     }
 

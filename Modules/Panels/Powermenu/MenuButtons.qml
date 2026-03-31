@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
 import Quickshell.Io
 import qs.Widgets
 import qs.Commons
@@ -29,14 +28,14 @@ RowLayout {
 
       implicitWidth: Theme.powermenuButtonSize
       implicitHeight: Theme.powermenuButtonSize
-      color: buttonMa.containsMouse ? Theme.mauve : Theme.mantle
+      color: buttonMa.containsMouse ? Colors.mPrimary : Colors.mBackground
 
       ColorImageIcon {
         name: `${Paths.icons}/${buttonContainer.modelData.icon}.png`
         anchors.centerIn: parent
         implicitHeight: parent.height * 0.5
         implicitWidth: parent.width * 0.5
-        color: buttonMa.containsMouse ? Theme.base : Theme.text
+        color: buttonMa.containsMouse ? Colors.mOnPrimary : Colors.mOnBackground
       }
 
       Process {

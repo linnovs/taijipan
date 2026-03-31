@@ -28,13 +28,13 @@ RowLayout {
     width: Theme.iconSizeL
     height: Theme.iconSizeL
     name: root.iconName
-    color: Theme.text
+    color: Colors.mOnBackground
   }
 
   Text {
     visible: root.currentOSDType === OSD.Type.NumLock || root.currentOSDType === OSD.Type.CapsLock || root.currentOSDType === OSD.Type.ScrollLock
     text: root.displayText
-    color: Theme.text
+    color: Colors.mOnBackground
     font.family: Theme.fontFamily
     font.pointSize: Theme.fontSizeM
     font.weight: Font.Medium
@@ -50,7 +50,7 @@ RowLayout {
     Layout.alignment: Qt.AlignVCenter
     height: Theme.spacing * 2
     radius: height / 2
-    color: Theme.overlaySecondary
+    color: Colors.mSurfaceContainer
 
     Rectangle {
       anchors.left: parent.left
@@ -58,7 +58,7 @@ RowLayout {
       anchors.bottom: parent.bottom
       width: parent.width * Math.min(1.0, root.percentage)
       radius: parent.radius
-      color: Theme.text
+      color: Colors.mOnSurface
 
       Behavior on width {
         NumberAnimation {
@@ -72,7 +72,7 @@ RowLayout {
   Text { // percentage text
     visible: root.currentOSDType === OSD.Type.Volume
     text: root.displayText
-    color: Theme.text
+    color: Colors.mOnBackground
     font.family: Theme.fontFamily
     font.pointSize: Theme.fontSizeS
     font.weight: Font.Medium

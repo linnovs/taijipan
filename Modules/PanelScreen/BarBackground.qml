@@ -30,7 +30,7 @@ ShapePath {
   readonly property real blRadius: barHeight / 2
 
   strokeWidth: -1
-  fillColor: Theme.base
+  fillColor: Colors.mBackground
   fillRule: ShapePath.WindingFill
 
   startX: root.barPos.x + root.tlMarginX

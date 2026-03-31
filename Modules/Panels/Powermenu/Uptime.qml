@@ -31,7 +31,7 @@ Item {
   }
 
   Rectangle {
-    color: Theme.mantle
+    color: Colors.mBackground
     opacity: 0.85
     radius: Theme.radiusM
     implicitHeight: uptimeText.implicitHeight + Theme.spacing * 2
@@ -40,7 +40,7 @@ Item {
     Text {
       id: uptimeText
       anchors.centerIn: parent
-      color: Theme.text
+      color: Colors.mOnBackground
       text: "System | Uptime: " + root.currentUptime
     }
   }

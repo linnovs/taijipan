@@ -17,7 +17,7 @@ Item {
     blurMax: Theme.blurMax
     shadowBlur: Theme.shadowBlur
     shadowOpacity: Theme.shadowOpacity
-    shadowColor: Theme.shadowColor
+    shadowColor: Colors.mShadow
     shadowHorizontalOffset: Theme.shadowHorizontalOffset
     shadowVerticalOffset: Theme.shadowVerticalOffset
     autoPaddingEnabled: autoPaddingEnabled
