@@ -367,202 +367,202 @@ Singleton {
   }
 
   Connections {
-    target: ColorService ? ColorService.adapter : null
+    target: ColorService ? ColorService.data : null
     function onMBackgroundChanged() {
       startTransition();
-      root.mBackground = ColorService.adapter.mBackground;
+      root.mBackground = ColorService.data.mBackground;
     }
     function onMErrorChanged() {
       startTransition();
-      root.mError = ColorService.adapter.mError;
+      root.mError = ColorService.data.mError;
     }
     function onMErrorContainerChanged() {
       startTransition();
-      root.mErrorContainer = ColorService.adapter.mErrorContainer;
+      root.mErrorContainer = ColorService.data.mErrorContainer;
     }
     function onMInverseOnSurfaceChanged() {
       startTransition();
-      root.mInverseOnSurface = ColorService.adapter.mInverseOnSurface;
+      root.mInverseOnSurface = ColorService.data.mInverseOnSurface;
     }
     function onMInversePrimaryChanged() {
       startTransition();
-      root.mInversePrimary = ColorService.adapter.mInversePrimary;
+      root.mInversePrimary = ColorService.data.mInversePrimary;
     }
     function onMInverseSurfaceChanged() {
       startTransition();
-      root.mInverseSurface = ColorService.adapter.mInverseSurface;
+      root.mInverseSurface = ColorService.data.mInverseSurface;
     }
     function onMOnBackgroundChanged() {
       startTransition();
-      root.mOnBackground = ColorService.adapter.mOnBackground;
+      root.mOnBackground = ColorService.data.mOnBackground;
     }
     function onMOnErrorChanged() {
       startTransition();
-      root.mOnError = ColorService.adapter.mOnError;
+      root.mOnError = ColorService.data.mOnError;
     }
     function onMOnErrorContainerChanged() {
       startTransition();
-      root.mOnErrorContainer = ColorService.adapter.mOnErrorContainer;
+      root.mOnErrorContainer = ColorService.data.mOnErrorContainer;
     }
     function onMOnPrimaryChanged() {
       startTransition();
-      root.mOnPrimary = ColorService.adapter.mOnPrimary;
+      root.mOnPrimary = ColorService.data.mOnPrimary;
     }
     function onMOnPrimaryContainerChanged() {
       startTransition();
-      root.mOnPrimaryContainer = ColorService.adapter.mOnPrimaryContainer;
+      root.mOnPrimaryContainer = ColorService.data.mOnPrimaryContainer;
     }
     function onMOnPrimaryFixedChanged() {
       startTransition();
-      root.mOnPrimaryFixed = ColorService.adapter.mOnPrimaryFixed;
+      root.mOnPrimaryFixed = ColorService.data.mOnPrimaryFixed;
     }
     function onMOnPrimaryFixedVariantChanged() {
       startTransition();
-      root.mOnPrimaryFixedVariant = ColorService.adapter.mOnPrimaryFixedVariant;
+      root.mOnPrimaryFixedVariant = ColorService.data.mOnPrimaryFixedVariant;
     }
     function onMOnSecondaryChanged() {
       startTransition();
-      root.mOnSecondary = ColorService.adapter.mOnSecondary;
+      root.mOnSecondary = ColorService.data.mOnSecondary;
     }
     function onMOnSecondaryContainerChanged() {
       startTransition();
-      root.mOnSecondaryContainer = ColorService.adapter.mOnSecondaryContainer;
+      root.mOnSecondaryContainer = ColorService.data.mOnSecondaryContainer;
     }
     function onMOnSecondaryFixedChanged() {
       startTransition();
-      root.mOnSecondaryFixed = ColorService.adapter.mOnSecondaryFixed;
+      root.mOnSecondaryFixed = ColorService.data.mOnSecondaryFixed;
     }
     function onMOnSecondaryFixedVariantChanged() {
       startTransition();
-      root.mOnSecondaryFixedVariant = ColorService.adapter.mOnSecondaryFixedVariant;
+      root.mOnSecondaryFixedVariant = ColorService.data.mOnSecondaryFixedVariant;
     }
     function onMOnSurfaceChanged() {
       startTransition();
-      root.mOnSurface = ColorService.adapter.mOnSurface;
+      root.mOnSurface = ColorService.data.mOnSurface;
     }
     function onMOnSurfaceVariantChanged() {
       startTransition();
-      root.mOnSurfaceVariant = ColorService.adapter.mOnSurfaceVariant;
+      root.mOnSurfaceVariant = ColorService.data.mOnSurfaceVariant;
     }
     function onMOnTertiaryChanged() {
       startTransition();
-      root.mOnTertiary = ColorService.adapter.mOnTertiary;
+      root.mOnTertiary = ColorService.data.mOnTertiary;
     }
     function onMOnTertiaryContainerChanged() {
       startTransition();
-      root.mOnTertiaryContainer = ColorService.adapter.mOnTertiaryContainer;
+      root.mOnTertiaryContainer = ColorService.data.mOnTertiaryContainer;
     }
     function onMOnTertiaryFixedChanged() {
       startTransition();
-      root.mOnTertiaryFixed = ColorService.adapter.mOnTertiaryFixed;
+      root.mOnTertiaryFixed = ColorService.data.mOnTertiaryFixed;
     }
     function onMOnTertiaryFixedVariantChanged() {
       startTransition();
-      root.mOnTertiaryFixedVariant = ColorService.adapter.mOnTertiaryFixedVariant;
+      root.mOnTertiaryFixedVariant = ColorService.data.mOnTertiaryFixedVariant;
     }
     function onMOutlineChanged() {
       startTransition();
-      root.mOutline = ColorService.adapter.mOutline;
+      root.mOutline = ColorService.data.mOutline;
     }
     function onMOutlineVariantChanged() {
       startTransition();
-      root.mOutlineVariant = ColorService.adapter.mOutlineVariant;
+      root.mOutlineVariant = ColorService.data.mOutlineVariant;
     }
     function onMPrimaryChanged() {
       startTransition();
-      root.mPrimary = ColorService.adapter.mPrimary;
+      root.mPrimary = ColorService.data.mPrimary;
     }
     function onMPrimaryContainerChanged() {
       startTransition();
-      root.mPrimaryContainer = ColorService.adapter.mPrimaryContainer;
+      root.mPrimaryContainer = ColorService.data.mPrimaryContainer;
     }
     function onMPrimaryFixedChanged() {
       startTransition();
-      root.mPrimaryFixed = ColorService.adapter.mPrimaryFixed;
+      root.mPrimaryFixed = ColorService.data.mPrimaryFixed;
     }
     function onMPrimaryFixedDimChanged() {
       startTransition();
-      root.mPrimaryFixedDim = ColorService.adapter.mPrimaryFixedDim;
+      root.mPrimaryFixedDim = ColorService.data.mPrimaryFixedDim;
     }
     function onMScrimChanged() {
       startTransition();
-      root.mScrim = ColorService.adapter.mScrim;
+      root.mScrim = ColorService.data.mScrim;
     }
     function onMSecondaryChanged() {
       startTransition();
-      root.mSecondary = ColorService.adapter.mSecondary;
+      root.mSecondary = ColorService.data.mSecondary;
     }
     function onMSecondaryContainerChanged() {
       startTransition();
-      root.mSecondaryContainer = ColorService.adapter.mSecondaryContainer;
+      root.mSecondaryContainer = ColorService.data.mSecondaryContainer;
     }
     function onMSecondaryFixedChanged() {
       startTransition();
-      root.mSecondaryFixed = ColorService.adapter.mSecondaryFixed;
+      root.mSecondaryFixed = ColorService.data.mSecondaryFixed;
     }
     function onMSecondaryFixedDimChanged() {
       startTransition();
-      root.mSecondaryFixedDim = ColorService.adapter.mSecondaryFixedDim;
+      root.mSecondaryFixedDim = ColorService.data.mSecondaryFixedDim;
     }
     function onMShadowChanged() {
       startTransition();
-      root.mShadow = ColorService.adapter.mShadow;
+      root.mShadow = ColorService.data.mShadow;
     }
     function onMSurfaceChanged() {
       startTransition();
-      root.mSurface = ColorService.adapter.mSurface;
+      root.mSurface = ColorService.data.mSurface;
     }
     function onMSurfaceBrightChanged() {
       startTransition();
-      root.mSurfaceBright = ColorService.adapter.mSurfaceBright;
+      root.mSurfaceBright = ColorService.data.mSurfaceBright;
     }
     function onMSurfaceContainerChanged() {
       startTransition();
-      root.mSurfaceContainer = ColorService.adapter.mSurfaceContainer;
+      root.mSurfaceContainer = ColorService.data.mSurfaceContainer;
     }
     function onMSurfaceContainerHighChanged() {
       startTransition();
-      root.mSurfaceContainerHigh = ColorService.adapter.mSurfaceContainerHigh;
+      root.mSurfaceContainerHigh = ColorService.data.mSurfaceContainerHigh;
     }
     function onMSurfaceContainerHighestChanged() {
       startTransition();
-      root.mSurfaceContainerHighest = ColorService.adapter.mSurfaceContainerHighest;
+      root.mSurfaceContainerHighest = ColorService.data.mSurfaceContainerHighest;
     }
     function onMSurfaceContainerLowChanged() {
       startTransition();
-      root.mSurfaceContainerLow = ColorService.adapter.mSurfaceContainerLow;
+      root.mSurfaceContainerLow = ColorService.data.mSurfaceContainerLow;
     }
     function onMSurfaceContainerLowestChanged() {
       startTransition();
-      root.mSurfaceContainerLowest = ColorService.adapter.mSurfaceContainerLowest;
+      root.mSurfaceContainerLowest = ColorService.data.mSurfaceContainerLowest;
     }
     function onMSurfaceDimChanged() {
       startTransition();
-      root.mSurfaceDim = ColorService.adapter.mSurfaceDim;
+      root.mSurfaceDim = ColorService.data.mSurfaceDim;
     }
     function onMSurfaceTintChanged() {
       startTransition();
-      root.mSurfaceTint = ColorService.adapter.mSurfaceTint;
+      root.mSurfaceTint = ColorService.data.mSurfaceTint;
     }
     function onMSurfaceVariantChanged() {
       startTransition();
-      root.mSurfaceVariant = ColorService.adapter.mSurfaceVariant;
+      root.mSurfaceVariant = ColorService.data.mSurfaceVariant;
     }
     function onMTertiaryChanged() {
       startTransition();
-      root.mTertiary = ColorService.adapter.mTertiary;
+      root.mTertiary = ColorService.data.mTertiary;
     }
     function onMTertiaryContainerChanged() {
       startTransition();
-      root.mTertiaryContainer = ColorService.adapter.mTertiaryContainer;
+      root.mTertiaryContainer = ColorService.data.mTertiaryContainer;
     }
     function onMTertiaryFixedChanged() {
       startTransition();
-      root.mTertiaryFixed = ColorService.adapter.mTertiaryFixed;
+      root.mTertiaryFixed = ColorService.data.mTertiaryFixed;
     }
     function onMTertiaryFixedDimChanged() {
       startTransition();
-      root.mTertiaryFixedDim = ColorService.adapter.mTertiaryFixedDim;
+      root.mTertiaryFixedDim = ColorService.data.mTertiaryFixedDim;
     }
   }
 }

@@ -9,7 +9,7 @@ Singleton {
   id: root
 
   property string jsonFilePath: Paths.assetsDir + "/colors.json"
-  property alias adapter: adapter
+  readonly property alias data: adapter
 
   function init() {
     Logger.i("ColorService", "Service started");
