@@ -103,8 +103,8 @@ PanelWindow {
       id: barPlaceholder
       readonly property var barItem: barPlaceholder
       property ShellScreen screen: root.screen
-      x: root.width * 0.1; y: 0
-      width: root.width - root.width * 0.2
+      x: root.width * Theme.barMarginHRatio; y: 0
+      width: root.width - (root.width * Theme.barMarginHRatio * 2)
       height: Theme.barHeight
     }
   }

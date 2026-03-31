@@ -83,6 +83,19 @@ Singleton {
     property JsonObject general: JsonObject {
       property string avatarImage: `${Paths.homeDir}/.face`
     }
+
+    property JsonObject bar: JsonObject {
+      property JsonObject widgets
+      property int widgetSpacing: Theme.spacing
+
+      widgets: JsonObject {
+        property list<var> left: []
+        property list<var> center: [
+          { "id": "DateTime" },
+        ]
+        property list<var> right: []
+      }
+    }
   }
 
   Component.onCompleted: {

@@ -17,9 +17,12 @@ Singleton {
   property real   shadowHorizontalOffset: 3
   property real   shadowVerticalOffset: 3
 
-  property int barHeight: spacing * 8
-  property int barInnerHeight: barHeight - spacing * 2
-  property int barItemHeight: barInnerHeight - spacing * 2
+  property int    barHeight: spacing * 8
+  property real   barCapsuleRatio: 0.75
+  property real   barCapsuleHeight: barHeight * barCapsuleRatio
+  property color  barCapsuleColor: Qt.alpha(Colors.mSurface, 1.0)
+  property color  barCapsuleTextColor: Qt.alpha(Colors.mOnSurface, 1.0)
+  property real   barMarginHRatio: 0.1
 
   property int powermenuButtonSize: spacing * 30
   property int powermenuUserIconSize: spacing * 23

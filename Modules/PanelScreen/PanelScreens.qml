@@ -38,10 +38,18 @@ Variants {
     }
 
     Loader {
-      active: {
-        if (!screenItem.windowLoaded || !screenItem.shouldBeActive) return false
-        return true
+      active: screenItem.windowLoaded && screenItem.shouldBeActive
+      asynchronous: false
+      onLoaded: {
+        Logger.d("PanelScreens", "BarWindow created for", screenItem.modelData?.name);
       }
+      sourceComponent: BarWindow {
+        screen: screenItem.modelData
+      }
+    }
+
+    Loader {
+      active: screenItem.windowLoaded && screenItem.shouldBeActive
       asynchronous: false
       onLoaded: {
         Logger.d("PanelScreens", "BarExclusionZone created for", screenItem.modelData?.name);
