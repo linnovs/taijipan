@@ -36,7 +36,7 @@ PanelWindow {
 
   color: {
     if (isAnyPanelOpen) {
-      return Qt.alpha(Theme.surface, 0.9);
+      return Qt.alpha(Colors.mScrim, 0.9);
     }
     return "transparent";
   }
