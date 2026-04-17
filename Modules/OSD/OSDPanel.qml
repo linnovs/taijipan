@@ -89,7 +89,7 @@ PanelWindow {
       radius: Theme.radiusM
       color: Qt.alpha(Colors.mBackground, 0.95)
       border.color: Qt.alpha(Colors.onOutline, 0.95)
-      border.width: 2
+      border.width: Theme.borderM
     }
 
     DropShadow {

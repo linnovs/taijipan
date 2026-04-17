@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 import Quickshell
 
@@ -71,4 +70,10 @@ Singleton {
   property int radiusM: spacing * 2
   property int radiusL: spacing * 4
   property int radiusRound: spacing * 25
+
+  // border
+  property int borderS: 1
+  property int borderM: 2
+  property int borderL: 4
+  property int borderXL: 8
 }
