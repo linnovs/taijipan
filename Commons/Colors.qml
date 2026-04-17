@@ -9,6 +9,7 @@ Singleton {
   id: root
 
   property bool isTransitioning: false
+
   property color mBackground: "#141318"
   property color mError: "#FFB4AB"
   property color mErrorContainer: "#93000A"
