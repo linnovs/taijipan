@@ -12,17 +12,17 @@ Singleton {
 
   function init(detector) {
     screenDetector = detector;
-    Logger.i("IPCService", "IPC Service initialized")
+    Logger.i("IPCService", "IPC Service initialized");
   }
 
   IpcHandler {
     target: "powermenu"
 
     function open() {
-      root.screenDetector.withCurrentScreen(screen=>{
+      root.screenDetector.withCurrentScreen(screen => {
         var powermenuPanel = PanelService.getPanel("powermenu", screen);
         powermenuPanel?.toggle();
-      })
+      });
     }
   }
 }

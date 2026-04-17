@@ -49,7 +49,7 @@ Singleton {
       if (!root.isLoaded) {
         Logger.i("Settings", "Settings file loaded:", root.settingsFile);
 
-        var rawJson = null
+        var rawJson = null;
         try {
           rawJson = JSON.parse(settingsFileView.text());
         } catch (e) {
@@ -91,7 +91,9 @@ Singleton {
       widgets: JsonObject {
         property list<var> left: []
         property list<var> center: [
-          { "id": "DateTime" },
+          {
+            "id": "DateTime"
+          },
         ]
         property list<var> right: []
       }
@@ -111,7 +113,7 @@ Singleton {
   function runMigrations(rawJson) {
     if (!rawJson) {
       Logger.i("Settings", "Empty settings, skipping migrations.");
-      return
+      return;
     }
 
     const currentVersion = adapter.version;

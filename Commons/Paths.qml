@@ -24,7 +24,7 @@ Singleton {
   readonly property url icons: `${assets}/icons`
 
   function stringify(path: url): string {
-      return path.toString().replace(/%20/g, " ");
+    return path.toString().replace(/%20/g, " ");
   }
 
   function strip(path: url): string {

@@ -1,14 +1,14 @@
 import QtQuick
 import QtQuick.Layouts
-import qs.Widgets
 import qs.Commons
+import qs.Widgets
 
 RowLayout {
   id: root
 
   property Item background: null
   property int currentOSDType: -1
-  property real percentage: 0.0
+  property real percentage: 0
   property string displayText: ""
   property string iconName: ""
 
@@ -19,6 +19,7 @@ RowLayout {
 
   TextMetrics {
     id: percentageMetrics
+
     font.family: Theme.fontFamily
     font.pointSize: Theme.fontSizeS
     text: "150%"
@@ -44,7 +45,8 @@ RowLayout {
     Layout.fillWidth: true
   }
 
-  Rectangle { // percentage bar
+  // percentage bar
+  Rectangle {
     visible: root.currentOSDType === OSD.Type.Volume
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignVCenter
@@ -56,7 +58,7 @@ RowLayout {
       anchors.left: parent.left
       anchors.top: parent.top
       anchors.bottom: parent.bottom
-      width: parent.width * Math.min(1.0, root.percentage)
+      width: parent.width * Math.min(1, root.percentage)
       radius: parent.radius
       color: Colors.mOnSurface
 
@@ -69,7 +71,8 @@ RowLayout {
     }
   }
 
-  Text { // percentage text
+  // percentage text
+  Text {
     visible: root.currentOSDType === OSD.Type.Volume
     text: root.displayText
     color: Colors.mOnBackground

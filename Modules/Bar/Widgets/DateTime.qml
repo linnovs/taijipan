@@ -5,22 +5,24 @@ import qs.Commons
 Item {
   id: root
 
-  SystemClock {
-    id: clock
-    precision: SystemClock.Seconds
-  }
-
-  TextMetrics {
-    id: datetimeMetrics
-    font.family: Theme.fontFamily
-    text: "ddd, dd MMM hh:mm:ss"
-  }
-
   readonly property real contentWidth: datetimeMetrics.width + Theme.spacing * 2
   readonly property real contentHeight: Theme.barCapsuleHeight
 
   implicitWidth: contentWidth
   implicitHeight: contentHeight
+
+  SystemClock {
+    id: clock
+
+    precision: SystemClock.Seconds
+  }
+
+  TextMetrics {
+    id: datetimeMetrics
+
+    font.family: Theme.fontFamily
+    text: "ddd, dd MMM hh:mm:ss"
+  }
 
   Rectangle {
     width: root.contentWidth

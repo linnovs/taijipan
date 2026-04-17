@@ -13,12 +13,30 @@ RowLayout {
 
   Repeater {
     model: [
-      {command: "swaylock", icon: "lockscreen"},
-      {command: "loginctl terminate-user $USER", icon: "logout"},
-      {command: "systemctl suspend", icon: "suspend"},
-      {command: "systemctl hibernate", icon: "hibernate"},
-      {command: "systemctl poweroff", icon: "shutdown"},
-      {command: "systemctl reboot", icon: "reboot"},
+      {
+        command: "swaylock",
+        icon: "lockscreen"
+      },
+      {
+        command: "loginctl terminate-user $USER",
+        icon: "logout"
+      },
+      {
+        command: "systemctl suspend",
+        icon: "suspend"
+      },
+      {
+        command: "systemctl hibernate",
+        icon: "hibernate"
+      },
+      {
+        command: "systemctl poweroff",
+        icon: "shutdown"
+      },
+      {
+        command: "systemctl reboot",
+        icon: "reboot"
+      },
     ]
 
     delegate: Rectangle {

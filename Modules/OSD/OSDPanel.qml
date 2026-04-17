@@ -128,6 +128,6 @@ PanelWindow {
   }
 
   function showOSD() {
-    osdItem.show()
+    osdItem.show();
   }
 }

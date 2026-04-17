@@ -15,13 +15,14 @@ PanelWindow {
   WlrLayershell.namespace: "taijipan-panelscreen-" + (screen?.name || "unknown")
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
   WlrLayershell.keyboardFocus: {
-    if (!root.isAnyPanelOpen) return WlrKeyboardFocus.None;
+    if (!root.isAnyPanelOpen)
+      return WlrKeyboardFocus.None;
 
     if (root.isPanelOpen) {
       return PanelService.openedPanel.exclusiveKeyboard ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand;
     }
 
-    return WlrKeyboardFocus.OnDemand
+    return WlrKeyboardFocus.OnDemand;
   }
 
   Component.onCompleted: {
@@ -49,19 +50,24 @@ PanelWindow {
 
   mask: Region {
     id: clickthroughMask
-    x: 0; y: 0; width: root.width; height: root.height
+    x: 0
+    y: 0
+    width: root.width
+    height: root.height
     intersection: Intersection.Xor
 
     Region {
-      x: 0; y: 0
-      width: root.width;
+      x: 0
+      y: 0
+      width: root.width
       height: Theme.barHeight
       intersection: Intersection.Subtract
     }
 
     Region {
-      x: 0; y: 0;
-      width: root.isAnyPanelOpen ? root.width : 0;
+      x: 0
+      y: 0
+      width: root.isAnyPanelOpen ? root.width : 0
       height: root.isAnyPanelOpen ? root.height : 0
       intersection: Intersection.Subtract
     }
@@ -101,7 +107,8 @@ PanelWindow {
       id: barPlaceholder
       readonly property var barItem: barPlaceholder
       property ShellScreen screen: root.screen
-      x: root.width * Theme.barMarginHRatio; y: 0
+      x: root.width * Theme.barMarginHRatio
+      y: 0
       width: root.width - (root.width * Theme.barMarginHRatio * 2)
       height: Theme.barHeight
     }

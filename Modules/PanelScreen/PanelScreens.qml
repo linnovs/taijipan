@@ -15,7 +15,7 @@ Variants {
         return false;
       }
 
-      Logger.d("PanelScreens", "Screen activated:", modelData.name);;
+      Logger.d("PanelScreens", "Screen activated:", modelData.name);
 
       return true;
     }

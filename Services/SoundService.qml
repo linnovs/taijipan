@@ -1,7 +1,6 @@
 pragma Singleton
-
-import QtQuick
 import QtMultimedia
+import QtQuick
 import Quickshell
 import qs.Commons
 
@@ -10,6 +9,18 @@ Singleton {
 
   property bool hasMediaSupport: false
   property var mediaPlayerComponent: null
+
+  function playSound(source, volume) {
+    if (!hasMediaSupport)
+      return;
+
+    if (!source || source === "") {
+      Logger.w("SoundService", "No audio source provided");
+      return;
+    }
+    mediaPlayer.source = source;
+    mediaPlayer.play();
+  }
 
   Component.onCompleted: {
     try {
@@ -27,24 +38,11 @@ Singleton {
       Logger.e("SoundService", "Media support is not available:", e);
       return;
     }
-
     mediaPlayerComponent = Qt.createComponent(`${Quickshell.shellDir}/assets/qmls/MediaPlayer.qml`);
     Logger.i("SoundService", "MediaPlayer initialized");
   }
 
   SoundEffect {
     id: mediaPlayer
-  }
-
-  function playSound(source, volume) {
-    if (!hasMediaSupport) return;
-
-    if (!source || source === "") {
-      Logger.w("SoundService", "No audio source provided");
-      return;
-    }
-
-    mediaPlayer.source = source;
-    mediaPlayer.play();
   }
 }

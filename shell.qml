@@ -12,37 +12,43 @@ ShellRoot {
   property bool stateLoaded: false
 
   Component.onCompleted: {
-    Logger.i("Shell", "------------------------------------")
-    Logger.i("Shell", "Starting TaiJiPan Shell...")
+    Logger.i("Shell", "------------------------------------");
+    Logger.i("Shell", "Starting TaiJiPan Shell...");
   }
 
   Connections {
-    target: Quickshell
     function onReloadCompleted() {
       Quickshell.inhibitReloadPopup();
     }
+
+    target: Quickshell
   }
 
   Connections {
-    target: Settings ? Settings : null
     function onSettingsLoaded() {
       root.settingsLoaded = true;
     }
+
+    target: Settings ? Settings : null
   }
 
   Connections {
-    target: ShellState ? ShellState : null
     function onIsLoadedChanged() {
-      if (!ShellState.isLoaded) return;
+      if (!ShellState.isLoaded)
+        return;
+
       root.stateLoaded = true;
     }
+
+    target: ShellState ? ShellState : null
   }
 
   Loader {
     active: root.settingsLoaded && root.stateLoaded
+
     sourceComponent: Item {
       Component.onCompleted: {
-        Logger.i("Shell", "------------------------------------")
+        Logger.i("Shell", "------------------------------------");
 
         ColorService.init();
 

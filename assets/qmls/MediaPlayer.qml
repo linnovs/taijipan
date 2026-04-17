@@ -1,5 +1,5 @@
-import QtQuick
 import QtMultimedia
+import QtQuick
 
 MediaPlayer {
   id: root
@@ -7,17 +7,15 @@ MediaPlayer {
   property real volume: Math.max(0, Math.min(1, volume))
 
   source: source
+  Component.onCompleted: {
+    play();
+  }
+  onPlaybackStateChanged: {
+    if (!playing)
+      destroy();
+  }
+
   audioOutput: AudioOutput {
     volume: root.volume
-  }
-
-  Component.onCompleted: {
-    play()
-  }
-
-  onPlaybackStateChanged: {
-    if (!playing) {
-      destroy();
-    }
   }
 }

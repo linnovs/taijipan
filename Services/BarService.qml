@@ -17,11 +17,12 @@ Singleton {
   property int revision: 0
 
   readonly property var widgets: ({
-    "DateTime": datetimeComp
-  })
+      "DateTime": datetimeComp
+    })
 
   function filterWidgets(widgetList: list<var>): list<var> {
-    if (!widgetList) return []
+    if (!widgetList)
+      return [];
     return widgetList.filter(w => w && w.id && w.id in widgets);
   }
 

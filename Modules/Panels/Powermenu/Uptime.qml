@@ -12,10 +12,12 @@ Item {
 
   Process {
     id: uptime
+
     command: ["uptime", "-p"]
+
     stdout: StdioCollector {
       onStreamFinished: {
-        root.currentUptime = this.text.trim().replace("up ", "")
+        root.currentUptime = this.text.trim().replace("up ", "");
       }
     }
   }
@@ -26,7 +28,7 @@ Item {
     running: true
     triggeredOnStart: true
     onTriggered: {
-      uptime.running = true
+      uptime.running = true;
     }
   }
 
@@ -39,6 +41,7 @@ Item {
 
     Text {
       id: uptimeText
+
       anchors.centerIn: parent
       color: Colors.mOnBackground
       text: "System | Uptime: " + root.currentUptime

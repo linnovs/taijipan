@@ -56,18 +56,21 @@ Loader {
   }
 
   function showOSD(type) {
-    if (!startupComplete) return;
+    if (!startupComplete)
+      return;
 
     currentOSDType = type;
 
-    if (!root.active) root.active = true;
+    if (!root.active)
+      root.active = true;
 
     if (root.item) {
       root.item.showOSD();
     } else {
       Qt.callLater(() => {
-        if (root.item) root.item.showOSD();
-      })
+        if (root.item)
+          root.item.showOSD();
+      });
     }
   }
 

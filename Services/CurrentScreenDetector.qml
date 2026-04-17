@@ -30,7 +30,8 @@ Item {
 
   Timer {
     id: screenDetectorDebounce
-    running: false; interval: 40
+    running: false
+    interval: 40
     onTriggered: {
       Logger.d("CurrentScreenDetector", "Screen debounced to:", root.detectedScreen?.name || "null");
 
@@ -40,7 +41,7 @@ Item {
         root.pendingCallback = null;
         try {
           callback(root.detectedScreen);
-        } catch(e) {
+        } catch (e) {
           Logger.e("CurnentScreenDetector", "Error invoking callback:", e);
         }
       }
@@ -54,7 +55,8 @@ Item {
     active: false
 
     sourceComponent: PanelWindow {
-      implicitWidth: 0; implicitHeight: 0
+      implicitWidth: 0
+      implicitHeight: 0
       color: "transparent"
       WlrLayershell.exclusionMode: ExclusionMode.Ignore
       WlrLayershell.namespace: "taijipan-screen-detector"

@@ -16,9 +16,9 @@ Item {
 
   required property ShellScreen screen
 
-  property ListModel leftWidgetsModel:    ListModel {}
-  property ListModel centerWidgetsModel:  ListModel {}
-  property ListModel rightWidgetsModel:   ListModel {}
+  property ListModel leftWidgetsModel: ListModel {}
+  property ListModel centerWidgetsModel: ListModel {}
+  property ListModel rightWidgetsModel: ListModel {}
 
   function syncWidgetModel(model, widgets) {
     var validWidgets = BarService.filterWidgets(widgets);

@@ -11,6 +11,7 @@ Item {
 
   Image {
     id: iconImage
+
     anchors.centerIn: parent
     width: parent.width
     height: parent.height

@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -18,22 +17,21 @@ Singleton {
 
   FileView {
     id: colorsFileView
+
     path: root.jsonFilePath ? root.jsonFilePath : undefined
     printErrors: false
     watchChanges: true
-
     onFileChanged: {
       Logger.d("ColorService", "Reloading colors from file: " + root.jsonFilePath);
-      reload()
+      reload();
     }
     onAdapterUpdated: {
       Logger.d("ColorService", "Writing colors to file: " + root.jsonFilePath);
       writeAdapter();
     }
     onLoadFailed: function (error) {
-      if (error === 2 || error.toString().includes("No such file")) {
+      if (error === 2 || error.toString().includes("No such file"))
         writeAdapter();
-      }
     }
   }
 

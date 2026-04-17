@@ -20,6 +20,7 @@ Item {
 
       Shape {
         id: barBackgroundShape
+
         anchors.fill: parent
         preferredRendererType: Shape.CurveRenderer
         enabled: false

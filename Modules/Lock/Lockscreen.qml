@@ -7,7 +7,7 @@ import Quickshell.Wayland
 Item {
   id: root
 
-  signal unlocked()
+  signal unlocked
 
   WlSessionLock {
     id: lock
@@ -26,8 +26,8 @@ Item {
     id: lockCtx
 
     onUnlocked: {
-      lock.locked = false
-      root.unlocked()
+      lock.locked = false;
+      root.unlocked();
     }
   }
 }
