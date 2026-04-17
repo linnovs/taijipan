@@ -19,21 +19,17 @@ PanelWindow { // qmllint disable
     Logger.d("BarWindow", "BarWindow created for screen:", screen?.name);
   }
 
-  anchors {
-    top: true
-    right: true
-    bottom: false
-    left: true
-  }
+  anchors.top: true
+  anchors.right: true
+  anchors.bottom: false
+  anchors.left: true
 
   readonly property real barMarginH: screen?.width * Theme.barMarginHRatio || 0
 
-  margins {
-    top: 0
-    right: barMarginH
-    bottom: 0
-    left: barMarginH
-  }
+  margins.top: 0
+  margins.right: barMarginH
+  margins.bottom: 0
+  margins.left: barMarginH
 
   implicitWidth: screen?.width
   implicitHeight: Theme.barHeight
