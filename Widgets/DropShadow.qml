@@ -14,7 +14,7 @@ Item {
   layer.effect: MultiEffect {
     source: root.source
     shadowEnabled: true
-    blurMax: Theme.blurMax
+    blurMax: Theme.shadowBlurMax
     shadowBlur: Theme.shadowBlur
     shadowOpacity: Theme.shadowOpacity
     shadowColor: Colors.mShadow

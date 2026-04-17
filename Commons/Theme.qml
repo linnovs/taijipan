@@ -13,6 +13,7 @@ Singleton {
   property int spacing: 4
 
   // shadow
+  property int shadowBlurMax: 22
   property real shadowBlur: 1
   property real shadowOpacity: 0.85
   property real shadowHorizontalOffset: 3
