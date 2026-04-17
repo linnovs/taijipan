@@ -28,12 +28,10 @@ PanelWindow {
     Logger.d("MainWindow", "Window created for screen:", screen?.name, "- Dimensions:", screen?.width, "x", screen?.height);
   }
 
-  anchors {
-    top: true
-    right: true
-    bottom: true
-    left: true
-  }
+  anchors.top: true
+  anchors.right: true
+  anchors.bottom: true
+  anchors.left: true
 
   color: {
     if (isAnyPanelOpen) {
