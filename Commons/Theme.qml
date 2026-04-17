@@ -48,9 +48,13 @@ Singleton {
   property int animationSlowest: 750
 
   // font
-  property int fontSizeS: 12
-  property int fontSizeM: 14
-  property int fontSizeL: 16
+  property int fontSizeXXS: 7
+  property int fontSizeXS: 8
+  property int fontSizeS: 10
+  property int fontSizeM: 12
+  property int fontSizeL: 14
+  property int fontSizeXL: 16
+  property int fontSizeXXL: 18
 
   // icon
   property int iconSize: spacing * 6

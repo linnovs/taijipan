@@ -21,13 +21,13 @@ RowLayout {
     id: percentageMetrics
 
     font.family: Theme.fontFamily
-    font.pointSize: Theme.fontSizeS
+    font.pointSize: Theme.fontSizeM
     text: "150%"
   }
 
   ColorImageIcon {
-    width: Theme.iconSizeL
-    height: Theme.iconSizeL
+    Layout.preferredWidth: Theme.iconSizeL
+    Layout.preferredHeight: Theme.iconSizeL
     name: root.iconName
     color: Colors.mOnBackground
   }
@@ -50,7 +50,7 @@ RowLayout {
     visible: root.currentOSDType === OSD.Type.Volume
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignVCenter
-    height: Theme.spacing * 2
+    Layout.preferredHeight: Theme.spacing * 2
     radius: height / 2
     color: Colors.mSurfaceContainer
 
@@ -77,7 +77,7 @@ RowLayout {
     text: root.displayText
     color: Colors.mOnBackground
     font.family: Theme.fontFamily
-    font.pointSize: Theme.fontSizeS
+    font.pointSize: Theme.fontSizeM
     font.weight: Font.Medium
     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
     horizontalAlignment: Text.AlignRight
