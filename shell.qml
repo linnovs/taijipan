@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import qs.Commons
+import qs.Modules.Notification
 import qs.Modules.OSD
 import qs.Modules.PanelScreen
 import qs.Services
@@ -61,6 +62,7 @@ ShellRoot {
 
       OSD {}
       PanelScreens {}
+      Notification {}
 
       CurrentScreenDetector {
         id: screenDetector

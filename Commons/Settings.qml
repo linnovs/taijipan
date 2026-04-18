@@ -98,6 +98,16 @@ Singleton {
         property list<var> right: []
       }
     }
+
+    property JsonObject notifications: JsonObject {
+      property JsonObject timeouts
+
+      timeouts: JsonObject {
+        property int low: 3
+        property int normal: 5
+        property int critical: 0
+      }
+    }
   }
 
   Component.onCompleted: {

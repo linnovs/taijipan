@@ -56,10 +56,14 @@ Singleton {
   property int fontSizeXXL: 18
 
   // icon
-  property int iconSize: spacing * 6
+  property int iconSizeXS: spacing * 4
+  property int iconSizeS: spacing * 6
+  property int iconSizeM: spacing * 9
   property int iconSizeL: spacing * 12
+  property int iconSizeXL: spacing * 16
 
   // margin
+  property int marginXS: spacing / 2
   property int marginS: spacing
   property int marginM: spacing * 2
   property int marginL: spacing * 4
