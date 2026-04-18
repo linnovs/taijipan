@@ -34,7 +34,7 @@ ColumnLayout {
       Layout.preferredWidth: Theme.iconSizeL
       Layout.preferredHeight: Theme.iconSizeL
       Layout.alignment: Qt.AlignTop
-      source: imageSource || Quickshell.iconPath(appIcon, true) || Quickshell("bell")
+      source: imageSource || Quickshell.iconPath(appIcon, true) || Quickshell.iconPath("bell")
       sourceSize: Qt.size(width, height)
 
       Loader {
