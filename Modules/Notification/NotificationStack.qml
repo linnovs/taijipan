@@ -31,6 +31,17 @@ ColumnLayout {
       property var timeoutHandler: null
       property bool isClosing: false
 
+      Timer {
+        id: entryDelayTimer
+        interval: Theme.animationBuffer
+        repeat: false
+        onTriggered: {
+          notificationCard.offset = 0;
+          notificationCard.scale = 1.0;
+          notificationCard.opacity = 1.0;
+        }
+      }
+
       Component.onCompleted: {
         timeoutHandler = function (id) {
           if (isClosing)
@@ -41,6 +52,7 @@ ColumnLayout {
         };
 
         NotificationService.notifierTimeouted.connect(timeoutHandler);
+        entryDelayTimer.start();
       }
 
       Component.onDestruction: {
@@ -55,6 +67,10 @@ ColumnLayout {
 
         anchors.fill: parent
         anchors.margins: shadowPadding
+
+        scale: 0.85
+        opacity: 0
+        offset: notification.Layout.preferredWidth
 
         appIcon: model.appIcon
         imageSource: model.imageSource
