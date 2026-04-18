@@ -18,27 +18,36 @@ ColumnLayout {
     delegate: Item {
       id: notification
 
-      property real offset: 0
-
-      Behavior on offset {
-        NumberAnimation {
-          duration: Theme.animationNormal
-          easing.type: Easing.InOutQuad
-        }
-      }
-
       Layout.preferredWidth: Theme.notificationWidth + notificationStack.shadowPadding * 2
       Layout.preferredHeight: notificationCard.contentHeight + Theme.marginM * 3 + notificationStack.shadowPadding * 2
       Layout.maximumHeight: Layout.preferredHeight
-
-      transform: Translate {
-        x: offset
-      }
 
       Timer {
         id: dismissTimer
         interval: Theme.animationNormal
         onTriggered: NotificationService.dismissNotifier(model.id)
+      }
+
+      property var timeoutHandler: null
+      property bool isClosing: false
+
+      Component.onCompleted: {
+        timeoutHandler = function (id) {
+          if (isClosing)
+            return;
+
+          if (model.id === id)
+            notificationCard.close();
+        };
+
+        NotificationService.notifierTimeouted.connect(timeoutHandler);
+      }
+
+      Component.onDestruction: {
+        if (timeoutHandler) {
+          NotificationService.notifierTimeouted.disconnect(timeoutHandler);
+          timeoutHandler = null;
+        }
       }
 
       NotificationCard {
@@ -47,7 +56,6 @@ ColumnLayout {
         anchors.fill: parent
         anchors.margins: shadowPadding
 
-        notificationId: model.id
         appIcon: model.appIcon
         imageSource: model.imageSource
         urgency: model.urgency
@@ -57,10 +65,18 @@ ColumnLayout {
         summary: model.summary
         body: model.body
 
+        onHoveredChanged: hovered => {
+          if (hovered)
+            NotificationService.pause(model.id);
+          else
+            NotificationService.resume(model.id);
+        }
+
         onClose: {
+          notification.isClosing = true;
+          offset = notification.width;
           scale = 0.85;
           opacity = 0;
-          notification.offset = notification.width;
           dismissTimer.start();
         }
 

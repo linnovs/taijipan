@@ -131,8 +131,11 @@ Singleton {
     addNotifier(clientId, notification, data);
   }
 
+  signal notifierTimeouted(string notificationId)
+
   function updateNotifierProgress() {
     const now = Date.now();
+    const toRemove = [];
 
     for (var i = 0; i < notifierModel.count; i++) {
       const noti = notifierModel.get(i);
@@ -147,7 +150,12 @@ Singleton {
 
       if (Math.abs(noti.progress - progress) > 0.01)
         notifierModel.setProperty(i, "progress", progress);
+      else if (progress <= 0)
+        toRemove.push(noti.id);
     }
+
+    if (toRemove.length > 0)
+      root.notifierTimeouted(toRemove[0]);
   }
 
   function pause(id) {

@@ -1,6 +1,5 @@
 import QtQuick
 import qs.Widgets
-import qs.Services
 import qs.Commons
 
 Item {
@@ -8,7 +7,6 @@ Item {
 
   readonly property int contentHeight: cardContent.implicitHeight
 
-  property string notificationId
   property string appIcon
   property string imageSource
   property int urgency
@@ -18,14 +16,23 @@ Item {
   property string summary
   property string body
 
-  HoverHandler {
-    onHoveredChanged: {
-      if (hovered) {
-        NotificationService.pause(notificationId);
-      } else {
-        NotificationService.resume(notificationId);
-      }
+  property real offset: 0
+
+  Behavior on offset {
+    NumberAnimation {
+      duration: Theme.animationNormal
+      easing.type: Easing.InOutQuad
     }
+  }
+
+  transform: Translate {
+    x: offset
+  }
+
+  signal hoveredChanged(bool hovered)
+
+  HoverHandler {
+    onHoveredChanged: card.hoveredChanged(hovered)
   }
 
   Rectangle {
