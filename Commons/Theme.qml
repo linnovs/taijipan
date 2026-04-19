@@ -28,7 +28,6 @@ Singleton {
 
   // notification
   property int notificationWidth: spacing * 110
-  property int notificationHeight: spacing * 22
 
   // powermenu
   property int powermenuButtonSize: spacing * 30
