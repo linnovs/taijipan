@@ -20,7 +20,7 @@ Singleton {
   property ListModel historyModel: ListModel {}
 
   property var notifierState: ({})
-  property var clientIdMap: ({})
+  property var internalIdMap: ({})
 
   property var notificationServerLoader: null
 
@@ -44,10 +44,10 @@ Singleton {
       progress: 1.0,
       appIcon: noti.appIcon,
       imageSource: noti.image,
-      originalId: noti.originalId || noti.id || 0,
+      originalId: noti.id || 0,
       actionsJson: JSON.stringify((noti.actions || []).map(action => ({
             text: (action.text || "").trim() || "Action",
-            identifier: action.identifier || ""
+            identifier: noti.hasActionIcons ? action.identifier : Checksum.sha256(JSON.stringify(action))
           })))
     };
   }
@@ -59,6 +59,7 @@ Singleton {
       historyModel.insert(0, data);
       while (historyModel.count > maxHistory) {
         historyModel.remove(historyModel.count - 1);
+        cleanupNotifierState(data.id);
       }
     });
   }
@@ -84,17 +85,31 @@ Singleton {
     return durations[data.urgency];
   }
 
-  function dismissNotifier(id) {
+  function removeNotifier(id) {
     const idx = findNotifierIndex(id);
     if (idx >= 0)
       notifierModel.remove(idx);
   }
 
+  function createNotifierActionObject(notification) {
+    const actionObject = {};
+
+    if (notification.actions) {
+      for (var i = 0; i < notification.actions.length; i++) {
+        const action = notification.actions[i];
+        actionObject[action.identifier] = action;
+      }
+    }
+
+    return actionObject;
+  }
+
   function addNotifier(clientId, notification, data) {
-    clientIdMap[clientId] = data.id;
+    internalIdMap[clientId] = data.id;
 
     notifierState[data.id] = {
       notification,
+      actions: createNotifierActionObject(notification),
       metadata: {
         originalId: data.originalId,
         paused: false,
@@ -105,7 +120,7 @@ Singleton {
     };
 
     function onClosed() {
-      dismissNotifier(data.id);
+      removeNotifier(data.id);
     }
 
     notification.tracked = true;
@@ -118,9 +133,76 @@ Singleton {
       // Remove excess notifiers if we exceed the max visible count
       while (notifierModel.count > maxVisible) {
         const last = notifierModel.get(notifierModel.count - 1);
-        notifierState[last.id]?.notification?.dismiss();
+        notifierState[last.id]?.notification?.dismiss(); // dismiss will trigger onClosed
       }
     });
+  }
+
+  function updateNotifier(dataId, newNotification, newData) {
+    const idx = findNotifierIndex(dataId);
+    if (idx < 0)
+      return;
+    const oldData = notifierModel.get(idx);
+    const oldTimestamp = oldData.timestamp;
+    const oldProgress = oldData.progress;
+
+    notifierModel.set(idx, "summary", newData.summary);
+    notifierModel.set(idx, "body", newData.body);
+    notifierModel.set(idx, "appName", newData.appName);
+    notifierModel.set(idx, "urgency", newData.urgency);
+    notifierModel.set(idx, "expireTimeout", newData.expireTimeout);
+    notifierModel.set(idx, "appIcon", newData.appIcon);
+    notifierModel.set(idx, "imageSource", newData.imageSource);
+    notifierModel.set(idx, "actionsJson", newData.actionsJson);
+    notifierModel.set(idx, "timestamp", oldTimestamp);
+    notifierModel.set(idx, "progress", oldProgress);
+
+    const state = notifierState[dataId];
+    state.notification = newNotification;
+    state.actions = createNotifierActionObject(newNotification);
+    state.metadata.originalId = newData.originalId;
+
+    function onClosed() {
+      removeNotifier(dataId);
+    }
+
+    state.notification.tracked = true;
+    state.notification.closed.connect(onClosed);
+    state.onClosed = onClosed;
+
+    state.metadata.urgency = newData.urgency;
+    state.metadata.duration = calDuration(newData);
+  }
+
+  function dataContentHash(data) {
+    return Checksum.sha256(JSON.stringify({
+      summary: data.summary || "",
+      body: data.body || "",
+      appName: data.appName || ""
+    }));
+  }
+
+  function cleanupNotifierState(dataId) {
+    delete notifierState[dataId];
+    for (var i = 0; i < internalIdMap.length; i++) {
+      if (internalIdMap[i] === dataId) {
+        delete internalIdMap[i];
+        break;
+      }
+    }
+  }
+
+  function removeDuplicatedNotifier(data) {
+    const contentHash = dataContentHash(data);
+
+    for (var i = 0; i < notifierModel.count; i++) {
+      const noti = notifierModel.get(i);
+      if (dataContentHash(noti) === contentHash) {
+        removeNotifier(noti.id);
+        cleanupNotifierState(noti.id);
+        return;
+      }
+    }
   }
 
   function handleNotification(notification) {
@@ -128,6 +210,15 @@ Singleton {
     const data = parseNotification(notification);
 
     addToHistory(data, notification);
+
+    const existingDataId = internalIdMap[clientId];
+    if (existingDataId && notifierState[existingDataId]) {
+      // Update existing notification
+      updateNotifier(existingDataId, notification, data);
+      return;
+    }
+
+    removeDuplicatedNotifier(data);
     addNotifier(clientId, notification, data);
   }
 
