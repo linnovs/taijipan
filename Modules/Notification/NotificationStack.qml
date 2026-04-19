@@ -31,7 +31,7 @@ ColumnLayout {
       Timer {
         id: dismissTimer
         interval: Theme.animationNormal
-        onTriggered: NotificationService.dismissNotifier(modelData.id)
+        onTriggered: NotificationService.removeNotifier(modelData.id)
       }
 
       property var timeoutHandler: null
