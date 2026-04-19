@@ -47,6 +47,7 @@ Item {
   NotificationCardBackground {
     id: cardBackground
     urgency: cardData.urgency
+    progress: cardData.progress
   }
 
   DropShadow {

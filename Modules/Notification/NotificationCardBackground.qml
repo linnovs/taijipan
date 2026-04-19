@@ -5,6 +5,7 @@ Rectangle {
   id: cardBackground
 
   property int urgency
+  property real progress
 
   anchors.fill: parent
   radius: Theme.radiusM
