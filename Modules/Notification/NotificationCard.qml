@@ -19,6 +19,20 @@ Item {
     }
   }
 
+  Behavior on opacity {
+    NumberAnimation {
+      duration: Theme.animationNormal
+      easing.type: Easing.InOutQuad
+    }
+  }
+
+  Behavior on scale {
+    NumberAnimation {
+      duration: Theme.animationNormal
+      easing.type: Easing.InOutQuad
+    }
+  }
+
   transform: Translate {
     x: offset
   }

@@ -24,6 +24,10 @@ ColumnLayout {
       Layout.preferredHeight: notificationCard.contentHeight + Theme.marginM * 3 + notificationStack.shadowPadding * 2
       Layout.maximumHeight: Layout.preferredHeight
 
+      property real cardOffset: Layout.preferredWidth
+      property real cardScale: 0.8
+      property real cardOpacity: 0.0
+
       Timer {
         id: dismissTimer
         interval: Theme.animationNormal
@@ -38,9 +42,9 @@ ColumnLayout {
         interval: Theme.animationBuffer
         repeat: false
         onTriggered: {
-          notificationCard.offset = 0;
-          notificationCard.scale = 1.0;
-          notificationCard.opacity = 1.0;
+          cardOffset = 0;
+          cardScale = 1.0;
+          cardOpacity = 1.0;
         }
       }
 
@@ -72,9 +76,9 @@ ColumnLayout {
         anchors.fill: parent
         anchors.margins: shadowPadding
 
-        scale: 0.85
-        opacity: 0
-        offset: notification.Layout.preferredWidth
+        scale: cardScale
+        opacity: cardOpacity
+        offset: cardOffset
 
         onHoveredChanged: hovered => {
           if (hovered)
@@ -89,20 +93,6 @@ ColumnLayout {
           scale = 0.85;
           opacity = 0;
           dismissTimer.start();
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: Theme.animationNormal
-            easing.type: Easing.InOutQuad
-          }
-        }
-
-        Behavior on scale {
-          NumberAnimation {
-            duration: Theme.animationNormal
-            easing.type: Easing.InOutQuad
-          }
         }
       }
     }
