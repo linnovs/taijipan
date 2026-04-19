@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import qs.Widgets
 import qs.Commons
 
