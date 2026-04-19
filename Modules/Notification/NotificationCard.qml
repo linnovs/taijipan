@@ -52,21 +52,10 @@ Item {
     }
   }
 
-  Button {
+  NotificationCardXButton {
     anchors.top: cardBackground.top
     anchors.right: cardBackground.right
-    anchors.topMargin: Theme.marginXS
-    anchors.rightMargin: Theme.marginXS
-    icon.name: "window-close"
-    icon.width: Theme.iconSizeS
-    icon.height: Theme.iconSizeS
-    icon.color: hovered ? Qt.alpha(Colors.mOnSurface, 0.9) : Qt.alpha(Colors.mOnSurface, 0.6)
     visible: hoverHandler.hovered
-    width: icon.width
-    height: icon.height
-    background: Rectangle {
-      color: "transparent"
-    }
     onClicked: close()
   }
 
