@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
 import qs.Commons
 
 ColumnLayout {
@@ -30,25 +29,9 @@ ColumnLayout {
     Layout.bottomMargin: Theme.marginM
     Layout.leftMargin: Theme.marginM
 
-    Image {
-      Layout.preferredWidth: Theme.iconSizeL
-      Layout.preferredHeight: Theme.iconSizeL
-      Layout.alignment: Qt.AlignTop
-      source: imageSource || Quickshell.iconPath(appIcon, true) || Quickshell.iconPath("bell")
-      sourceSize: Qt.size(width, height)
-
-      Loader {
-        active: imageSource && appIcon
-        anchors.fill: parent
-        Image {
-          width: Theme.iconSizeXS
-          height: Theme.iconSizeXS
-          source: Quickshell.iconPath(appIcon, true) || appIcon
-          sourceSize: Qt.size(width, height)
-          anchors.right: parent.right
-          anchors.bottom: parent.bottom
-        }
-      }
+    NotificationCardImage {
+      imageSource: cardContent.imageSource
+      appIcon: cardContent.appIcon
     }
 
     ColumnLayout {
