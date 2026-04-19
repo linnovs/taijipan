@@ -8,14 +8,7 @@ Item {
 
   readonly property int contentHeight: cardContent.implicitHeight
 
-  property string appIcon
-  property string imageSource
-  property int urgency
-  property real progress
-  property date timestamp
-  property string appName
-  property string summary
-  property string body
+  required property var cardData
 
   property real offset: 0
 
@@ -39,7 +32,7 @@ Item {
 
   NotificationCardBackground {
     id: cardBackground
-    urgency: card.urgency
+    urgency: cardData.urgency
   }
 
   DropShadow {
@@ -80,13 +73,6 @@ Item {
   NotificationCardContent {
     id: cardContent
     background: cardBackground
-    appIcon: card.appIcon
-    imageSource: card.imageSource
-    urgency: card.urgency
-    progress: card.progress
-    timestamp: card.timestamp
-    appName: card.appName
-    summary: card.summary
-    body: card.body
+    cardData: card.cardData
   }
 }

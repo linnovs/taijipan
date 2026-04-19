@@ -18,6 +18,8 @@ ColumnLayout {
     delegate: Item {
       id: notification
 
+      required property var modelData
+
       Layout.preferredWidth: Theme.notificationWidth + notificationStack.shadowPadding * 2
       Layout.preferredHeight: notificationCard.contentHeight + Theme.marginM * 3 + notificationStack.shadowPadding * 2
       Layout.maximumHeight: Layout.preferredHeight
@@ -25,7 +27,7 @@ ColumnLayout {
       Timer {
         id: dismissTimer
         interval: Theme.animationNormal
-        onTriggered: NotificationService.dismissNotifier(model.id)
+        onTriggered: NotificationService.dismissNotifier(modelData.id)
       }
 
       property var timeoutHandler: null
@@ -47,7 +49,7 @@ ColumnLayout {
           if (isClosing)
             return;
 
-          if (model.id === id)
+          if (modelData.id === id)
             notificationCard.close();
         };
 
@@ -65,6 +67,8 @@ ColumnLayout {
       NotificationCard {
         id: notificationCard
 
+        cardData: notification.modelData
+
         anchors.fill: parent
         anchors.margins: shadowPadding
 
@@ -72,25 +76,16 @@ ColumnLayout {
         opacity: 0
         offset: notification.Layout.preferredWidth
 
-        appIcon: model.appIcon
-        imageSource: model.imageSource
-        urgency: model.urgency
-        progress: model.progress
-        timestamp: model.timestamp
-        appName: model.appName
-        summary: model.summary
-        body: model.body
-
         onHoveredChanged: hovered => {
           if (hovered)
-            NotificationService.pause(model.id);
+            NotificationService.pause(cardData.id);
           else
-            NotificationService.resume(model.id);
+            NotificationService.resume(cardData.id);
         }
 
         onClose: {
           notification.isClosing = true;
-          offset = notification.width;
+          offset = notificationCard.width;
           scale = 0.85;
           opacity = 0;
           dismissTimer.start();

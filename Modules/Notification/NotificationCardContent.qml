@@ -6,15 +6,7 @@ ColumnLayout {
   id: cardContent
 
   required property Item background
-
-  property string appIcon
-  property string imageSource
-  property int urgency
-  property real progress
-  property date timestamp
-  property string appName
-  property string summary
-  property string body
+  required property var cardData
 
   anchors.fill: background
   anchors.margins: Theme.marginM
@@ -30,8 +22,8 @@ ColumnLayout {
     Layout.leftMargin: Theme.marginM
 
     NotificationCardImage {
-      imageSource: cardContent.imageSource
-      appIcon: cardContent.appIcon
+      imageSource: cardData.imageSource
+      appIcon: cardData.appIcon
     }
 
     ColumnLayout {
@@ -39,14 +31,14 @@ ColumnLayout {
       spacing: Theme.marginS
 
       NotificationCardHeader {
-        appName: cardContent.appName
-        urgency: cardContent.urgency
-        timestamp: cardContent.timestamp
+        appName: cardData.appName
+        urgency: cardData.urgency
+        timestamp: cardData.timestamp
       }
 
       // Summary
       Text {
-        text: summary || "Notification"
+        text: cardData.summary || "Notification"
         font.pointSize: Theme.fontSizeM
         font.weight: Font.Medium
         color: Colors.mOnSurface
@@ -61,7 +53,7 @@ ColumnLayout {
 
       // Body
       Text {
-        text: body || ""
+        text: cardData.body || ""
         font.pointSize: Theme.fontSizeM
         color: Colors.mOnSurface
         textFormat: Text.StyledText
