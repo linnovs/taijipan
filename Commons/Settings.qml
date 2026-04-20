@@ -1,0 +1,84 @@
+pragma Singleton
+import QtQuick
+import Quickshell
+import Quickshell.Io
+
+Singleton {
+  id: root
+
+  property bool isLoaded: false
+  property bool createdDirectories: false
+  property string settingsFile: Paths.joinDir(Paths.configDir, "settings.json")
+
+  signal settingsLoaded
+  signal settingsReloaded
+
+  TextMetrics {
+    id: defaultTextMetrics
+  }
+
+  JsonAdapter {
+    id: settingsAdapter
+
+    property bool debug: false
+
+    property JsonObject ui: JsonObject {
+      property string font: defaultTextMetrics.font.family
+    }
+  }
+
+  readonly property alias data: settingsAdapter
+
+  Timer {
+    id: reloadDebounceTimer
+    running: false
+    interval: 200
+    onTriggered: {
+      if (createdDirectories || settingsFileView.path !== undefined) {
+        Logger.i("Settings", "Reload settings after detected external change to file");
+        settingsFileView.reload();
+      }
+    }
+  }
+
+  Timer {
+    id: saveDebounceTimer
+    running: false
+    interval: 500
+    onTriggered: settingsFileView.writeAdapter()
+  }
+
+  FileView {
+    id: settingsFileView
+    path: createdDirectories ? settingsFile : ""
+    printErrors: false
+    watchChanges: true
+
+    onFileChanged: reloadDebounceTimer.restart()
+    onAdapterUpdated: saveDebounceTimer.restart()
+    onPathChanged: if (path !== undefined)
+      reload()
+    onLoaded: {
+      if (!isLoaded) {
+        Logger.i("Settings", "Loaded settings from file");
+        isLoaded = true;
+        root.settingsLoaded();
+      } else {
+        Logger.i("Settings", "Reloaded settings from file");
+        root.settingsReloaded();
+      }
+    }
+  }
+
+  function save() {
+    saveDebounceTimer.restart();
+  }
+
+  Component.onCompleted: {
+    Quickshell.execDetached(["mkdir", "-p", Paths.configDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.cacheDir]);
+
+    createdDirectories = true;
+    settingsFileView.adapter = settingsAdapter;
+  }
+}
