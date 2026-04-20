@@ -15,6 +15,19 @@ Singleton {
     return `${parts.hour}:${parts.minute}`;
   }
 
+  function formatDateTime(date) {
+    const parts = {
+      year: String(date.getFullYear()).padStart(4, '0'),
+      month: String(date.getMonth() + 1).padStart(2, '0'),
+      day: String(date.getDate()).padStart(2, '0'),
+      hour: String(date.getHours()).padStart(2, '0'),
+      minute: String(date.getMinutes()).padStart(2, '0'),
+      second: String(date.getSeconds()).padStart(2, '0')
+    };
+
+    return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}:${parts.second}`;
+  }
+
   function formatRelativeTime(pastTime) {
     let now = Date.now();
     let diff = now - pastTime;
