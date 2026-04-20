@@ -6,7 +6,7 @@ Singleton {
   id: root
 
   function _format(...args) {
-    const maxLen = 16;
+    const maxLen = 17;
     const t = Time.formatDateTime(new Date());
     var module = "";
 
