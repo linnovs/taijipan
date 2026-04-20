@@ -8,16 +8,17 @@ Singleton {
 
   function _format(...args) {
     const maxLen = 16;
-    const t = new Date().toISOString();
+    const t = Time.formatDateTime(new Date());
     var module = "";
 
     if (args.length > 1) {
-      module = args.shift().substring(0, maxLen).padEnd(maxLen, " ");
+      module = args.shift();
     } else {
-      module = "General".substring(0, maxLen).padEnd(maxLen, " ");
+      module = "General";
     }
+    module = module.substring(0, maxLen).padStart(maxLen / 2 + module.length / 2, " ").padEnd(maxLen, " ");
 
-    return `\x1b[32m[${t}]\x1b[0m \x1b[35m${module}\x1b[0m ` + args.join(" ");
+    return `\x1b[32m${t}\x1b[0m \x1b[35m[${module}]\x1b[0m ` + args.join(" ");
   }
 
   function d(...args) {
