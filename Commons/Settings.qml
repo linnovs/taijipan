@@ -20,6 +20,7 @@ Singleton {
   JsonAdapter {
     id: settingsAdapter
 
+    property bool rewriteNeeded: false
     property bool debug: false
 
     property JsonObject ui: JsonObject {
@@ -66,6 +67,12 @@ Singleton {
       } else {
         Logger.i("Settings", "Reloaded settings from file");
         root.settingsReloaded();
+      }
+
+      if (root.data.rewriteNeeded) {
+        Logger.i("Settings", "Rewriting settings file to update format");
+        root.save();
+        root.data.rewriteNeeded = false;
       }
     }
   }
