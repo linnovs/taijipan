@@ -65,7 +65,7 @@ Singleton {
         isLoaded = true;
         root.settingsLoaded();
       } else {
-        Logger.i("Settings", "Reloaded settings from file");
+        Logger.i("Settings", "Settings reloaded");
         root.settingsReloaded();
       }
 
