@@ -1,0 +1,210 @@
+pragma Singleton
+import QtQuick
+import Quickshell
+import Quickshell.Io
+import qs.Commons
+
+Singleton {
+  id: root
+
+  property bool initialized: false
+  property bool magickAvailable: false
+
+  readonly property string baseDir: Paths.joinDir(Paths.cacheDir, "images")
+  readonly property string bgThumbDir: Paths.joinDir(baseDir, "wallpaper/thumbnails")
+  readonly property string bgFullDir: Paths.joinDir(baseDir, "wallpaper/full")
+
+  readonly property var supportedImageFormats: ["jpg", "jpeg", "png", "gif", "bmp"]
+
+  function isSupportedImageFormat(filePath): bool {
+    const ext = filePath.split(".").pop().toLowerCase();
+    return supportedImageFormats.includes(ext);
+  }
+
+  function createCacheDirectories() {
+    Quickshell.execDetached(["mkdir", "-p", bgThumbDir]);
+    Quickshell.execDetached(["mkdir", "-p", bgFullDir]);
+  }
+
+  function clearCache() {
+    Logger.i("ImageCacheService", "Clearing image cache");
+    const dirs = [bgThumbDir, bgFullDir];
+    dirs.forEach(dir => {
+      Quickshell.execDetached(["find", dir, "-type", "f", "-mtime", "+15", "-delete"]);
+    });
+    Logger.i("ImageCacheService", "Finished clearing image cache, deleted files older than 15 days");
+  }
+
+  Process {
+    id: checkMagickProcess
+    command: ["sh", "-c", "command -v magick"]
+    running: false
+    onExited: exitCode => {
+      if (exitCode === 0) {
+        Logger.i("ImageCacheService", "ImageMagick is available, image processing features enabled");
+        root.magickAvailable = true;
+      } else {
+        Logger.w("ImageCacheService", "ImageMagick is not available, image processing features disabled");
+      }
+      root.initialized = true;
+    }
+  }
+
+  function init() {
+    createCacheDirectories();
+    clearCache();
+    checkMagickProcess.running = true;
+    Logger.i("ImageCacheService", "Loaded image cache service");
+  }
+
+  function generateCacheKey(sourceImage, width, height, mtime) {
+    const keyString = `${sourceImage}@${width}x${height}@${mtime}`;
+    return Checksum.sha256(keyString);
+  }
+
+  property var commandQueue: []
+  property int runningCommands: 0
+  readonly property int maxConcurrentCommands: 16
+
+  function runCommand({
+    name,
+    component,
+    params,
+    callback,
+    onError
+  }) {
+    runningCommands++;
+
+    try {
+      const procObj = component.createObject(root, params);
+
+      procObj.exited.connect(function (exitCode) {
+        procObj.destroy();
+        runningCommands--;
+        callback(exitCode, procObj);
+        runCommandAsync();
+      });
+
+      procObj.running = true;
+    } catch (e) {
+      Logger.e("ImageCacheService", "Failed to create process", name + ":", e);
+      runningCommands--;
+      onError(e);
+      runCommandAsync();
+    }
+  }
+
+  function runCommandAsync() {
+    while (runningCommands < maxConcurrentCommands && commandQueue.length > 0) {
+      const request = commandQueue.shift();
+      runCommand(request);
+    }
+  }
+
+  function queueCommand(command) {
+    commandQueue.push(command);
+    runCommandAsync();
+  }
+
+  Component {
+    id: getDimensionsComponent
+    Process {
+      required property string filePath
+      command: ["identify", "-ping", "-format", "%w %h", filePath]
+      stdout: StdioCollector {}
+      stderr: StdioCollector {}
+    }
+  }
+
+  // callback will be called with (width, height)
+  function getDimensions(filePath, callback) {
+    queueCommand({
+      name: "getDimensions",
+      component: getDimensionsComponent,
+      params: {
+        filePath
+      },
+      callback: function (exitCode, obj) {
+        let width = 0, height = 0;
+        if (exitCode === 0) {
+          const parts = obj.stdout.text.trim().split(" ");
+          if (parts.length === 2) {
+            width = parseInt(parts[0]) || 0;
+            height = parseInt(parts[1]) || 0;
+          }
+        }
+        callback(width, height);
+      },
+      onError: function () {
+        callback(0, 0);
+      }
+    });
+  }
+
+  Component {
+    id: getMTimeComponent
+    Process {
+      required property string filePath
+      command: ["stat", "-c", "%Y", filePath]
+      stdout: StdioCollector {}
+      stderr: StdioCollector {}
+    }
+  }
+
+  // callback will be called with mtime as unix timestamp
+  function getMTime(filePath, callback) {
+    queueCommand({
+      name: "getMTime",
+      component: getMTimeComponent,
+      params: {
+        filePath
+      },
+      callback: function (exitCode, obj) {
+        const mtime = exitCode === 0 ? obj.stdout.text.trim() : "";
+        callback(mtime);
+      },
+      onError: function () {
+        callback("");
+      }
+    });
+  }
+
+  function openBG(sourceImage, width, height, callback) {
+    if (!magickAvailable) {
+      Logger.d("ImageCacheService", "ImageMagick not available, use original:", sourceImage);
+      callback(sourceImage);
+      return;
+    }
+
+    let imageSource = sourceImage;
+
+    if (Paths.isFileUrl(sourceImage)) {
+      imageSource = Paths.strip(sourceImage);
+    }
+
+    getDimensions(imageSource, function (imgWidth, imgHeight) {
+      const fitsScreen = imgWidth > 0 && imgHeight > 0 && imgWidth <= width && imgHeight <= height;
+
+      if (fitsScreen) {
+        if (!isSupportedImageFormat(sourceImage)) {
+          callback(imageSource);
+          return;
+        }
+      }
+
+      const targetWidth = fitsScreen ? imgWidth : width;
+      const targetHeight = fitsScreen ? imgHeight : height;
+
+      getMTime(imageSource, function (mtime) {
+        const cacheKey = generateCacheKey(imageSource, targetWidth, targetHeight, mtime);
+        const cacheFilePath = Paths.joinDir(root.bgFullDir, cacheKey + ".png");
+
+        if (Paths.isRelativePath(imageSource)) {
+          callback(imageSource);
+        } else {
+          callback(Paths.toFileUrl(imageSource));
+        }
+      });
+    });
+  }
+}

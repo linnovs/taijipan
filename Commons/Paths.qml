@@ -26,6 +26,14 @@ Singleton {
     return path.toString().replace(/%20/g, " ");
   }
 
+  function isFileUrl(path: string): bool {
+    return path.startsWith("file://");
+  }
+
+  function isRelativePath(path: string): bool {
+    return !isFileUrl(path) && !path.startsWith("/");
+  }
+
   function strip(path: url): string {
     return stringify(path).replace("file://", "");
   }

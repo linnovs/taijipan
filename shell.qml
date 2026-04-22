@@ -1,5 +1,7 @@
 import QtQuick
 import Quickshell
+import qs.Modules.Wallpaper
+import qs.Services
 import qs.Commons
 
 ShellRoot {
@@ -51,6 +53,19 @@ ShellRoot {
       if (Settings.isLoaded && !Settings.data.debug) {
         Quickshell.inhibitReloadPopup();
       }
+    }
+  }
+
+  Loader {
+    active: settingsLoaded
+    sourceComponent: Item {
+      Component.onCompleted: {
+        ImageCacheService.init();
+
+        Logger.i("Shell", "All services loaded, shell initialization complete");
+      }
+
+      Wallpaper {}
     }
   }
 }

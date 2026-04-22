@@ -23,6 +23,14 @@ Singleton {
     property bool rewriteNeeded: false
     property bool debug: false
 
+    property JsonObject wallpaper: JsonObject {
+      property bool enabled: false
+      property string selected: ""
+      property string mode: "fill"
+      property string directory: Paths.joinDir(Paths.homeDir, "Pictures/Wallpapers")
+      property string transition: "wipe"
+    }
+
     property JsonObject ui: JsonObject {
       property string font: defaultTextMetrics.font.family
     }
