@@ -15,6 +15,8 @@ layout(std140, binding = 0) uniform buf {
 
     float origImgWidth;
     float origImgHeight;
+    float destImgWidth;
+    float destImgHeight;
 
     float screenWidth;
     float screenHeight;
@@ -75,10 +77,11 @@ void main() {
     vec2 center = vec2(0.5);
     vec2 direction = uv - center;
 
-    vec2 scaledUV = scaleUVWithCrop(uv, origImgWidth, origImgHeight);
+    vec2 scaleUV1 = scaleUVWithCrop(uv, origImgWidth, origImgHeight);
+    vec2 scaleUV2 = scaleUVWithCrop(uv, destImgWidth, destImgHeight);
 
-    vec4 color1 = sampleWithRipple(sourceImg, scaledUV, direction);
-    vec4 color2 = sampleWithRipple(destImg, scaledUV, direction);
+    vec4 color1 = sampleWithRipple(sourceImg, scaleUV1, direction);
+    vec4 color2 = sampleWithRipple(destImg, scaleUV2, direction);
 
     color1 = mix(color1, solid, step(0.5, origIsSolid));
 

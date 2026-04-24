@@ -15,10 +15,6 @@ Variants {
     sourceComponent: PanelWindow {
       id: root
 
-      property bool wallpaperReady: false
-
-      visible: wallpaperReady
-
       color: "transparent"
       screen: modelData
       WlrLayershell.layer: WlrLayer.Background
@@ -30,16 +26,43 @@ Variants {
       anchors.bottom: true
       anchors.left: true
 
+      property bool wallpaperReady: false
+      property bool initialized: false
+
+      visible: wallpaperReady
+
+      property real transitionProgress: 0
+
+      NumberAnimation {
+        id: transitionAnimation
+        target: root
+        property: "transitionProgress"
+        from: 0.0
+        to: 1.0
+        duration: Theme.animationSlowest
+        onFinished: {
+          if (!initialized) {
+            initialized = true;
+          }
+
+          const wallpaperSource = nextWallpaper.source;
+          currentWallpaper.source = wallpaperSource;
+          transitionProgress = 0.0;
+
+          Qt.callLater(() => {
+            nextWallpaper.source = "";
+            currentWallpaper.asynchronous = true;
+          });
+        }
+      }
+
+      property bool isTransitioning: transitionAnimation.running
+
       Image {
         id: currentWallpaper
-        source: ""
-        smooth: true
-        mipmap: false
-        visible: true
-        cache: true
+        source: defaultWallpaper
+        visible: false
         asynchronous: true
-        fillMode: Image.PreserveAspectCrop
-        anchors.fill: parent
         onStatusChanged: {
           if (status === Image.Error) {
             Logger.e("Wallpaper", "Failed to load wallpaper image:", source);
@@ -49,26 +72,81 @@ Variants {
         }
       }
 
-      function setWallpaper() {
-        let imgPath = Settings.data.wallpaper.selected;
+      Image {
+        id: nextWallpaper
+        source: ""
+        visible: false
+        cache: false
+        asynchronous: true
+        onStatusChanged: {
+          if (status === Image.Error) {
+            Logger.e("Wallpaper", "Failed to load next wallpaper image:", source);
+          } else if (status === Image.Ready) {
+            if (!wallpaperReady) {
+              wallpaperReady = true;
+            }
+            transitionAnimation.start();
+          }
+        }
+      }
 
-        // use default wallpaper if selected file is missing or not set
-        if (imgPath === "") {
-          Logger.w("Wallpaper", "No wallpaper selected, using default wallpaper on", screen.name);
-          imgPath = defaultWallpaper;
-        } else {
-          Logger.i("Wallpaper", "Setting wallpaper on", screen.name, "to", Settings.data.wallpaper.selected);
+      ShaderEffect {
+        anchors.fill: parent
+
+        property variant sourceImg: currentWallpaper
+        property variant destImg: nextWallpaper
+
+        property real progress: transitionProgress
+        property real maxRadius: 1.0
+
+        property real origImgWidth: sourceImg.sourceSize.width
+        property real origImgHeight: sourceImg.sourceSize.height
+        property real destImgWidth: destImg.sourceSize.width
+        property real destImgHeight: destImg.sourceSize.height
+
+        property real screenWidth: screen.width
+        property real screenHeight: screen.height
+        property vector2d aspectRatio: Qt.vector2d(1, screen.width / screen.height)
+
+        property real origIsSolid: initialized ? 0.0 : 1.0
+        property vector4d solid: Qt.vector4d(Colors.mBackground.r, Colors.mBackground.g, Colors.mBackground.b, 1)
+
+        fragmentShader: Quickshell.shellPath("assets/shaders/qsb/wallpaper_transition.frag.qsb")
+      }
+
+      function updateNextWallpaper() {
+        const bg = Settings.data.wallpaper.selected || defaultWallpaper;
+        ImageCacheService.openBG(bg, screen.width, screen.height, function (imageSource) {
+          currentWallpaper.asynchronous = false;
+          nextWallpaper.source = imageSource;
+        });
+      }
+
+      function changeWallpaper() {
+        if (isTransitioning) {
+          transitionAnimation.stop();
+          transitionProgress = 0.0;
+
+          // clean up the current wallpaper and move the next wallpaper to the current wallpaper
+          Qt.callLater(() => {
+            const newCurrentSource = nextWallpaper.source;
+            currentWallpaper.source = newCurrentSource;
+
+            // start next transition after a small delay
+            Qt.callLater(() => {
+              updateNextWallpaper();
+            });
+          });
+          return;
         }
 
-        ImageCacheService.openBG(imgPath, width, height, function (imageSource) {
-          currentWallpaper.source = imageSource;
-        });
+        updateNextWallpaper();
       }
 
       Connections {
         target: Settings.data.wallpaper
         function onSelectedChanged() {
-          setWallpaper();
+          changeWallpaper();
         }
       }
 
@@ -78,7 +156,7 @@ Variants {
           return;
         }
 
-        setWallpaper();
+        changeWallpaper();
       }
 
       Component.onCompleted: initializeWallpaper()
