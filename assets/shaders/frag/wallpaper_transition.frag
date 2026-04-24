@@ -3,7 +3,8 @@
 layout(location = 0) in vec2 qt_TexCoord0;
 layout(location = 0) out vec4 fragColor;
 
-layout(binding = 1) uniform sampler2D source;
+layout(binding = 1) uniform sampler2D sourceImg;
+layout(binding = 2) uniform sampler2D destImg;
 
 layout(std140, binding = 0) uniform buf {
     mat4 qt_Matrix;
@@ -33,7 +34,7 @@ vec2 scaleUVWithCrop(vec2 uv, float imgW, float imgH) {
 }
 
 float rippleOffset(float adjustment, vec2 direction) {
-    float t = progress + adjustment;
+    float t = progress + mix(0., adjustment, float(progress));
     float d = length(direction / aspectRatio) - t * maxRadius; // SDF of circle
     d *= 1. - smoothstep(0., 0.1, abs(d)); // limit the offset to a narrow band around the circle
     d *= smoothstep(0., 0.1, t); // fade in
@@ -41,26 +42,45 @@ float rippleOffset(float adjustment, vec2 direction) {
     return d;
 }
 
+vec4 sampleWithRipple(sampler2D source, vec2 uv, vec2 direction) {
+    float tAdjustment = 0.05 * sin(progress * 3.14);
+    float rD = rippleOffset(tAdjustment, direction);
+    float gD = rippleOffset(0., direction);
+    float bD = rippleOffset(-tAdjustment, direction);
+
+    direction = normalize(direction);
+
+    float r = texture(source, uv + direction * rD).r;
+    float g = texture(source, uv + direction * gD).g;
+    float b = texture(source, uv + direction * bD).b;
+
+    float shading = gD * 3.;
+
+    vec4 color = vec4(r, g, b, 1.);
+    color.rgb += shading;
+
+    return color;
+}
+
+float offsetFactor(vec2 direction) {
+    float d = length(direction / aspectRatio) - progress * maxRadius;
+    d = smoothstep(0., -0.1, d);
+
+    return d;
+}
+
 void main() {
     vec2 uv = qt_TexCoord0;
-
-    vec2 scaledUV = scaleUVWithCrop(uv, origImgWidth, origImgHeight);
 
     vec2 center = vec2(0.5);
     vec2 direction = uv - center;
 
-    float rD = rippleOffset(0.02, direction);
-    float gD = rippleOffset(0., direction);
-    float bD = rippleOffset(-0.02, direction);
+    vec2 scaledUV = scaleUVWithCrop(uv, origImgWidth, origImgHeight);
 
-    direction = normalize(direction);
+    vec4 color1 = sampleWithRipple(sourceImg, scaledUV, direction);
+    vec4 color2 = sampleWithRipple(destImg, scaledUV, direction);
 
-    float r = texture(source, scaledUV + direction * rD).r;
-    float g = texture(source, scaledUV + direction * gD).g;
-    float b = texture(source, scaledUV + direction * bD).b;
+    color1 = mix(color1, solid, step(0.5, origIsSolid));
 
-    float shading = gD * 3.;
-
-    fragColor = vec4(r, g, b, 1.0);
-    fragColor.rgb += shading;
+    fragColor = mix(color1, color2, offsetFactor(direction));
 }
