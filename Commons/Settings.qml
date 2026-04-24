@@ -90,8 +90,11 @@ Singleton {
   }
 
   Component.onCompleted: {
-    Quickshell.execDetached(["mkdir", "-p", Paths.configDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.dataDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.stateDir]);
     Quickshell.execDetached(["mkdir", "-p", Paths.cacheDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.configDir]);
+    Quickshell.execDetached(["mkdir", "-p", Paths.imagecacheDir]);
 
     createdDirectories = true;
     settingsFileView.adapter = settingsAdapter;
