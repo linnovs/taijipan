@@ -50,8 +50,8 @@ Variants {
           transitionProgress = 0.0;
 
           Qt.callLater(() => {
-            nextWallpaper.source = "";
             currentWallpaper.asynchronous = true;
+            nextWallpaper.source = "";
           });
         }
       }
@@ -60,14 +60,12 @@ Variants {
 
       Image {
         id: currentWallpaper
-        source: defaultWallpaper
+        source: ""
         visible: false
         asynchronous: true
         onStatusChanged: {
           if (status === Image.Error) {
-            Logger.e("Wallpaper", "Failed to load wallpaper image:", source);
-          } else if (status === Image.Ready && !wallpaperReady) {
-            wallpaperReady = true;
+            Logger.e("Wallpaper", "Failed to load current wallpaper image:", source);
           }
         }
       }
