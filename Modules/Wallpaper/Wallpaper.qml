@@ -18,7 +18,7 @@ Variants {
       color: "transparent"
       screen: modelData
       WlrLayershell.layer: WlrLayer.Background
-      WlrLayershell.exclusiveZone: ExclusionMode.Ignore
+      WlrLayershell.exclusionMode: ExclusionMode.Ignore
       WlrLayershell.namespace: "taijipan-wallpaper-" + (screen?.name || "unknown")
 
       anchors.top: true
