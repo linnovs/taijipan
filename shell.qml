@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import qs.Modules.OSD
 import qs.Modules.Wallpaper
 import qs.Services
 import qs.Commons
@@ -65,6 +66,7 @@ ShellRoot {
         Logger.i("Shell", "All services loaded, shell initialization complete");
       }
 
+      OSD {}
       Wallpaper {}
     }
   }

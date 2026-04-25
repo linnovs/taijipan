@@ -23,6 +23,16 @@ Singleton {
     property bool rewriteNeeded: false
     property bool debug: false
 
+    property JsonObject general: JsonObject {
+      property real shadowOffsetX: 2
+      property real shadowOffsetY: 3
+    }
+
+    property JsonObject osd: JsonObject {
+      property int autoDismissTimeout: 2000
+      property real backgroundOpacity: 0.8
+    }
+
     property JsonObject wallpaper: JsonObject {
       property bool enabled: false
       property string selected: ""
