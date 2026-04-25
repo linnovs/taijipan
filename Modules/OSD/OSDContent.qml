@@ -45,7 +45,7 @@ RowLayout {
       anchors.top: parent.top
       anchors.left: parent.left
       anchors.bottom: parent.bottom
-      implicitWidth: parent.width * osdContent.percentage
+      implicitWidth: parent.width * Math.max(0, Math.min(1, osdContent.percentage))
       radius: Theme.radiusRound
       color: Colors.mOnSurface
     }
