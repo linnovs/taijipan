@@ -10,11 +10,13 @@ Loader {
   active: false
 
   enum Type {
-    Volume
+    Volume,
+    LockKey
   }
 
   property bool initialized: false
   property int currentType: -1
+  property string lockKeyType: ""
 
   function getIcon() {
     switch (root.currentType) {
@@ -26,6 +28,15 @@ Loader {
       if (AudioService.volume >= 0.3)
         return "audio-volume-medium";
       return "audio-volume-low";
+    case OSD.Type.LockKey:
+      switch (root.lockKeyType) {
+      case "capslock":
+        return LockKeyService.capsLockOn ? "caps-lock-on" : "caps-lock-off";
+      case "numlock":
+        return LockKeyService.numLockOn ? "num-lock-on" : "num-lock-off";
+      case "scrolllock":
+        return LockKeyService.scrollLockOn ? "scroll-lock-on" : "scroll-lock-off";
+      }
     }
     return "osd-rotate-normal";
   }
@@ -36,6 +47,21 @@ Loader {
       return AudioService.volume ?? 0.0;
     }
     return 0.0;
+  }
+
+  function getStatusMessage() {
+    switch (root.currentType) {
+    case OSD.Type.LockKey:
+      switch (root.lockKeyType) {
+      case "capslock":
+        return LockKeyService.capsLockOn ? "Caps Lock On" : "Caps Lock Off";
+      case "numlock":
+        return LockKeyService.numLockOn ? "Num Lock On" : "Num Lock Off";
+      case "scrolllock":
+        return LockKeyService.scrollLockOn ? "Scroll Lock On" : "Scroll Lock Off";
+      }
+    }
+    return "";
   }
 
   Timer {
@@ -73,6 +99,7 @@ Loader {
       id: osdItem
       icon: root.getIcon()
       percentage: root.getPercentage()
+      statusMessage: root.getStatusMessage()
     }
 
     Timer {
@@ -111,6 +138,30 @@ Loader {
         if (root.item)
           root.item.showOSD(type);
       });
+    }
+  }
+
+  Component.onCompleted: {
+    LockKeyService.registerComponent("osd:lockKey");
+  }
+
+  Component.onDestruction: {
+    LockKeyService.unregisterComponent("osd:lockKey");
+  }
+
+  Connections {
+    target: LockKeyService
+    function onCapsLockChanged(state) {
+      root.lockKeyType = "capslock";
+      activeAndShow(OSD.Type.LockKey);
+    }
+    function onNumLockChanged(state) {
+      root.lockKeyType = "numlock";
+      activeAndShow(OSD.Type.LockKey);
+    }
+    function onScrollLockChanged(state) {
+      root.lockKeyType = "scrolllock";
+      activeAndShow(OSD.Type.LockKey);
     }
   }
 

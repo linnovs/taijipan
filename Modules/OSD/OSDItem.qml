@@ -7,6 +7,7 @@ Item {
 
   property string icon: ""
   property real percentage: 0.0
+  property string statusMessage: ""
 
   anchors.centerIn: parent
 
@@ -47,6 +48,7 @@ Item {
     id: osdContent
     icon: osdItem.icon
     percentage: osdItem.percentage
+    statusMessage: osdItem.statusMessage
   }
 
   function show() {

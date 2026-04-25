@@ -9,6 +9,7 @@ RowLayout {
 
   property string icon: ""
   property real percentage: 0.0
+  property string statusMessage: ""
 
   anchors.fill: parent
   anchors.leftMargin: Theme.marginXS
@@ -35,6 +36,7 @@ RowLayout {
 
   Rectangle {
     id: progress
+    visible: osdContent.statusMessage === ""
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignVCenter
     Layout.preferredHeight: Theme.spacing * 2
@@ -53,7 +55,7 @@ RowLayout {
 
   Text {
     Layout.preferredWidth: textMetrics.width
-    text: Math.round(percentage * 100).toFixed(0) + "%"
+    text: osdContent.statusMessage || Math.round(percentage * 100).toFixed(0) + "%"
     horizontalAlignment: Text.AlignRight
     color: Colors.mOnSurface
     font.weight: Font.DemiBold
