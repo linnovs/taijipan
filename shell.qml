@@ -64,6 +64,10 @@ ShellRoot {
       Component.onCompleted: {
         ImageCacheService.init();
 
+        Qt.callLater(() => {
+          IPCService.init();
+        });
+
         Logger.i("Shell", "All services loaded, shell initialization complete");
       }
 
