@@ -21,13 +21,13 @@ Loader {
   function getIcon() {
     switch (root.currentType) {
     case OSD.Type.Volume:
-      if (AudioService.muted || AudioService.volume <= 0.005)
+      if (AudioService.muted)
         return "audio-volume-muted";
-      if (AudioService.volume >= 0.6)
+      if (AudioService.volume <= 0.005)
+        return "audio-volume-low";
+      if (AudioService.volume >= 0.5)
         return "audio-volume-high";
-      if (AudioService.volume >= 0.3)
-        return "audio-volume-medium";
-      return "audio-volume-low";
+      return "audio-volume-medium";
     case OSD.Type.LockKey:
       switch (root.lockKeyType) {
       case "capslock":
