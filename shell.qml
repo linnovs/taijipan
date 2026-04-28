@@ -1,8 +1,10 @@
+//@ pragma UseQApplication
 import QtQuick
 import Quickshell
 import qs.Modules.Panel
 import qs.Modules.OSD
 import qs.Modules.Wallpaper
+import qs.Modules.SysTray
 import qs.Services
 import qs.Commons
 
@@ -74,6 +76,8 @@ ShellRoot {
       Panel {}
       OSD {}
       Wallpaper {}
+
+      SysTray {}
     }
   }
 }
