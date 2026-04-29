@@ -21,7 +21,9 @@ Singleton {
   }
 
   function d(...args) {
-    console.debug(_format(...args));
+    if (Settings?.data.debug) {
+      console.debug(_format(...args));
+    }
   }
 
   function i(...args) {
@@ -34,5 +36,28 @@ Singleton {
 
   function e(...args) {
     console.error(_format(...args));
+  }
+
+  function _getStackTrace() {
+    try {
+      throw new Error();
+    } catch (e) {
+      return e.stack;
+    }
+  }
+
+  function callStack() {
+    var stack = _getStackTrace();
+    i("Debug", "-".repeat(52));
+    i("Debug", "Call stack:");
+    // Split the stack into lines and log each one
+    var stackLines = stack.split("\n");
+    for (var j = 0; j < stackLines.length; j++) {
+      var line = stackLines[j].trim();
+      if (line.length > 0) {
+        i("Debug", `- ${line}`);
+      }
+    }
+    i("Debug", "-".repeat(52));
   }
 }

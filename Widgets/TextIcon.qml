@@ -13,6 +13,7 @@ Text {
 
     if (Icons.get(icon) === undefined) {
       Logger.w("Icons", `"${icon}"`, "not found in the icons font");
+      Logger.callStack();
       return Icons.get(Icons.defaultIcon);
     }
 
