@@ -52,7 +52,7 @@ Variants {
           Qt.callLater(() => {
             currentWallpaper.asynchronous = true;
             nextWallpaper.source = "";
-            Logger.d("Wallpaper", "Transition finished, current wallpaper for", screen.name, "updated to:", wallpaperSource);
+            Logger.d("Wallpaper", "Transition finished, current wallpaper for", screen.name, "updated to:", Paths.replaceHomeWithTilde(wallpaperSource));
           });
         }
       }
@@ -66,7 +66,7 @@ Variants {
         asynchronous: true
         onStatusChanged: {
           if (status === Image.Error) {
-            Logger.e("Wallpaper", "Failed to load current wallpaper image:", source);
+            Logger.e("Wallpaper", "Failed to load current wallpaper image:", Paths.replaceHomeWithTilde(source));
           }
         }
       }
@@ -79,7 +79,7 @@ Variants {
         asynchronous: true
         onStatusChanged: {
           if (status === Image.Error) {
-            Logger.e("Wallpaper", "Failed to load next wallpaper image:", source);
+            Logger.e("Wallpaper", "Failed to load next wallpaper image:", Paths.replaceHomeWithTilde(source));
           } else if (status === Image.Ready) {
             if (!wallpaperReady) {
               wallpaperReady = true;

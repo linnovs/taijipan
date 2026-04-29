@@ -51,6 +51,14 @@ Singleton {
     return joinDir(homeDir, ...parts);
   }
 
+  function replaceHomeWithTilde(path: string): string {
+    path = strip(path);
+    if (path.startsWith(homeDir)) {
+      return "~" + path.slice(homeDir.length);
+    }
+    return path;
+  }
+
   readonly property string picturesDir: strip(pictures)
   function picturePath(...parts): string {
     return joinDir(picturesDir, ...parts);
