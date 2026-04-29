@@ -71,7 +71,7 @@ Singleton {
 
   IpcHandler {
     target: "powermenu"
-    function toggle() {
+    function toggle(): void {
       runOnScreen(screen => {
         var powermenu = PanelService.getPanel("powerMenu", screen);
         powermenu?.toggle();
