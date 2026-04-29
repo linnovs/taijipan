@@ -34,6 +34,12 @@ Singleton {
       property real backgroundOpacity: 0.8
     }
 
+    property JsonObject audio: JsonObject {
+      property int volumeStep: 5
+      property bool volumeFeedback: true
+      property string volumeFeedbackSoundFile: ""
+    }
+
     property JsonObject wallpaper: JsonObject {
       property bool enabled: false
       property string selected: ""

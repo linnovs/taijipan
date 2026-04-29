@@ -11,6 +11,9 @@ Singleton {
   property bool initialized: false
   property bool isSettingVolume: false
 
+  property int lastVolumeFeedbackTime: 0
+  readonly property int volumeFeedbackInterval: 100
+
   readonly property var sink: Pipewire.ready ? Pipewire.defaultAudioSink : null
   readonly property real maxVolume: 1.5
   readonly property real epsilon: 0.005
@@ -81,6 +84,109 @@ Singleton {
 
     wpctlStateProcess.command = ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"];
     wpctlStateProcess.running = true;
+  }
+
+  function playFeedbackSound(vol: real) {
+    if (!Settings.data.audio.volumeFeedback)
+      return;
+
+    const now = Date.now();
+    if (now - lastVolumeFeedbackTime < volumeFeedbackInterval)
+      return;
+    lastVolumeFeedbackTime = now;
+
+    SoundService.playSound("volumeFeedback", vol);
+  }
+
+  Process {
+    id: wpctlSetProcess
+    stdout: StdioCollector {}
+    onExited: exitCode => {
+      if (exitCode !== 0)
+        Logger.w("AudioService", "Failed to set volume with wpctl, exit code:", exitCode, "stderr:", stdout.text);
+    }
+  }
+
+  function setVolume(vol: real) {
+    if (!Pipewire.ready || (!sink?.audio && !hasWpctl)) {
+      Logger.w("AudioService", "No audio sink available to set volume");
+      return;
+    }
+
+    const clampedVol = clampVolume(vol);
+    if (Math.abs(clampedVol - volume) < root.epsilon)
+      return;
+
+    if (hasWpctl) {
+      if (wpctlSetProcess.running)
+        return;
+
+      isSettingVolume = true;
+      wpctlMuted = false;
+      wpctlVolume = clampedVol;
+      wpctlStateValid = true;
+
+      const volPercent = Math.round(clampedVol * 10000) / 100;
+      wpctlSetProcess.command = ["sh", "-c", `wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ ${volPercent}%`];
+      wpctlSetProcess.running = true;
+
+      playFeedbackSound(clampedVol);
+      return;
+    }
+
+    if (!sink?.ready || !sink?.audio) {
+      Logger.w("AudioService", "Audio sink not ready to set volume");
+      return;
+    }
+
+    isSettingVolume = true;
+    sink.audio.muted = false;
+    sink.audio.volume = clampedVol;
+
+    playFeedbackSound(clampedVol);
+
+    Qt.callLater(() => {
+      isSettingVolume = false;
+    });
+  }
+
+  function setMuted(muted: bool) {
+    if (!Pipewire.ready || (!sink?.audio && !hasWpctl)) {
+      Logger.w("AudioService", "No audio sink available to set muted state");
+      return;
+    }
+
+    if (hasWpctl) {
+      if (wpctlSetProcess.running)
+        return;
+
+      wpctlMuted = muted;
+      wpctlStateValid = true;
+
+      const muteCmd = muted ? "1" : "0";
+      wpctlSetProcess.command = ["sh", "-c", `wpctl set-mute @DEFAULT_AUDIO_SINK@ ${muteCmd}`];
+      wpctlSetProcess.running = true;
+
+      return;
+    }
+
+    if (!sink?.ready || !sink?.audio) {
+      Logger.w("AudioService", "Audio sink not ready to set muted state");
+      return;
+    }
+
+    sink.audio.muted = muted;
+  }
+
+  function increaseVolume() {
+    if (volume >= maxVolume)
+      return;
+
+    setVolume(volume + Settings.data.audio.volumeStep / 100.0);
+  }
+
+  function decreaseVolume() {
+    setVolume(volume - Settings.data.audio.volumeStep / 100.0);
   }
 
   Process {

@@ -78,4 +78,17 @@ Singleton {
       });
     }
   }
+
+  IpcHandler {
+    target: "volume"
+    function increase(): void {
+      AudioService.increaseVolume();
+    }
+    function decrease(): void {
+      AudioService.decreaseVolume();
+    }
+    function toggleMute(): void {
+      AudioService.setMuted(!AudioService.muted);
+    }
+  }
 }
