@@ -185,7 +185,7 @@ Singleton {
       const fitsScreen = imgWidth > 0 && imgHeight > 0 && imgWidth <= width && imgHeight <= height;
 
       if (fitsScreen) {
-        if (!isSupportedImageFormat(sourceImage)) {
+        if (!isSupportedImageFormat(imageSource)) {
           callback(imageSource);
           return;
         }
