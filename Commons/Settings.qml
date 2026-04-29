@@ -42,8 +42,8 @@ Singleton {
 
     property JsonObject wallpaper: JsonObject {
       property bool enabled: false
-      property string selected: ""
-      property string directory: Paths.homePath("Pictures", "Wallpapers")
+      property string directory: ""
+      property bool recursive: false
     }
 
     property JsonObject ui: JsonObject {
