@@ -37,9 +37,7 @@ Singleton {
     property JsonObject wallpaper: JsonObject {
       property bool enabled: false
       property string selected: ""
-      property string mode: "fill"
       property string directory: Paths.homePath("Pictures", "Wallpapers")
-      property string transition: "wipe"
     }
 
     property JsonObject ui: JsonObject {
