@@ -58,4 +58,7 @@ Singleton {
   readonly property int barMarginV: spacing * 2
   readonly property int barMarginH: spacing * 2
   readonly property int barHeight: spacing * 8
+
+  readonly property int powerMenuIconSize: spacing * 32
+  readonly property int powerMenuButtonIconSize: spacing * 16
 }

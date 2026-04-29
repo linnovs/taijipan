@@ -24,6 +24,7 @@ Singleton {
     property bool debug: false
 
     property JsonObject general: JsonObject {
+      property string userIcon: Paths.joinDir(Paths.homeDir, ".face")
       property real shadowOffsetX: 2
       property real shadowOffsetY: 3
     }
@@ -43,6 +44,39 @@ Singleton {
 
     property JsonObject ui: JsonObject {
       property string font: defaultTextMetrics.font.family
+    }
+
+    property JsonObject powerMenu: JsonObject {
+      property list<var> options: [
+        {
+          "action": "lock",
+          "enable": true
+        },
+        {
+          "action": "suspend",
+          "enable": true
+        },
+        {
+          "action": "hibernate",
+          "enable": true
+        },
+        {
+          "action": "reboot",
+          "enable": true
+        },
+        {
+          "action": "rebootToUEFI",
+          "enable": true
+        },
+        {
+          "action": "logout",
+          "enable": true
+        },
+        {
+          "action": "shutdown",
+          "enable": true
+        },
+      ]
     }
   }
 

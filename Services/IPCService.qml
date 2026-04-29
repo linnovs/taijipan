@@ -72,7 +72,10 @@ Singleton {
   IpcHandler {
     target: "powermenu"
     function toggle() {
-      runOnScreen(screen => {});
+      runOnScreen(screen => {
+        var powermenu = PanelService.getPanel("powerMenu", screen);
+        powermenu?.toggle();
+      });
     }
   }
 }
