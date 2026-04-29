@@ -10,9 +10,8 @@ Singleton {
   property bool initialized: false
   property bool magickAvailable: false
 
-  readonly property string baseDir: Paths.joinDir(Paths.cacheDir, "images")
-  readonly property string bgThumbDir: Paths.joinDir(baseDir, "wallpaper/thumbnails")
-  readonly property string bgFullDir: Paths.joinDir(baseDir, "wallpaper/full")
+  readonly property string bgThumbDir: Paths.cachePath("images", "wallpaper", "thumbnails")
+  readonly property string bgFullDir: Paths.cachePath("images", "wallpaper", "full")
 
   readonly property var supportedImageFormats: ["jpg", "jpeg", "png", "gif", "bmp"]
 

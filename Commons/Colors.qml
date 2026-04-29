@@ -143,7 +143,7 @@ Singleton {
 
   FileView {
     id: colorsFileView
-    path: Settings.createdDirectories ? (Paths.joinDir(Paths.configDir, "colors.json")) : undefined
+    path: Settings.createdDirectories ? (Paths.configPath("colors.json")) : undefined
     printErrors: false
     watchChanges: true
     onFileChanged: scheduleColorsReload()

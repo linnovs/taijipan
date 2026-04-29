@@ -47,14 +47,57 @@ Singleton {
   }
 
   readonly property string homeDir: strip(home)
+  function homePath(...parts): string {
+    return joinDir(homeDir, ...parts);
+  }
+
   readonly property string picturesDir: strip(pictures)
+  function picturePath(...parts): string {
+    return joinDir(picturesDir, ...parts);
+  }
+
   readonly property string dataDir: strip(data)
+  function dataPath(...parts): string {
+    return joinDir(dataDir, ...parts);
+  }
+
   readonly property string stateDir: strip(state)
+  function statePath(...parts): string {
+    return joinDir(stateDir, ...parts);
+  }
+
   readonly property string cacheDir: strip(cache)
+  function cachePath(...parts): string {
+    return joinDir(cacheDir, ...parts);
+  }
+
   readonly property string configDir: strip(config)
+  function configPath(...parts): string {
+    return joinDir(configDir, ...parts);
+  }
+
   readonly property string imagecacheDir: strip(imagecache)
+  function imagecachePath(...parts): string {
+    return joinDir(imagecacheDir, ...parts);
+  }
+
   readonly property string scriptsDir: strip(scripts)
+  function scriptPath(...parts): string {
+    return joinDir(scriptsDir, ...parts);
+  }
+
   readonly property string assetsDir: strip(assets)
+  function assetPath(...parts): string {
+    return joinDir(assetsDir, ...parts);
+  }
+
   readonly property string soundsDir: strip(sounds)
+  function soundPath(...parts): string {
+    return joinDir(soundsDir, ...parts);
+  }
+
   readonly property string iconsDir: strip(icons)
+  function iconPath(...parts): string {
+    return joinDir(iconsDir, ...parts);
+  }
 }

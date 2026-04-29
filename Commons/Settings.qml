@@ -8,7 +8,7 @@ Singleton {
 
   property bool isLoaded: false
   property bool createdDirectories: false
-  property string settingsFile: Paths.joinDir(Paths.configDir, "settings.json")
+  property string settingsFile: Paths.configPath("settings.json")
 
   signal settingsLoaded
   signal settingsReloaded
@@ -24,7 +24,7 @@ Singleton {
     property bool debug: false
 
     property JsonObject general: JsonObject {
-      property string userIcon: Paths.joinDir(Paths.homeDir, ".face")
+      property string userIcon: Paths.homePath(".face")
       property real shadowOffsetX: 2
       property real shadowOffsetY: 3
     }
@@ -38,7 +38,7 @@ Singleton {
       property bool enabled: false
       property string selected: ""
       property string mode: "fill"
-      property string directory: Paths.joinDir(Paths.homeDir, "Pictures/Wallpapers")
+      property string directory: Paths.homePath("Pictures", "Wallpapers")
       property string transition: "wipe"
     }
 
