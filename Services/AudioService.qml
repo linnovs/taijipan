@@ -63,7 +63,7 @@ Singleton {
 
     if (!root.initialized) {
       root.initialized = true;
-      Logger.i("AudioService", "initialized with volume " + wpctlVolume + " and muted state " + wpctlMuted);
+      Logger.i("AudioService", "Initialized with volume " + wpctlVolume + " and muted state " + wpctlMuted);
     }
 
     return true;
