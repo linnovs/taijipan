@@ -13,6 +13,7 @@ Singleton {
 
   readonly property var sink: Pipewire.ready ? Pipewire.defaultAudioSink : null
   readonly property real maxVolume: 1.5
+  readonly property real epsilon: 0.005
 
   property bool hasWpctl: false
   property bool wpctlStateValid: false

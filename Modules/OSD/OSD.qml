@@ -23,7 +23,7 @@ Loader {
     case OSD.Type.Volume:
       if (AudioService.muted)
         return "audio-volume-muted";
-      if (AudioService.volume <= 0.005)
+      if (AudioService.volume <= AudioService.epsilon)
         return "audio-volume-low";
       if (AudioService.volume >= 0.5)
         return "audio-volume-high";
