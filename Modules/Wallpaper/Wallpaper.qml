@@ -142,13 +142,6 @@ Variants {
         updateNextWallpaper();
       }
 
-      Connections {
-        target: Settings.data.wallpaper
-        function onSelectedChanged() {
-          changeWallpaper();
-        }
-      }
-
       function initializeWallpaper() {
         if (!ImageCacheService.initialized) {
           Qt.callLater(initializeWallpaper);
