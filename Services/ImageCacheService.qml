@@ -13,7 +13,7 @@ Singleton {
   readonly property string bgThumbDir: Paths.cachePath("images", "wallpaper", "thumbnails")
   readonly property string bgFullDir: Paths.cachePath("images", "wallpaper", "full")
 
-  readonly property var supportedImageFormats: ["jpg", "jpeg", "png", "gif", "bmp"]
+  readonly property list<string> supportedImageFormats: ["jpg", "jpeg", "png", "gif", "bmp"]
 
   function isSupportedImageFormat(filePath): bool {
     const ext = filePath.split(".").pop().toLowerCase();
@@ -168,10 +168,43 @@ Singleton {
     });
   }
 
-  function openBG(sourceImage, width, height, callback) {
+  Component {
+    id: downscaleImageComponent
+    Process {
+      required property string sourcePath
+      required property string targetPath
+      required property int width
+      required property int height
+      command: ["magick", `'${sourcePath}'`, "-auto-orient", "-filter", "Lanczos", "-resize", `${width}x${height}^`, `'${targetPath}'`]
+      stdout: StdioCollector {}
+      stderr: StdioCollector {}
+    }
+  }
+
+  function downscaleImage(sourcePath, targetPath, width, height, callback) {
+    queueCommand({
+      name: "downscaleImage",
+      component: downscaleImageComponent,
+      params: {
+        sourcePath,
+        targetPath,
+        width,
+        height
+      },
+      callback: function (exitCode) {
+        callback(exitCode === 0);
+      },
+      onError: function () {
+        callback(false);
+      }
+    });
+  }
+
+  // callback will be called with the file path to the cached image, or empty string if original image should be used
+  function getLarge(sourceImage, width, height, callback) {
     if (!magickAvailable) {
-      Logger.d("ImageCacheService", "ImageMagick not available, use original:", sourceImage);
-      callback(sourceImage);
+      Logger.d("ImageCacheService", "ImageMagick not available, use original:", Paths.replaceHomeWithTilde(sourceImage));
+      callback("");
       return;
     }
 
@@ -185,10 +218,12 @@ Singleton {
       const fitsScreen = imgWidth > 0 && imgHeight > 0 && imgWidth <= width && imgHeight <= height;
 
       if (fitsScreen) {
-        if (!isSupportedImageFormat(imageSource)) {
-          callback(imageSource);
+        if (isSupportedImageFormat(imageSource)) {
+          Logger.d("ImageCacheService", "Image fits screen and is in supported format, use original:", Paths.replaceHomeWithTilde(sourceImage));
+          callback("");
           return;
         }
+        Logger.d("ImageCacheService", "Image fits screen but is in unsupported format, will convert to PNG:", Paths.replaceHomeWithTilde(sourceImage));
       }
 
       const targetWidth = fitsScreen ? imgWidth : width;
@@ -198,11 +233,13 @@ Singleton {
         const cacheKey = generateCacheKey(imageSource, targetWidth, targetHeight, mtime);
         const cacheFilePath = Paths.joinDir(root.bgFullDir, cacheKey + ".png");
 
-        if (Paths.isRelativePath(imageSource)) {
-          callback(imageSource);
-        } else {
-          callback(Paths.toFileUrl(imageSource));
-        }
+        downscaleImage(imageSource, cacheFilePath, targetWidth, targetHeight, function (success) {
+          if (success) {
+            callback(Paths.toFileUrl(cacheFilePath));
+          } else {
+            callback("");
+          }
+        });
       });
     });
   }

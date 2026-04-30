@@ -10,8 +10,6 @@ Variants {
     required property ShellScreen modelData
     active: modelData && Settings.data.wallpaper.enabled
 
-    readonly property string defaultWallpaper: Quickshell.shellPath("assets/default-wallpaper.jpg")
-
     sourceComponent: PanelWindow {
       id: root
 
@@ -58,8 +56,9 @@ Variants {
       }
 
       property bool isTransitioning: transitionAnimation.running
+      readonly property color solidColor: Colors.mBackground
 
-      Image {
+      AnimatedImage {
         id: currentWallpaper
         source: ""
         visible: false
@@ -71,7 +70,7 @@ Variants {
         }
       }
 
-      Image {
+      AnimatedImage {
         id: nextWallpaper
         source: ""
         visible: false
@@ -108,16 +107,18 @@ Variants {
         property vector2d aspectRatio: Qt.vector2d(1, screen.width / screen.height)
 
         property real origIsSolid: initialized ? 0.0 : 1.0
-        property vector4d solid: Qt.vector4d(Colors.mBackground.r, Colors.mBackground.g, Colors.mBackground.b, 1)
+        property vector4d solid: Qt.vector4d(solidColor.r, solidColor.g, solidColor.b, 1)
 
         fragmentShader: Quickshell.shellPath("assets/shaders/qsb/wallpaper_transition.frag.qsb")
       }
 
       function updateNextWallpaper() {
-        const bg = Settings.data.wallpaper.selected || defaultWallpaper;
-        ImageCacheService.openBG(bg, screen.width, screen.height, function (imageSource) {
+        const wallpaperPath = WallpaperService.currentWallpapers[screen.name];
+        ImageCacheService.getLarge(wallpaperPath, screen.width, screen.height, function (cached) {
           currentWallpaper.asynchronous = false;
-          nextWallpaper.source = imageSource;
+          nextWallpaper.source = cached || wallpaperPath;
+
+          WallpaperService.postWallpaperProcess(screen.name, wallpaperPath, cached);
         });
       }
 
@@ -142,8 +143,16 @@ Variants {
         updateNextWallpaper();
       }
 
+      Connections {
+        target: WallpaperService
+        function onWallpaperChanged(screenName, path) {
+          if (screenName === screen.name)
+            changeWallpaper();
+        }
+      }
+
       function initializeWallpaper() {
-        if (!ImageCacheService.initialized) {
+        if ((WallpaperService && !WallpaperService.initialized) || (ImageCacheService && !ImageCacheService.initialized)) {
           Qt.callLater(initializeWallpaper);
           return;
         }

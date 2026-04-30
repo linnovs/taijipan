@@ -42,6 +42,12 @@ Singleton {
     return path.startsWith("file://") ? path : "file://" + path;
   }
 
+  function baseName(path: string): string {
+    path = strip(path);
+    const parts = path.split("/");
+    return parts[parts.length - 1];
+  }
+
   function joinDir(...parts): string {
     return parts.map(part => strip(part)).join("/");
   }

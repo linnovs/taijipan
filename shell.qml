@@ -65,6 +65,7 @@ ShellRoot {
     sourceComponent: Item {
       Component.onCompleted: {
         ImageCacheService.init();
+        WallpaperService.init();
 
         Qt.callLater(() => {
           IPCService.init();

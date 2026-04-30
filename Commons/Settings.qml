@@ -42,8 +42,14 @@ Singleton {
 
     property JsonObject wallpaper: JsonObject {
       property bool enabled: false
+      property color solidColor: Colors.mBackground
+      property real overviewBlur: 0.4
+      property real overviewTint: 0.6
       property string directory: ""
+      property string sortBy: "name"
       property bool recursive: false
+      property bool enableSlideshow: false
+      property int slideshowInterval: 300
     }
 
     property JsonObject ui: JsonObject {
