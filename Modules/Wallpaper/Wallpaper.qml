@@ -51,7 +51,6 @@ Variants {
           Qt.callLater(() => {
             currentWallpaper.asynchronous = true;
             nextWallpaper.source = "";
-            Logger.d("Wallpaper", "Transition finished, current wallpaper for", screen.name, "updated to:", Paths.replaceHomeWithTilde(wallpaperSource));
           });
         }
       }
