@@ -72,8 +72,12 @@ Singleton {
   Process {
     id: wpctlStateProcess
     stdout: StdioCollector {}
-    onExited: exitCode => {
-      if (exitCode !== 0 || !root.applyWpctlState(stdout.text))
+  }
+
+  Connections {
+    target: wpctlStateProcess
+    function onExited(exitCode) {
+      if (exitCode !== 0 || !root.applyWpctlState(wpctlStateProcess.stdout.text))
         wpctlStateValid = false;
     }
   }
@@ -101,7 +105,11 @@ Singleton {
   Process {
     id: wpctlSetProcess
     stdout: StdioCollector {}
-    onExited: exitCode => {
+  }
+
+  Connections {
+    target: wpctlSetProcess
+    function onExited(exitCode) {
       if (exitCode !== 0)
         Logger.w("AudioService", "Failed to set volume with wpctl, exit code:", exitCode, "stderr:", stdout.text);
     }
@@ -192,7 +200,11 @@ Singleton {
   Process {
     id: checkWpctlProcess
     command: ["sh", "-c", "command -v wpctl"]
-    onExited: exitCode => {
+  }
+
+  Connections {
+    target: checkWpctlProcess
+    function onExited(exitCode) {
       root.hasWpctl = exitCode === 0;
       if (root.hasWpctl)
         root.refreshWpctlState();

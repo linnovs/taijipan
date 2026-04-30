@@ -38,7 +38,11 @@ Singleton {
     id: checkMagickProcess
     command: ["sh", "-c", "command -v magick"]
     running: false
-    onExited: exitCode => {
+  }
+
+  Connections {
+    target: checkMagickProcess
+    function onExited(exitCode) {
       if (exitCode === 0) {
         Logger.i("ImageCacheService", "ImageMagick is available, image processing features enabled");
         root.magickAvailable = true;
