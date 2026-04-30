@@ -64,6 +64,7 @@ ShellRoot {
     active: settingsLoaded
     sourceComponent: Item {
       Component.onCompleted: {
+        AppThemeService.init();
         ImageCacheService.init();
         WallpaperService.init();
 
