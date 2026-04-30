@@ -73,6 +73,8 @@ Loader {
           color: Colors.mSurface
           opacity: Settings.data.wallpaper.overviewTint
         }
+
+        onStatusChanged: playing = AnimatedImage.Ready
       }
     }
   }

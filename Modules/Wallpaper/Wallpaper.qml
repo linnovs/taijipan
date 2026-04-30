@@ -64,9 +64,10 @@ Variants {
         visible: false
         asynchronous: true
         onStatusChanged: {
-          if (status === Image.Error) {
+          if (status === AnimatedImage.Error) {
             Logger.e("Wallpaper", "Failed to load current wallpaper image:", Paths.replaceHomeWithTilde(source));
           }
+          playing = (status === AnimatedImage.Ready);
         }
       }
 
@@ -77,14 +78,15 @@ Variants {
         cache: false
         asynchronous: true
         onStatusChanged: {
-          if (status === Image.Error) {
+          if (status === AnimatedImage.Error) {
             Logger.e("Wallpaper", "Failed to load next wallpaper image:", Paths.replaceHomeWithTilde(source));
-          } else if (status === Image.Ready) {
+          } else if (status === AnimatedImage.Ready) {
             if (!wallpaperReady) {
               wallpaperReady = true;
             }
             transitionAnimation.start();
           }
+          playing = (status === AnimatedImage.Ready);
         }
       }
 
