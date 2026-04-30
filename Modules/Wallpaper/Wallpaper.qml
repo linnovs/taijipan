@@ -25,6 +25,7 @@ Variants {
       anchors.left: true
 
       property bool wallpaperReady: false
+      property bool shaderActive: true
       property bool initialized: false
 
       visible: wallpaperReady
@@ -89,8 +90,7 @@ Variants {
       }
 
       Loader {
-        id: shaderLoader
-        active: true
+        active: shaderActive
         anchors.fill: parent
 
         ShaderEffect {
@@ -170,7 +170,7 @@ Variants {
 
       Component.onDestruction: {
         transitionAnimation.stop();
-        shaderLoader.active = false;
+        shaderActive = false;
         currentWallpaper.source = "";
         nextWallpaper.source = "";
       }
