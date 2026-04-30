@@ -88,28 +88,34 @@ Variants {
         }
       }
 
-      ShaderEffect {
+      Loader {
+        id: shaderLoader
+        active: true
         anchors.fill: parent
 
-        property variant sourceImg: currentWallpaper
-        property variant destImg: nextWallpaper
+        ShaderEffect {
+          anchors.fill: parent
 
-        property real progress: transitionProgress
-        property real maxRadius: 1.0
+          property variant sourceImg: currentWallpaper
+          property variant destImg: nextWallpaper
 
-        property real origImgWidth: sourceImg.sourceSize.width
-        property real origImgHeight: sourceImg.sourceSize.height
-        property real destImgWidth: destImg.sourceSize.width
-        property real destImgHeight: destImg.sourceSize.height
+          property real progress: transitionProgress
+          property real maxRadius: 1.0
 
-        property real screenWidth: screen.width
-        property real screenHeight: screen.height
-        property vector2d aspectRatio: Qt.vector2d(1, screen.width / screen.height)
+          property real origImgWidth: sourceImg.sourceSize.width
+          property real origImgHeight: sourceImg.sourceSize.height
+          property real destImgWidth: destImg.sourceSize.width
+          property real destImgHeight: destImg.sourceSize.height
 
-        property real origIsSolid: initialized ? 0.0 : 1.0
-        property vector4d solid: Qt.vector4d(solidColor.r, solidColor.g, solidColor.b, 1)
+          property real screenWidth: screen.width
+          property real screenHeight: screen.height
+          property vector2d aspectRatio: Qt.vector2d(1, screen.width / screen.height)
 
-        fragmentShader: Quickshell.shellPath("assets/shaders/qsb/wallpaper_transition.frag.qsb")
+          property real origIsSolid: initialized ? 0.0 : 1.0
+          property vector4d solid: Qt.vector4d(solidColor.r, solidColor.g, solidColor.b, 1)
+
+          fragmentShader: Quickshell.shellPath("assets/shaders/qsb/wallpaper_transition.frag.qsb")
+        }
       }
 
       function updateNextWallpaper() {
@@ -161,6 +167,13 @@ Variants {
       }
 
       Component.onCompleted: initializeWallpaper()
+
+      Component.onDestruction: {
+        transitionAnimation.stop();
+        shaderLoader.active = false;
+        currentWallpaper.source = "";
+        nextWallpaper.source = "";
+      }
     }
   }
 }
