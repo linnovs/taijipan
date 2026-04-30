@@ -1,7 +1,7 @@
 function strToUtf8Bytes(str) {
 	const bytes = [];
-	for (var i = 0; i < str.length; i++) {
-		var charCode = str.charCodeAt(i);
+	for (let i = 0; i < str.length; i++) {
+		let charCode = str.charCodeAt(i);
 		if (charCode < 0x80)
 			bytes.push(charCode); // 1-byte character
 		else if (charCode < 0x800)

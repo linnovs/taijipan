@@ -20,7 +20,7 @@ Singleton {
   function getPanel(name, screen) {
     if (!screen) {
       Logger.d("PanelService", "getPanel called without screen for panel:", name);
-      for (var key in _panels) {
+      for (let key in _panels) {
         if (key.startsWith(name + "-")) {
           return _panels[key];
         }
@@ -28,7 +28,7 @@ Singleton {
       return null;
     }
 
-    var panelKey = `${name}-${screen.name}`;
+    let panelKey = `${name}-${screen.name}`;
 
     if (hasPanel(panelKey)) {
       return _panels[panelKey];

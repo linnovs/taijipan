@@ -8,7 +8,7 @@ Singleton {
   function _format(...args) {
     const maxLen = 17;
     const t = Time.formatDateTime(new Date());
-    var module = "";
+    let module = "";
 
     if (args.length > 1) {
       module = args.shift();
@@ -47,13 +47,13 @@ Singleton {
   }
 
   function callStack() {
-    var stack = _getStackTrace();
+    let stack = _getStackTrace();
     i("Debug", "-".repeat(52));
     i("Debug", "Call stack:");
     // Split the stack into lines and log each one
-    var stackLines = stack.split("\n");
-    for (var j = 0; j < stackLines.length; j++) {
-      var line = stackLines[j].trim();
+    let stackLines = stack.split("\n");
+    for (let j = 0; j < stackLines.length; j++) {
+      let line = stackLines[j].trim();
       if (line.length > 0) {
         i("Debug", `- ${line}`);
       }

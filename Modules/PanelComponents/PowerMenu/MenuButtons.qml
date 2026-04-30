@@ -44,11 +44,11 @@ Item {
   property int _optionsVersion: 0
   property var options: {
     void (_optionsVersion);
-    var options = [];
-    var fromSettings = Settings.data.powerMenu.options || [];
+    let options = [];
+    let fromSettings = Settings.data.powerMenu.options || [];
 
-    for (var i = 0; i < fromSettings.length; i++) {
-      var option = fromSettings[i];
+    for (let i = 0; i < fromSettings.length; i++) {
+      let option = fromSettings[i];
       if (actionMetadatas[option.action]) {
         options.push(actionMetadatas[option.action]);
       }

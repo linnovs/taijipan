@@ -21,7 +21,7 @@ Singleton {
       Logger.d("IPCService", "Debounce timer triggered, executing pending callback with detected screen:", root.detectedScreen?.name);
 
       if (pendingCallback) {
-        var callback = pendingCallback;
+        let callback = pendingCallback;
         pendingCallback = null; // Clear pending callback before execution to prevent reentrancy issues
         try {
           callback(root.detectedScreen);
@@ -73,7 +73,7 @@ Singleton {
     target: "powermenu"
     function toggle(): void {
       runOnScreen(screen => {
-        var powermenu = PanelService.getPanel("powerMenu", screen);
+        let powermenu = PanelService.getPanel("powerMenu", screen);
         powermenu?.toggle();
       });
     }
