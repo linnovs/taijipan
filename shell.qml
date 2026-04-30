@@ -76,6 +76,7 @@ ShellRoot {
 
       Panel {}
       OSD {}
+      Overview {}
       Wallpaper {}
 
       SysTray {}
