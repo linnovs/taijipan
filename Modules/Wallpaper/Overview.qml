@@ -52,7 +52,7 @@ Loader {
         }
       }
 
-      AnimatedImage {
+      Image {
         id: bgImg
         anchors.fill: parent
         visible: WallpaperService.initialized
@@ -73,8 +73,6 @@ Loader {
           color: Colors.mSurface
           opacity: Settings.data.wallpaper.overviewTint
         }
-
-        onStatusChanged: playing = AnimatedImage.Ready
       }
     }
   }

@@ -13,7 +13,7 @@ Singleton {
   readonly property string bgThumbDir: Paths.cachePath("images", "wallpaper", "thumbnails")
   readonly property string bgFullDir: Paths.cachePath("images", "wallpaper", "full")
 
-  readonly property list<string> supportedImageFormats: ["jpg", "jpeg", "png", "gif", "bmp"]
+  readonly property list<string> supportedImageFormats: ["jpg", "jpeg", "png", "bmp"]
 
   function isSupportedImageFormat(filePath): bool {
     const ext = filePath.split(".").pop().toLowerCase();

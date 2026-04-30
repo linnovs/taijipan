@@ -58,35 +58,33 @@ Variants {
       property bool isTransitioning: transitionAnimation.running
       readonly property color solidColor: Colors.mBackground
 
-      AnimatedImage {
+      Image {
         id: currentWallpaper
         source: ""
         visible: false
         asynchronous: true
         onStatusChanged: {
-          if (status === AnimatedImage.Error) {
+          if (status === Image.Error) {
             Logger.e("Wallpaper", "Failed to load current wallpaper image:", Paths.replaceHomeWithTilde(source));
           }
-          playing = (status === AnimatedImage.Ready);
         }
       }
 
-      AnimatedImage {
+      Image {
         id: nextWallpaper
         source: ""
         visible: false
         cache: false
         asynchronous: true
         onStatusChanged: {
-          if (status === AnimatedImage.Error) {
+          if (status === Image.Error) {
             Logger.e("Wallpaper", "Failed to load next wallpaper image:", Paths.replaceHomeWithTilde(source));
-          } else if (status === AnimatedImage.Ready) {
+          } else if (status === Image.Ready) {
             if (!wallpaperReady) {
               wallpaperReady = true;
             }
             transitionAnimation.start();
           }
-          playing = (status === AnimatedImage.Ready);
         }
       }
 
