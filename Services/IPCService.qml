@@ -95,7 +95,7 @@ Singleton {
   IpcHandler {
     target: "wallpaper"
     function next(): void {
-      if (Settings.data.wallpaper.enabled) {
+      if (Settings.data.wallpaper.enabled && Settings.data.wallpaper.enableSlideshow) {
         WallpaperService.setNextWallpaper();
       }
     }
