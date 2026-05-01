@@ -91,4 +91,21 @@ Singleton {
       AudioService.setMuted(!AudioService.muted);
     }
   }
+
+  IpcHandler {
+    target: "wallpaper"
+    function next(): void {
+      if (Settings.data.wallpaper.enabled) {
+        WallpaperService.setNextWallpaper();
+      }
+    }
+    function set(path: string): void {
+      if (Settings.data.wallpaper.enabled) {
+        WallpaperService.changeWallpaper(path);
+      }
+    }
+    function refresh(): void {
+      WallpaperService.refreshWallpapers();
+    }
+  }
 }
