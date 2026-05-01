@@ -95,7 +95,7 @@ Item {
       return panelSize.preferredHeight || (panelContent ? panelContent.implicitHeight : 0) + topMargin + bottomMargin;
     }
 
-    scale: root.isClosing ? 0.8 : 1.0
+    scale: root.isClosing ? 0.0 : 1.0
 
     width: contentWidth
     height: contentHeight
