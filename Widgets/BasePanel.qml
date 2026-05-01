@@ -95,7 +95,8 @@ Item {
       return panelSize.preferredHeight || (panelContent ? panelContent.implicitHeight : 0) + topMargin + bottomMargin;
     }
 
-    scale: root.isClosing ? 0.0 : 1.0
+    scale: root.isClosing ? 0.8 : 1.0
+    opacity: root.isClosing ? 0.0 : 1.0
 
     width: contentWidth
     height: contentHeight
@@ -114,6 +115,13 @@ Item {
     }
 
     Behavior on scale {
+      NumberAnimation {
+        duration: root.isClosing ? Theme.animationFast : Theme.animationNormal
+        easing.type: Easing.OutBack
+      }
+    }
+
+    Behavior on opacity {
       NumberAnimation {
         duration: root.isClosing ? Theme.animationFast : Theme.animationNormal
         easing.type: Easing.OutBack
@@ -150,6 +158,7 @@ Item {
     width: panelContainer.width
     height: panelContainer.height
     scale: panelContainer.scale
+    opacity: panelContainer.opacity
     sourceComponent: root.panelComponent
     onLoaded: {
       Logger.d("BasePanel", "Panel content loaded for screen:", screen?.name);
