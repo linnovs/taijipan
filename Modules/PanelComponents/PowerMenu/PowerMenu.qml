@@ -7,19 +7,15 @@ BasePanel {
   id: root
 
   exclusiveKeyboardFocus: true
+  panelPosition.placeInCenter: true
 
-  panelComponent: Item {
-    x: (screen.width - childrenRect.width) / 2
-    y: (screen.height - childrenRect.height) / 2
+  panelComponent: ColumnLayout {
+    spacing: Theme.marginSM
 
-    ColumnLayout {
-      spacing: Theme.marginSM
+    UserIcon {}
 
-      UserIcon {}
+    MenuButtons {}
 
-      MenuButtons {}
-
-      Uptime {}
-    }
+    Uptime {}
   }
 }
