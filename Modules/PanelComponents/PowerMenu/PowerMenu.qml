@@ -9,9 +9,10 @@ BasePanel {
   exclusiveKeyboardFocus: true
 
   panelComponent: Item {
+    x: (screen.width - childrenRect.width) / 2
+    y: (screen.height - childrenRect.height) / 2
+
     ColumnLayout {
-      y: (screen.height - implicitHeight) / 2
-      width: screen.width
       spacing: Theme.marginSM
 
       UserIcon {}
