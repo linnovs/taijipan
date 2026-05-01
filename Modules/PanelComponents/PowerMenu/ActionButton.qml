@@ -55,9 +55,9 @@ Rectangle {
     anchors.fill: parent
     hoverEnabled: true
     onHoveredChanged: {
-      root.color = containsMouse ? Colors.mSurfaceVariant : Colors.mSurface;
-      textIcon.color = containsMouse ? Colors.mOnSurfaceVariant : Colors.mOnSurface;
-      titleText.color = containsMouse ? Colors.mOnSurfaceVariant : Colors.mOnSurface;
+      root.color = containsMouse ? Colors.mInverseSurface : Colors.mSurface;
+      textIcon.color = containsMouse ? Colors.mInverseOnSurface : Colors.mOnSurface;
+      titleText.color = containsMouse ? Colors.mInverseOnSurface : Colors.mOnSurface;
     }
     onClicked: actionProcess.running = true
   }
