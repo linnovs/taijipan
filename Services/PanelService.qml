@@ -62,6 +62,11 @@ Singleton {
       _openedPanel.close();
     }
   }
+
+  function haveBackdrop() {
+    return _openedPanel && _openedPanel.enableBackdrop && _openedPanel.isOpen;
+  }
+
   function isPanelExclusiveKeyboardFocus() {
     return _openedPanel && _openedPanel.exclusiveKeyboardFocus;
   }

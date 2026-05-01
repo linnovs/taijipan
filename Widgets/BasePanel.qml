@@ -11,6 +11,7 @@ Item {
   property bool isOpen: false
   property bool placeInCenter: false
   property bool isClosing: false
+  property bool enableBackdrop: false
   property bool exclusiveKeyboardFocus: false
 
   width: parent ? parent.width : 0

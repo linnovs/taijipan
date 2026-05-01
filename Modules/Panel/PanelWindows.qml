@@ -33,7 +33,7 @@ PanelWindow {
   anchors.left: true
 
   color: {
-    if (PanelService.isAnyPanelVisible) {
+    if (PanelService.isAnyPanelVisible && PanelService.haveBackdrop()) {
       return Qt.alpha(Colors.mShadow, 0.8);
     }
 
@@ -65,6 +65,15 @@ PanelWindow {
     regions: [barMaskRegion, panelMaskRegion]
   }
 
+  Region {
+    id: backdropRegion
+    x: 0
+    y: 0
+    width: root.width
+    height: root.height
+  }
+  BackgroundEffect.blurRegion: PanelService.isAnyPanelVisible && PanelService.haveBackdrop() ? backdropRegion : null
+
   Item {
     id: container
     width: root.width
@@ -87,6 +96,7 @@ PanelWindow {
     PowerMenu {
       screen: root.screen
       objectName: "powerMenu-" + (root.screen?.name || "unknown")
+      enableBackdrop: true
     }
   }
 
