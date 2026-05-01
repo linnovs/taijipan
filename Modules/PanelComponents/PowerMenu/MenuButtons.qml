@@ -82,4 +82,5 @@ Item {
 
   Layout.fillWidth: true
   Layout.preferredHeight: buttonGrid.implicitHeight
+  Layout.preferredWidth: buttonGrid.implicitWidth
 }
