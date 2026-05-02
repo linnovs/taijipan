@@ -36,7 +36,7 @@ PanelWindow {
 
   color: {
     if (PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop) {
-      return Qt.alpha(Colors.mShadow, 0.8);
+      return Qt.alpha(Colors.mShadow, Settings.data.general.dimmerOpacity || 0.8);
     }
 
     return "transparent";

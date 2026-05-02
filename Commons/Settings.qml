@@ -27,6 +27,7 @@ Singleton {
       property string userIcon: Paths.homePath(".face")
       property real shadowOffsetX: 2
       property real shadowOffsetY: 3
+      property real dimmerOpacity: 0
     }
 
     property JsonObject osd: JsonObject {
