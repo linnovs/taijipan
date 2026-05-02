@@ -98,7 +98,7 @@ Singleton {
     running: false
     interval: 200
     onTriggered: {
-      if (createdDirectories || settingsFileView.path !== undefined) {
+      if (createdDirectories && settingsFileView.path !== undefined) {
         Logger.i("Settings", "Reload settings after detected external change to file");
         settingsFileView.reload();
       }
