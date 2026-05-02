@@ -12,6 +12,8 @@ PanelWindow {
     Logger.d("PanelWindows", "Panel initialized for screen:", screen?.name, "- Dimensions:", screen?.width, "x", screen?.height, "- Position:", screen?.x, ",", screen?.y);
   }
 
+  readonly property bool isPanelOpenOnScreen: PanelService.openedPanel !== null && PanelService.openedPanel.screen === screen
+
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
   WlrLayershell.namespace: "taijipan-panel-" + (screen?.name || "unknown")
@@ -20,8 +22,8 @@ PanelWindow {
       return WlrKeyboardFocus.None;
     }
 
-    if (PanelService.isPanelOpenOnScreen(screen)) {
-      return PanelService.isPanelExclusiveKeyboardFocus() ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand;
+    if (root.isPanelOpenOnScreen) {
+      return PanelService.openedPanel.exclusiveKeyboardFocus ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand;
     }
 
     return WlrKeyboardFocus.OnDemand;
@@ -33,7 +35,7 @@ PanelWindow {
   anchors.left: true
 
   color: {
-    if (PanelService.isAnyPanelVisible && PanelService.haveBackdrop()) {
+    if (PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop) {
       return Qt.alpha(Colors.mShadow, 0.8);
     }
 
@@ -55,8 +57,6 @@ PanelWindow {
 
     Region {
       id: panelMaskRegion
-      x: 0
-      y: 0
       width: PanelService.isAnyPanelVisible ? root.width : 0
       height: PanelService.isAnyPanelVisible ? root.height : 0
       intersection: Intersection.Subtract
@@ -67,12 +67,10 @@ PanelWindow {
 
   Region {
     id: backdropRegion
-    x: 0
-    y: 0
-    width: root.width
-    height: root.height
+    width: PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop ? root.width : 0
+    height: PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop ? root.height : 0
   }
-  BackgroundEffect.blurRegion: PanelService.isAnyPanelVisible && PanelService.haveBackdrop() ? backdropRegion : null
+  BackgroundEffect.blurRegion: backdropRegion
 
   Item {
     id: container
@@ -102,7 +100,7 @@ PanelWindow {
 
   Shortcut {
     sequences: ["Esc"]
-    enabled: PanelService.isPanelOpenOnScreen(screen) && !PanelService.isKeybindRecording
+    enabled: root.isPanelOpenOnScreen && !PanelService.isKeybindRecording
     onActivated: PanelService.onEscapePressed()
   }
 }

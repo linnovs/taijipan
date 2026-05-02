@@ -7,10 +7,10 @@ Singleton {
   id: root
 
   property var _panels: ({})
-  property var _openedPanel: null
-  property var _closingPanel: null
+  property var openedPanel: null
+  property var closingPanel: null
 
-  readonly property bool isAnyPanelVisible: _openedPanel !== null
+  readonly property bool isAnyPanelVisible: openedPanel !== null
   property bool isKeybindRecording: false
 
   function hasPanel(name) {
@@ -39,44 +39,32 @@ Singleton {
   }
 
   function openingPanel(panel) {
-    if (_openedPanel && _openedPanel !== panel) {
-      _closingPanel = _openedPanel;
-      _openedPanel.close();
+    if (openedPanel && openedPanel !== panel) {
+      closingPanel = openedPanel;
+      openedPanel.close();
     }
 
-    _openedPanel = panel;
+    openedPanel = panel;
   }
 
   function closedPanel(panel) {
-    if (_openedPanel && _openedPanel === panel) {
-      _openedPanel = null;
+    if (openedPanel && openedPanel === panel) {
+      openedPanel = null;
     }
 
-    if (_closingPanel && _closingPanel === panel) {
-      _closingPanel = null;
+    if (closingPanel && closingPanel === panel) {
+      closingPanel = null;
     }
   }
 
   function closePanel() {
-    if (_openedPanel && _openedPanel.close) {
-      _openedPanel.close();
+    if (openedPanel && openedPanel.close) {
+      openedPanel.close();
     }
   }
 
-  function haveBackdrop() {
-    return _openedPanel && _openedPanel.enableBackdrop && _openedPanel.isOpen;
-  }
-
-  function isPanelExclusiveKeyboardFocus() {
-    return _openedPanel && _openedPanel.exclusiveKeyboardFocus;
-  }
-
-  function isPanelOpenOnScreen(screen) {
-    return _openedPanel && _openedPanel.screen && _openedPanel.screen === screen;
-  }
-
   function onEscapePressed() {
-    return _openedPanel && _openedPanel.onEscapePressed ? _openedPanel.onEscapePressed() : false;
+    return openedPanel && openedPanel.onEscapePressed ? openedPanel.onEscapePressed() : false;
   }
 
   function registerPanel(panelItem) {
