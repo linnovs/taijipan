@@ -18,7 +18,7 @@ Singleton {
     id: callbackDebounceTimer
     interval: 40
     onTriggered: {
-      Logger.d("IPCService", "Debounce timer triggered, executing pending callback with detected screen:", root.detectedScreen?.name);
+      Logger.d("IPCService", "Screen debounced to:", root.detectedScreen?.name || "null");
 
       if (pendingCallback) {
         let callback = pendingCallback;
