@@ -61,7 +61,7 @@ BasePanel {
     function onScanFinished() {
       let count = WallpaperService.wallpaperList.length;
       WallpaperService.wallpaperList.forEach(function (wallpaperPath) {
-        Logger.d("WallpaperSwitcher", "Found wallpaper:", wallpaperPath);
+        Logger.d("WallpaperSwitcher", "Found wallpaper:", Paths.replaceHomeWithTilde(wallpaperPath));
         ImageCacheService.getThumbnail(wallpaperPath, function (cached) {
           wallpaperModel.append({
             wallpaperPath: wallpaperPath,
