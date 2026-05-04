@@ -14,12 +14,15 @@ Singleton {
   property string defaultWallpaper: Paths.assetPath("default-wallpaper.jpg")
   property var wallpaperList: []
   property QtObject runningProcess
+  property bool isScanning: runningProcess !== null
 
   // Emitted when the current wallpaper for a screen changes. Provides the screen name and the new wallpaper path.
   signal wallpaperChanged(string screen, string wallpaper)
   // Emitted when a wallpaper has finished processing and is ready to be displayed. Provides the screen name, the final
   // wallpaper path, and the cached thumbnail path (if applicable).
   signal postWallpaperProcess(string screen, string wallpaper, string cached)
+  // Emitted when the wallpaper scan process has completed and the wallpaper list has been updated.
+  signal scanFinished
 
   function _updateCurrentWallpapers() {
     Quickshell.screens.forEach(screen => {
@@ -134,6 +137,7 @@ Singleton {
 
     runningProcess.destroy();
     runningProcess = null;
+    root.scanFinished();
   }
 
   function _scanDirectory(directory) {

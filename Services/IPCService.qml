@@ -94,6 +94,14 @@ Singleton {
 
   IpcHandler {
     target: "wallpaper"
+    function toggle(): void {
+      if (Settings.data.wallpaper.enabled) {
+        runOnScreen(screen => {
+          let wallpaperSwitcher = PanelService.getPanel("wallpaperSwitcher", screen);
+          wallpaperSwitcher?.toggle();
+        });
+      }
+    }
     function next(): void {
       if (Settings.data.wallpaper.enabled && Settings.data.wallpaper.enableSlideshow) {
         WallpaperService.setNextWallpaper();

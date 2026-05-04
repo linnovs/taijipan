@@ -28,6 +28,11 @@ Singleton {
       property real shadowOffsetX: 2
       property real shadowOffsetY: 3
       property real dimmerOpacity: 0
+      property JsonObject keybinds: JsonObject {
+        property list<string> left: ["H"]
+        property list<string> right: ["L"]
+        property list<string> enter: ["Return", "Enter"]
+      }
     }
 
     property JsonObject osd: JsonObject {

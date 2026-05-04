@@ -14,6 +14,7 @@ Singleton {
   readonly property string bgFullDir: Paths.cachePath("images", "wallpaper", "full")
 
   readonly property list<string> supportedImageFormats: ["jpg", "jpeg", "png", "bmp"]
+  readonly property int thumbnailSize: 384
 
   function isSupportedImageFormat(filePath): bool {
     const ext = filePath.split(".").pop().toLowerCase();
@@ -173,27 +174,21 @@ Singleton {
   }
 
   Component {
-    id: downscaleImageComponent
+    id: checkFileExistsComponent
     Process {
-      required property string sourcePath
-      required property string targetPath
-      required property int width
-      required property int height
-      command: ["magick", `'${sourcePath}'`, "-auto-orient", "-filter", "Lanczos", "-resize", `${width}x${height}^`, `'${targetPath}'`]
+      required property string filePath
+      command: ["test", "-f", filePath]
       stdout: StdioCollector {}
       stderr: StdioCollector {}
     }
   }
 
-  function downscaleImage(sourcePath, targetPath, width, height, callback) {
+  function checkFileExists(filePath, callback) {
     queueCommand({
-      name: "downscaleImage",
-      component: downscaleImageComponent,
+      name: "checkFileExists",
+      component: checkFileExistsComponent,
       params: {
-        sourcePath,
-        targetPath,
-        width,
-        height
+        filePath
       },
       callback: function (exitCode) {
         callback(exitCode === 0);
@@ -201,6 +196,53 @@ Singleton {
       onError: function () {
         callback(false);
       }
+    });
+  }
+
+  Component {
+    id: downscaleImageComponent
+    Process {
+      required property string sourcePath
+      required property string targetPath
+      required property int width
+      required property int height
+      command: ["magick", `${sourcePath}`, "-auto-orient", "-filter", "Lanczos", "-resize", `${width}x${height}^`, `${targetPath}`]
+      stdout: StdioCollector {}
+      stderr: StdioCollector {}
+    }
+  }
+
+  function downscaleImage(sourcePath, targetPath, width, height, callback) {
+    checkFileExists(targetPath, function (exists) {
+      if (exists) {
+        callback(targetPath);
+        return;
+      }
+
+      queueCommand({
+        name: "downscaleImage",
+        component: downscaleImageComponent,
+        params: {
+          sourcePath,
+          targetPath,
+          width,
+          height
+        },
+        callback: function (exitCode, processObj) {
+          if (exitCode !== 0) {
+            const errMsg = processObj.stderr.text.trim();
+            const idx = errMsg.indexOf(":") + 1;
+            const msg = errMsg.substring(0, idx).padStart(10, " ") + errMsg.substring(idx);
+            Logger.e("ImageCacheService", "Failed to downscale image:", Paths.replaceHomeWithTilde(sourcePath));
+            Logger.e("ImageCacheService", "  ->", Paths.replaceHomeWithTilde(targetPath));
+            Logger.e("ImageCacheService", "  -> Exit code:", exitCode, "\n", msg);
+          }
+          callback(exitCode === 0);
+        },
+        onError: function () {
+          callback(false);
+        }
+      });
     });
   }
 
@@ -212,17 +254,12 @@ Singleton {
       return;
     }
 
-    let imageSource = sourceImage;
-
-    if (Paths.isFileUrl(sourceImage)) {
-      imageSource = Paths.strip(sourceImage);
-    }
-
-    getDimensions(imageSource, function (imgWidth, imgHeight) {
+    let imagePath = Paths.isFileUrl(sourceImage) ? Paths.strip(sourceImage) : sourceImage;
+    getDimensions(imagePath, function (imgWidth, imgHeight) {
       const fitsScreen = imgWidth > 0 && imgHeight > 0 && imgWidth <= width && imgHeight <= height;
 
       if (fitsScreen) {
-        if (isSupportedImageFormat(imageSource)) {
+        if (isSupportedImageFormat(imagePath)) {
           Logger.d("ImageCacheService", "Image fits screen and is in supported format, use original:", Paths.replaceHomeWithTilde(sourceImage));
           callback("");
           return;
@@ -233,17 +270,45 @@ Singleton {
       const targetWidth = fitsScreen ? imgWidth : width;
       const targetHeight = fitsScreen ? imgHeight : height;
 
-      getMTime(imageSource, function (mtime) {
-        const cacheKey = generateCacheKey(imageSource, targetWidth, targetHeight, mtime);
+      getMTime(imagePath, function (mtime) {
+        const cacheKey = generateCacheKey(imagePath, targetWidth, targetHeight, mtime);
         const cacheFilePath = Paths.joinDir(root.bgFullDir, cacheKey + ".png");
 
-        downscaleImage(imageSource, cacheFilePath, targetWidth, targetHeight, function (success) {
+        downscaleImage(imagePath, cacheFilePath, targetWidth, targetHeight, function (success) {
           if (success) {
             callback(Paths.toFileUrl(cacheFilePath));
           } else {
             callback("");
           }
         });
+      });
+    });
+  }
+
+  // callback will be called with the file path to the cached thumbnail, or empty string if original image should be used
+  function getThumbnail(sourceImage, callback) {
+    if (!magickAvailable) {
+      Logger.d("ImageCacheService", "ImageMagick not available, use original:", Paths.replaceHomeWithTilde(sourceImage));
+      callback("");
+      return;
+    }
+
+    if (!sourceImage || sourceImage === "") {
+      callback("");
+      return;
+    }
+
+    let imagePath = Paths.isFileUrl(sourceImage) ? Paths.strip(sourceImage) : sourceImage;
+    getMTime(imagePath, function (mtime) {
+      const cacheKey = generateCacheKey(imagePath, thumbnailSize, thumbnailSize, mtime);
+      const cacheFilePath = Paths.joinDir(root.bgThumbDir, cacheKey + ".png");
+
+      downscaleImage(imagePath, cacheFilePath, thumbnailSize, thumbnailSize, function (success) {
+        if (success) {
+          callback(Paths.toFileUrl(cacheFilePath));
+        } else {
+          callback("");
+        }
       });
     });
   }

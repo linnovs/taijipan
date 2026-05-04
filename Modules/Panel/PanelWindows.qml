@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import qs.Modules.PanelComponents.PowerMenu
+import qs.Modules.PanelComponents.WallpaperSwitcher
 import qs.Services
 import qs.Commons
 
@@ -91,6 +92,11 @@ PanelWindow {
       z: 0
     }
 
+    WallpaperSwitcher {
+      screen: root.screen
+      objectName: "wallpaperSwitcher-" + (root.screen?.name || "unknown")
+    }
+
     PowerMenu {
       screen: root.screen
       objectName: "powerMenu-" + (root.screen?.name || "unknown")
@@ -102,5 +108,32 @@ PanelWindow {
     sequences: ["Esc"]
     enabled: root.isPanelOpenOnScreen && !PanelService.isKeybindRecording
     onActivated: PanelService.onEscapePressed()
+  }
+
+  Instantiator {
+    model: Settings.data.general.keybinds.left || []
+    Shortcut {
+      sequence: modelData
+      enabled: root.isPanelOpenOnScreen && (PanelService.openedPanel.onLeftPressed !== undefined) && !PanelService.isKeybindRecording
+      onActivated: PanelService.openedPanel.onLeftPressed()
+    }
+  }
+
+  Instantiator {
+    model: Settings.data.general.keybinds.right || []
+    Shortcut {
+      sequence: modelData
+      enabled: root.isPanelOpenOnScreen && (PanelService.openedPanel.onRightPressed !== undefined) && !PanelService.isKeybindRecording
+      onActivated: PanelService.openedPanel.onRightPressed()
+    }
+  }
+
+  Instantiator {
+    model: Settings.data.general.keybinds.enter || []
+    Shortcut {
+      sequence: modelData
+      enabled: root.isPanelOpenOnScreen && (PanelService.openedPanel.onEnterPressed !== undefined) && !PanelService.isKeybindRecording
+      onActivated: PanelService.openedPanel.onEnterPressed()
+    }
   }
 }
