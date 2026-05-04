@@ -5,17 +5,20 @@ import Quickshell
 Singleton {
   id: root
 
+  function _center(str, width) {
+    if (str.length >= width)
+      return str.substring(0, width);
+
+    const totalPadding = width - str.length;
+    const leftPadding = Math.ceil(totalPadding / 2);
+
+    return str.padStart(leftPadding + str.length, " ").padEnd(width, " ");
+  }
+
   function _format(...args) {
     const maxLen = 17;
     const t = Time.formatDateTime(new Date());
-    let module = "";
-
-    if (args.length > 1) {
-      module = args.shift();
-    } else {
-      module = "General";
-    }
-    module = module.substring(0, maxLen).padStart(maxLen / 2 + Math.floor(module.length / 2), " ").padEnd(maxLen, " ");
+    const module = _center(args.length > 1 ? args.shift() : "General", maxLen);
 
     return `\x1b[32m${t}\x1b[0m \x1b[35m[${module}]\x1b[0m ` + args.join(" ");
   }
