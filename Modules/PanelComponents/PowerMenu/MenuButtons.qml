@@ -41,6 +41,8 @@ Item {
     }
   }
 
+  property var panelItem: null
+
   property int _optionsVersion: 0
   property var options: {
     void (_optionsVersion);
@@ -76,6 +78,9 @@ Item {
         icon: modelData.icon
         title: modelData.title
         command: modelData.command
+        onTriggered: {
+          panelItem.close();
+        }
       }
     }
   }

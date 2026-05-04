@@ -14,7 +14,9 @@ BasePanel {
 
     UserIcon {}
 
-    MenuButtons {}
+    MenuButtons {
+      panelItem: root
+    }
 
     Uptime {}
   }

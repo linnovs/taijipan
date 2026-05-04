@@ -14,6 +14,8 @@ Rectangle {
   color: Colors.mSurface
   radius: Theme.radiusMD
 
+  signal triggered
+
   Process {
     id: actionProcess
     running: false
@@ -59,7 +61,10 @@ Rectangle {
       textIcon.color = containsMouse ? Colors.mInverseOnSurface : Colors.mOnSurface;
       titleText.color = containsMouse ? Colors.mInverseOnSurface : Colors.mOnSurface;
     }
-    onClicked: actionProcess.running = true
+    onClicked: {
+      actionProcess.running = true;
+      root.triggered();
+    }
   }
 
   Layout.preferredWidth: Math.max(buttonLayout.implicitWidth, buttonLayout.implicitHeight) + Theme.marginXS
