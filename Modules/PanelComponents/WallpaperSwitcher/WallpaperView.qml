@@ -11,12 +11,14 @@ PathView {
 
   property ListModel wallpaperModel
   property real baseWidth: screen.width / pathItemCount
+  property int selectedIndex: 0
 
   model: wallpaperModel
   pathItemCount: 7
   cacheItemCount: 5
   preferredHighlightBegin: 0.5 - (1 / pathItemCount) / 2
   preferredHighlightEnd: 0.5 + (1 / pathItemCount) / 2
+  currentIndex: selectedIndex
   highlightMoveDuration: Theme.animationFast
 
   function handleLeft() {

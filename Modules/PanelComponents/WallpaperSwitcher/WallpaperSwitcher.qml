@@ -28,6 +28,7 @@ BasePanel {
         screen: root.screen
         wallpaperModel: root.wallpaperModel
         preferredHeight: panelSize.preferredHeight
+        selectedIndex: WallpaperService.getWallpaperIndex(screen.name)
       }
     }
 
