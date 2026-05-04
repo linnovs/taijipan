@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import qs.Services
 import qs.Commons
@@ -146,7 +145,7 @@ Item {
       anchors.fill: parent
       acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
       z: -1
-      onClicked: mouse.accepted = true
+      onClicked: mouse => mouse.accepted = true
     }
   }
 
@@ -160,9 +159,7 @@ Item {
     scale: panelContainer.scale
     opacity: panelContainer.opacity
     sourceComponent: root.panelComponent
-    onLoaded: {
-      Logger.d("BasePanel", "Panel content loaded for screen:", screen?.name);
-    }
+    onLoaded: {}
   }
 
   Component.onCompleted: {
