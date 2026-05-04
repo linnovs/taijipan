@@ -9,7 +9,6 @@ Item {
   property ShellScreen screen: null
   property Component panelComponent: null
   property bool isOpen: false
-  property bool placeInCenter: false
   property bool isClosing: false
   property bool enableBackdrop: false
   property bool exclusiveKeyboardFocus: false
@@ -17,12 +16,25 @@ Item {
   width: parent ? parent.width : 0
   height: parent ? parent.height : 0
 
+  enum Placement {
+    Top,
+    Center,
+    Bottom
+  }
+
+  component PanelMarginObj: QtObject {
+    property int top
+    property int right
+    property int bottom
+    property int left
+  }
   component PanelPositionObj: QtObject {
     property int x
     property int y
-    property bool placeInCenter
+    property int placement: -1
     property bool horizontalCenter
     property bool verticalCenter
+    property PanelMarginObj margins: PanelMarginObj {}
   }
   component PanelSize: QtObject {
     property int preferredWidth
@@ -100,18 +112,26 @@ Item {
     width: contentWidth
     height: contentHeight
 
-    x: {
-      if (panelPosition.placeInCenter || panelPosition.horizontalCenter) {
+    property real posX: {
+      if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.horizontalCenter) {
         return (parent.width - width) / 2;
       }
       return panelPosition.x;
     }
-    y: {
-      if (panelPosition.placeInCenter || panelPosition.verticalCenter) {
+    property real posY: {
+      if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.verticalCenter) {
         return (parent.height - height) / 2;
+      }
+      if (panelPosition.placement === BasePanel.Placement.Top) {
+        return 0;
+      }
+      if (panelPosition.placement === BasePanel.Placement.Bottom) {
+        return parent.height - height;
       }
       return panelPosition.y;
     }
+    x: posX + panelPosition.margins.left - panelPosition.margins.right
+    y: posY + panelPosition.margins.top - panelPosition.margins.bottom
 
     Behavior on scale {
       NumberAnimation {

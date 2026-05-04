@@ -7,7 +7,7 @@ BasePanel {
   id: root
 
   exclusiveKeyboardFocus: true
-  panelPosition.placeInCenter: true
+  panelPosition.placement: BasePanel.Placement.Center
 
   panelComponent: ColumnLayout {
     spacing: Theme.marginSM

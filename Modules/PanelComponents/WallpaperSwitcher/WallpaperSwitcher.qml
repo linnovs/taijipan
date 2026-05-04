@@ -9,7 +9,8 @@ BasePanel {
 
   exclusiveKeyboardFocus: true
 
-  panelPosition.placeInCenter: true
+  panelPosition.placement: BasePanel.Placement.Bottom
+  panelPosition.margins.bottom: screen.height * 0.05
   panelSize.preferredWidth: screen ? screen.width : 400
   panelSize.preferredHeight: ImageCacheService.thumbnailSize
 
