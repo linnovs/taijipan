@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Io
+import qs.Services
 import qs.Widgets
 import qs.Commons
 
@@ -13,8 +14,6 @@ Rectangle {
 
   color: Colors.mSurface
   radius: Theme.radiusMD
-
-  signal triggered
 
   Process {
     id: actionProcess
@@ -63,7 +62,7 @@ Rectangle {
     }
     onClicked: {
       actionProcess.running = true;
-      root.triggered();
+      PanelService.closePanel();
     }
   }
 
