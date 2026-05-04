@@ -1,8 +1,11 @@
 import QtQuick
 import Quickshell
 import qs.Services
+import qs.Commons
 
 PathView {
+  id: root
+
   property ShellScreen screen
   property real preferredHeight
 
@@ -14,6 +17,7 @@ PathView {
   cacheItemCount: 5
   preferredHighlightBegin: 0.5 - (1 / pathItemCount) / 2
   preferredHighlightEnd: 0.5 + (1 / pathItemCount) / 2
+  highlightMoveDuration: Theme.animationFast
 
   function handleLeft() {
     if (!moving)
@@ -83,5 +87,17 @@ PathView {
     }
   }
 
-  delegate: WallpaperItem {}
+  Timer {
+    id: selectedTime
+    interval: Theme.animationFast + Theme.animationBuffer
+    onTriggered: handleEnter()
+  }
+
+  delegate: WallpaperItem {
+    onSelected: (x, y) => {
+      const pos = mapToItem(root, x, y);
+      currentIndex = root.indexAt(pos.x, pos.y);
+      selectedTime.restart();
+    }
+  }
 }

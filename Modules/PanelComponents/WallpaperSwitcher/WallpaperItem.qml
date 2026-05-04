@@ -9,6 +9,8 @@ Item {
   property bool isCurrent: PathView.isCurrentItem
   readonly property string wallpaperPath: model.wallpaperPath
 
+  signal selected(real x, real y)
+
   Rectangle {
     color: "transparent"
     width: parent.width
@@ -32,6 +34,13 @@ Item {
       border.color: Colors.mPrimary
       border.width: isCurrent ? 6 : 0
       z: 5
+    }
+
+    MouseArea {
+      anchors.fill: parent
+      acceptedButtons: Qt.LeftButton
+      onClicked: mouse => selected(mouse.x, mouse.y)
+      z: 10
     }
   }
 
