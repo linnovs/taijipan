@@ -15,7 +15,7 @@ Singleton {
     } else {
       module = "General";
     }
-    module = module.substring(0, maxLen).padStart(maxLen / 2 + module.length / 2, " ").padEnd(maxLen, " ");
+    module = module.substring(0, maxLen).padStart(maxLen / 2 + Math.floor(module.length / 2), " ").padEnd(maxLen, " ");
 
     return `\x1b[32m${t}\x1b[0m \x1b[35m[${module}]\x1b[0m ` + args.join(" ");
   }
