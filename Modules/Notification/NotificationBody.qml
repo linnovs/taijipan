@@ -29,13 +29,15 @@ RowLayout {
       source: notification.image
       sourceSize.width: parent.Layout.preferredWidth
       sourceSize.height: parent.Layout.preferredHeight
+      width: parent.Layout.preferredWidth
+      height: parent.Layout.preferredHeight
     }
   }
 
   ColumnLayout {
     spacing: Theme.marginXXS
     Layout.fillWidth: true
-    Layout.minimumWidth: Theme.notificationMinimumWidth - (imageLoader.item?.implicitWidth ?? 0)
+    Layout.minimumWidth: Theme.notificationMinimumWidth - (imageLoader.active ? imageLoader.implicitWidth : 0)
     Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 
     Text {
