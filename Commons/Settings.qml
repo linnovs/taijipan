@@ -36,7 +36,7 @@ Singleton {
     }
 
     property JsonObject osd: JsonObject {
-      property int autoDismissTimeout: 2000
+      property int autoDismissTimeout: 2
       property real backgroundOpacity: 0.8
     }
 

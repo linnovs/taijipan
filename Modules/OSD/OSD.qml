@@ -104,7 +104,7 @@ Loader {
 
     Timer {
       id: autoHideTimer
-      interval: Settings.data.osd.autoDismissTimeout
+      interval: Settings.data.osd.autoDismissTimeout * 1000
       onTriggered: {
         hideOSD();
       }
