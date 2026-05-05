@@ -4,6 +4,7 @@ import Quickshell
 import qs.Modules.Panel
 import qs.Modules.OSD
 import qs.Modules.Wallpaper
+import qs.Modules.Notification
 import qs.Modules.SysTray
 import qs.Services
 import qs.Commons
@@ -67,6 +68,7 @@ ShellRoot {
         AppThemeService.init();
         ImageCacheService.init();
         WallpaperService.init();
+        NotificationService.init();
 
         Qt.callLater(() => {
           IPCService.init();
@@ -79,6 +81,7 @@ ShellRoot {
       OSD {}
       Overview {}
       Wallpaper {}
+      Notification {}
 
       SysTray {}
     }

@@ -62,6 +62,15 @@ Singleton {
       property string font: defaultTextMetrics.font.family
     }
 
+    property JsonObject notification: JsonObject {
+      property bool isOverlay: true
+      property int defaultTTL: 5
+      property int lowUrgencyTTL: 3
+      property real backgroundOpacity: 0.8
+      property int maximumLineCount: 5
+      property int maximumCharLength: 120
+    }
+
     property JsonObject powerMenu: JsonObject {
       property list<var> options: [
         {

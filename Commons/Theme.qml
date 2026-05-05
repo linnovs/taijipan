@@ -26,11 +26,13 @@ Singleton {
   readonly property int radiusXL: 12
   readonly property int radiusRound: 9999
 
+  readonly property int marginXXS: spacing
   readonly property int marginXS: spacing * 2
   readonly property int marginSM: spacing * 4
   readonly property int marginMD: spacing * 6
   readonly property int marginLG: spacing * 8
   readonly property int marginXL: spacing * 12
+  readonly property int marginXXL: spacing * 16
 
   readonly property int blurMax: spacing * 6
   readonly property real shadowBlur: 1.0
@@ -61,4 +63,9 @@ Singleton {
 
   readonly property int powerMenuIconSize: spacing * 32
   readonly property int powerMenuButtonIconSize: spacing * 16
+
+  readonly property int notificationMinimumWidth: spacing * 104
+  readonly property int notificationMinimumHeight: spacing * 26
+  readonly property int notificationAppIconSize: spacing * 4
+  readonly property int notificationImageSize: spacing * 24
 }
