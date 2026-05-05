@@ -89,11 +89,14 @@ Item {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.topMargin: Theme.marginXS
     notification: NotificationObject {
+      notificationId: popup.notificationId
       icon: modelData.icon
       appName: modelData.appName
       title: modelData.title
       body: modelData.body
       image: modelData.image
+      hasActionIcons: modelData.hasActionIcons
+      actions: modelData.actions
       timestamp: modelData.timestamp
     }
   }

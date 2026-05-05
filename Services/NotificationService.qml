@@ -29,12 +29,8 @@ Singleton {
     const now = Date.now();
     const actions = notification.actions.map(action => {
       return {
-        identifier: notification.hasActionIcons ? action.identifier : "",
-        text: action.text,
-        invoke: () => {
-          Logger.i("NotificationService", "Invoking action:", action.identifier, `(${action.text})`);
-        // action.invoke()
-        }
+        identifier: action.identifier,
+        text: action.text
       };
     });
     let noti = {
@@ -46,6 +42,7 @@ Singleton {
       body: notification.body.trim(),
       actions: actions,
       image: notification.image,
+      hasActionIcons: notification.hasActionIcons,
       timestamp: now,
       progress: 1.0
     };
@@ -158,7 +155,11 @@ Singleton {
       timestamp: data.timestamp,
       paused: false,
       pausedAt: null,
-      closedHandler: onClosed
+      closedHandler: onClosed,
+      actionMap: notification.actions.reduce((acc, action) => {
+        acc[action.identifier] = action;
+        return acc;
+      }, {})
     };
 
     notification.tracked = true;
@@ -179,6 +180,47 @@ Singleton {
 
     saveToHistory(noti, notification);
     addPopup(noti, notification);
+  }
+
+  function updateModel(model, id, prop, value) {
+    for (let i = 0; i < model.count; i++) {
+      if (model.get(i).id === id) {
+        model.setProperty(i, prop, value);
+        break;
+      }
+    }
+  }
+
+  function invokeAction(notificationId, actionIdentifier) {
+    const state = popupStates[notificationId];
+    if (!state) {
+      Logger.w("NotificationService", "No state found for notification ID", `'${notificationId}'`);
+      return false;
+    }
+
+    const actionObj = state.actionMap[actionIdentifier];
+    if (!actionObj) {
+      Logger.w("NotificationService", "No action found for identifier", `'${actionIdentifier}'`, "in notification ID", `'${notificationId}'`);
+      return false;
+    }
+
+    if (actionObj.invoke) {
+      try {
+        actionObj.invoke();
+      } catch (e) {
+        Logger.w("NotificationService", "invoke() failed:", e);
+        return false;
+      }
+    } else {
+      Logger.w("NotificationService", "Action does not have an invoke method");
+      return false;
+    }
+
+    // clear actions after invocation to prevent multiple invocations
+    updateModel(popupModel, notificationId, "actions", []);
+    updateModel(historyModel, notificationId, "actions", []);
+
+    return true;
   }
 
   NotificationServer {

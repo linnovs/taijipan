@@ -16,4 +16,9 @@ ColumnLayout {
   NotificationBody {
     notification: container.notification
   }
+
+  NotificationActions {
+    Layout.topMargin: Theme.marginXXS
+    notification: container.notification
+  }
 }
