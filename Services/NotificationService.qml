@@ -29,7 +29,7 @@ Singleton {
     const now = Date.now();
     const actions = notification.actions.map(action => {
       return {
-        identifier: action.identifier,
+        identifier: notification.hasActionIcons ? action.identifier : "",
         text: action.text,
         invoke: () => {
           Logger.i("NotificationService", "Invoking action:", action.identifier, `(${action.text})`);
