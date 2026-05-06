@@ -56,6 +56,35 @@ Item {
     dismissTimer.restart();
   }
 
+  DragHandler {
+    acceptedButtons: Qt.LeftButton
+    xAxis.minimum: 0
+    xAxis.maximum: parent.width
+    yAxis.enabled: false
+    onActiveChanged: {
+      if (active) {
+        parent.opacity = parent.x / parent.width;
+        return;
+      }
+
+      if (parent.x > parent.width * 0.8) {
+        popup.dismiss();
+      } else {
+        parent.x = 0;
+        parent.opacity = Settings.data.notification.backgroundOpacity;
+      }
+    }
+  }
+
+  MouseArea {
+    anchors.fill: parent
+    acceptedButtons: Qt.RightButton
+    onClicked: mouse => {
+      if (mouse.button === Qt.RightButton)
+        popup.dismiss();
+    }
+  }
+
   Rectangle {
     id: background
     anchors.fill: parent
