@@ -42,7 +42,9 @@ Loader {
       Repeater {
         id: popupRepeater
         model: popups
-        NotificationPopup {}
+        NotificationPopup {
+          Layout.alignment: Qt.AlignHCenter
+        }
       }
 
       Behavior on implicitHeight {
