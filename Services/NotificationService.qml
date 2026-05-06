@@ -27,12 +27,10 @@ Singleton {
 
   function parseNotification(notification) {
     const now = Date.now();
-    const actions = notification.actions.map(action => {
-      return {
-        identifier: action.identifier,
-        text: action.text
-      };
-    });
+    const actions = notification.actions.map(action => ({
+          identifier: action.identifier,
+          text: action.text
+        }));
     let noti = {
       internalId: notification.id,
       icon: notification.appIcon || "",
