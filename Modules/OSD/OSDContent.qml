@@ -58,6 +58,7 @@ RowLayout {
     text: osdContent.statusMessage || Math.round(percentage * 100).toFixed(0) + "%"
     horizontalAlignment: Text.AlignRight
     color: Colors.mOnSurface
+    font.pixelSize: Theme.fontSizeLG
     font.weight: Font.DemiBold
   }
 }

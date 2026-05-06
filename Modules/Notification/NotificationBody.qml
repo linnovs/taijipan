@@ -15,7 +15,7 @@ RowLayout {
     text: " ".repeat(Settings.data.notification.maximumCharLength)
     elide: Text.ElideRight
     font.family: Settings.data.ui.font
-    font.pixelSize: Theme.fontSizeSM
+    font.pixelSize: Theme.fontSizeMD
   }
 
   Loader {
@@ -44,6 +44,7 @@ RowLayout {
       Layout.fillWidth: true
       color: Colors.mOnSurface
       maximumLineCount: 1
+      font.pixelSize: textMetrics.font.pixelSize
       font.weight: Font.DemiBold
       elide: textMetrics.elide
       text: notification.title
@@ -54,6 +55,7 @@ RowLayout {
       color: Colors.mOnSurface
       wrapMode: Text.WordWrap
       maximumLineCount: Settings.data.notification.maximumLineCount
+      font.pixelSize: textMetrics.font.pixelSize
       elide: textMetrics.elide
       text: notification.body
     }
