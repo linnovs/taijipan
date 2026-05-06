@@ -7,6 +7,7 @@ Item {
   id: popup
 
   required property var modelData
+  property bool disableAnimation: false
   property bool dismissing: false
   property string notificationId: modelData.id
 
@@ -23,6 +24,7 @@ Item {
 
   opacity: 0
   Behavior on opacity {
+    enabled: !disableAnimation
     NumberAnimation {
       duration: Theme.animationNormal
       easing.type: Easing.Linear
@@ -59,19 +61,21 @@ Item {
   DragHandler {
     acceptedButtons: Qt.LeftButton
     xAxis.minimum: 0
-    xAxis.maximum: parent.width
+    xAxis.maximum: popup.width
     yAxis.enabled: false
+    onActiveTranslationChanged: {
+      const opacity = Math.min((popup.width - popup.x) / popup.width, Settings.data.notification.backgroundOpacity);
+      popup.opacity = Math.abs(opacity);
+    }
     onActiveChanged: {
-      if (active) {
-        parent.opacity = parent.x / parent.width;
+      popup.disableAnimation = active;
+      if (active)
         return;
-      }
-
-      if (parent.x > parent.width * 0.8) {
+      if (popup.x > popup.width * 0.9) {
         popup.dismiss();
       } else {
-        parent.x = 0;
-        parent.opacity = Settings.data.notification.backgroundOpacity;
+        popup.x = 0;
+        popup.opacity = Settings.data.notification.backgroundOpacity;
       }
     }
   }
