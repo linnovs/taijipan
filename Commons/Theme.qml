@@ -51,11 +51,11 @@ Singleton {
   readonly property int iconSizeLG: spacing * 32
   readonly property int iconSizeXL: spacing * 64
 
-  readonly property int fontSizeXS: spacing * 2
-  readonly property int fontSizeSM: spacing * 3
-  readonly property int fontSizeMD: spacing * 4
-  readonly property int fontSizeLG: spacing * 5
-  readonly property int fontSizeXL: spacing * 6
+  readonly property int fontSizeXS: spacing * 1
+  readonly property int fontSizeSM: spacing * 2
+  readonly property int fontSizeMD: spacing * 3
+  readonly property int fontSizeLG: spacing * 4
+  readonly property int fontSizeXL: spacing * 5
 
   readonly property int barMarginV: spacing * 2
   readonly property int barMarginH: spacing * 2
