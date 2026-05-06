@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.Services
 import qs.Commons
 
 ColumnLayout {
@@ -7,6 +8,16 @@ ColumnLayout {
 
   required property NotificationObject notification
   property int minimumWidth
+
+  HoverHandler {
+    onHoveredChanged: {
+      if (hovered) {
+        NotificationService.hover(notification.notificationId);
+      } else {
+        NotificationService.clearHover(notification.notificationId);
+      }
+    }
+  }
 
   spacing: Theme.marginXS
 

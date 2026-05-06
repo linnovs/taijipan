@@ -104,6 +104,25 @@ Singleton {
     onTriggered: progressUpdate()
   }
 
+  function hover(id) {
+    const state = popupStates[id];
+    if (state && !state.paused) {
+      state.paused = true;
+      state.pausedAt = Date.now();
+    }
+  }
+
+  function clearHover(id) {
+    const state = popupStates[id];
+    if (state && state.paused) {
+      const now = Date.now();
+      const pausedDuration = now - state.pausedAt;
+      state.timestamp += pausedDuration;
+      state.paused = false;
+      state.pausedAt = null;
+    }
+  }
+
   function calculateTTL(notification) {
     if (notification.expireTimeout > 0) {
       return notification.expireTimeout;
