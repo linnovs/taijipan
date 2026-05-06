@@ -66,8 +66,8 @@ FlexboxLayout {
         }
       }
 
-      implicitWidth: buttonContent.implicitWidth + Theme.marginXS * 2
-      implicitHeight: buttonContent.implicitHeight + Theme.marginXS * 2
+      implicitWidth: buttonContent.implicitWidth + Theme.marginXXS * 2
+      implicitHeight: buttonContent.implicitHeight + Theme.marginXXS * 2
     }
   }
 }

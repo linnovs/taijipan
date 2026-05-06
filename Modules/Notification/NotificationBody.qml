@@ -37,7 +37,7 @@ RowLayout {
   ColumnLayout {
     spacing: Theme.marginXXS
     Layout.fillWidth: true
-    Layout.minimumWidth: Theme.notificationMinimumWidth - (imageLoader.active ? imageLoader.implicitWidth : 0)
+    Layout.minimumWidth: notiContent.Layout.minimumWidth - (imageLoader.active ? imageLoader.implicitWidth : 0)
     Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 
     Text {

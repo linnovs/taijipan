@@ -7,12 +7,14 @@ Singleton {
 
   readonly property int spacing: 4
 
+  readonly property int widthXXS: spacing * 32
   readonly property int widthXS: spacing * 64
   readonly property int widthSM: spacing * 96
   readonly property int widthMD: spacing * 128
   readonly property int widthLG: spacing * 160
   readonly property int widthXL: spacing * 192
 
+  readonly property int heightXXS: spacing * 14
   readonly property int heightXS: spacing * 36
   readonly property int heightSM: spacing * 54
   readonly property int heightMD: spacing * 72
@@ -64,8 +66,6 @@ Singleton {
   readonly property int powerMenuIconSize: spacing * 32
   readonly property int powerMenuButtonIconSize: spacing * 16
 
-  readonly property int notificationMinimumWidth: spacing * 104
-  readonly property int notificationMinimumHeight: spacing * 26
   readonly property int notificationAppIconSize: spacing * 4
-  readonly property int notificationImageSize: spacing * 24
+  readonly property int notificationImageSize: spacing * 18
 }

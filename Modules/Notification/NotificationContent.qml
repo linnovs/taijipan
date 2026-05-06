@@ -6,6 +6,7 @@ ColumnLayout {
   id: container
 
   required property NotificationObject notification
+  property int minimumWidth
 
   spacing: Theme.marginXS
 
@@ -14,6 +15,7 @@ ColumnLayout {
   }
 
   NotificationBody {
+    Layout.minimumWidth: container.minimumWidth
     notification: container.notification
   }
 

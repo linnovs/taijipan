@@ -12,6 +12,9 @@ Item {
   property bool dismissing: false
   property string notificationId: modelData.id
 
+  readonly property int minimumWidth: Theme.widthSM
+  readonly property int minimumHeight: Theme.heightXXS
+
   scale: 0.8
   Behavior on scale {
     NumberAnimation {
@@ -88,6 +91,7 @@ Item {
     anchors.top: parent.top
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.topMargin: Theme.marginXS
+    minimumWidth: parent.minimumWidth
     notification: NotificationObject {
       notificationId: popup.notificationId
       icon: modelData.icon
@@ -101,6 +105,6 @@ Item {
     }
   }
 
-  implicitWidth: Math.max(Theme.notificationMinimumWidth, content.implicitWidth) + Theme.marginXS * 2
-  implicitHeight: Math.max(Theme.notificationMinimumHeight, content.implicitHeight) + Theme.marginXS * 2
+  implicitWidth: Math.max(minimumWidth, content.implicitWidth) + Theme.marginXS * 2
+  implicitHeight: Math.max(minimumHeight, content.implicitHeight) + Theme.marginXS * 2
 }
