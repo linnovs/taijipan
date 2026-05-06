@@ -66,6 +66,7 @@ Singleton {
       property bool isOverlay: true
       property int defaultTTL: 5
       property int lowUrgencyTTL: 3
+      property int criticalUrgencyTTL: 8
       property real backgroundOpacity: 0.8
       property int maximumLineCount: 5
       property int maximumCharLength: 120

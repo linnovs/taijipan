@@ -136,7 +136,7 @@ Singleton {
     case NotificationUrgency.Normal:
       return Settings.data.notification.defaultTTL * 1000 || 5000;
     case NotificationUrgency.Critical:
-      return -1; // never expire
+      return Settings.data.notification.criticalUrgencyTTL * 1000 || 8000;
     default:
       return Settings.data.notification.defaultTTL * 1000 || 5000;
     }
