@@ -40,7 +40,7 @@ Item {
 
   Component.onCompleted: {
     scale = 1.0;
-    opacity = Settings.data.notification.backgroundOpacity;
+    opacity = 1.0;
   }
 
   Timer {
@@ -64,7 +64,7 @@ Item {
     xAxis.maximum: popup.width
     yAxis.enabled: false
     onActiveTranslationChanged: {
-      const opacity = Math.min((popup.width - popup.x) / popup.width, Settings.data.notification.backgroundOpacity);
+      const opacity = (popup.width - popup.x) / popup.width;
       popup.opacity = Math.abs(opacity);
     }
     onActiveChanged: {
@@ -75,7 +75,7 @@ Item {
         popup.dismiss();
       } else {
         popup.x = 0;
-        popup.opacity = Settings.data.notification.backgroundOpacity;
+        popup.opacity = 1.0;
       }
     }
   }
@@ -93,7 +93,7 @@ Item {
     id: background
     anchors.fill: parent
     radius: Theme.radiusLG
-    color: Colors.mSurface
+    color: Qt.alpha(Colors.mSurface, Settings.data.notification.backgroundOpacity)
 
     Rectangle {
       anchors.top: parent.top
