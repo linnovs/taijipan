@@ -35,7 +35,7 @@ Item {
     id: background
     anchors.fill: parent
     radius: Theme.radiusMD
-    color: Colors.mSurface
+    color: Qt.alpha(Colors.mSurface, Settings.data.osd.backgroundOpacity)
   }
 
   DropShadow {
@@ -52,7 +52,7 @@ Item {
   }
 
   function show() {
-    osdItem.opacity = Settings.data.osd.backgroundOpacity;
+    osdItem.opacity = 1.0;
     osdItem.scale = 1.0;
   }
 
