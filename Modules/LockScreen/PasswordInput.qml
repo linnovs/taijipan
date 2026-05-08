@@ -6,10 +6,12 @@ import qs.Commons
 Rectangle {
   required property TextInput passwordInput
   property bool showPassword: false
+  property bool isError: false
+  property int originalX: 0
 
   radius: Theme.radiusRound
   color: Colors.mSurface
-  border.color: passwordInput.activeFocus ? Colors.mPrimary : Qt.alpha(Colors.mOutline, 0.3)
+  border.color: isError ? Colors.mError : (passwordInput.activeFocus ? Colors.mPrimary : Qt.alpha(Colors.mOutline, 0.3))
   border.width: passwordInput.activeFocus ? 2 : 1
 
   MouseArea {
@@ -106,5 +108,32 @@ Rectangle {
         }
       }
     }
+  }
+
+  NumberAnimation on x {
+    id: shakeAnimation
+    from: root.x - 5
+    to: root.x + 5
+    duration: Theme.animationFastest
+    loops: 5
+    running: isError
+    onStopped: root.x = originalX
+  }
+
+  signal failedAttempt
+
+  Timer {
+    id: resetErrorTimer
+    interval: 2000
+    repeat: false
+    onTriggered: {
+      isError = false;
+    }
+  }
+
+  onFailedAttempt: {
+    originalX = root.x;
+    isError = true;
+    resetErrorTimer.restart();
   }
 }

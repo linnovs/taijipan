@@ -10,6 +10,7 @@ Scope {
   property bool isUnlocking: false
 
   signal unlocked
+  signal failed
 
   PamContext {
     id: pam
@@ -17,19 +18,16 @@ Scope {
     configDirectory: "pam"
     config: "lockscreen.conf"
 
-    onPamMessage: if (pam.responseRequired)
-      pam.respond(password)
-
     onCompleted: result => {
       if (result === PamResult.Success) {
         root.unlocked();
         return;
       } else {
         root.password = "";
+        root.failed();
       }
 
       root.isUnlocking = false;
-      Logger.e("LockScreen", "PAM authentication failed with result:", pam.error());
     }
   }
 

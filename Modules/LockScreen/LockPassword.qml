@@ -6,6 +6,7 @@ Item {
   id: root
 
   required property TextInput passwordInput
+  required property LockContext context
 
   RowLayout {
     anchors.fill: parent
@@ -16,13 +17,22 @@ Item {
     }
 
     PasswordInput {
+      id: passwordField
       Layout.fillWidth: true
       Layout.preferredHeight: Theme.marginXL
       passwordInput: root.passwordInput
+      isError: context.isErrorMessage
     }
 
     Item {
       Layout.preferredWidth: Theme.marginXL
+    }
+  }
+
+  Connections {
+    target: context
+    function onFailed() {
+      passwordField.failedAttempt();
     }
   }
 

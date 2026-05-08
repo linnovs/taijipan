@@ -34,6 +34,7 @@ Item {
   }
 
   Background {
+    id: background
     screen: root.screen
   }
 
@@ -48,6 +49,19 @@ Item {
     LockPassword {
       Layout.alignment: Qt.AlignHCenter
       passwordInput: passwordInput
+      context: root.context
+    }
+  }
+
+  Connections {
+    target: context
+    function onIsUnlockingChanged() {
+      if (context.isUnlocking)
+        background.forceActiveFocus();
+    }
+    function onFailed() {
+      passwordInput.text = "";
+      passwordInput.forceActiveFocus();
     }
   }
 }
