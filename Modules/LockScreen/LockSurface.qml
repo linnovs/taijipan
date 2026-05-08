@@ -51,6 +51,11 @@ Item {
       passwordInput: passwordInput
       context: root.context
     }
+
+    LockMessage {
+      Layout.alignment: Qt.AlignHCenter
+      context: root.context
+    }
   }
 
   Connections {
