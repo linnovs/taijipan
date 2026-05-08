@@ -58,6 +58,13 @@ Item {
     }
   }
 
+  UptimeMessage {
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    anchors.rightMargin: Theme.marginMD
+    anchors.bottomMargin: Theme.marginMD
+  }
+
   Connections {
     target: context
     function onIsUnlockingChanged() {
