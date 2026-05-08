@@ -7,7 +7,7 @@ Item {
     "lock": {
       "icon": "lock",
       "title": "Lock",
-      "command": "loginctl lock-session"
+      "command": "qs ipc call lockscreen lock"
     },
     "suspend": {
       "icon": "bedtime",
