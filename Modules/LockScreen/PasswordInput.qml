@@ -54,6 +54,13 @@ Rectangle {
     height: parent.height
     clip: true
 
+    Text {
+      anchors.centerIn: parent
+      visible: passwordInput.text.length === 0
+      text: "PASSWORD or FIDO2"
+      color: Qt.alpha(Colors.mSurfaceVariant, 0.8)
+    }
+
     Row {
       anchors.verticalCenter: parent.verticalCenter
       anchors.horizontalCenter: parent.horizontalCenter
@@ -92,7 +99,7 @@ Rectangle {
         width: 2
         height: parent.height
         color: Colors.mOnSurface
-        visible: passwordInput.activeFocus
+        visible: passwordInput.activeFocus && passwordInput.text.length > 0
 
         SequentialAnimation on opacity {
           loops: Animation.Infinite
