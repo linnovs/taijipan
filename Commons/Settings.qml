@@ -105,6 +105,11 @@ Singleton {
         },
       ]
     }
+
+    property JsonObject lockScreen: JsonObject {
+      property real backgroundBlur: 0.6
+      property real backgroundTint: 0.6
+    }
   }
 
   readonly property alias data: settingsAdapter

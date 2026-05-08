@@ -6,6 +6,8 @@ import qs.Commons
 Singleton {
   id: root
 
+  property var lockscreen: null
+
   property var _panels: ({})
   property var openedPanel: null
   property var closingPanel: null

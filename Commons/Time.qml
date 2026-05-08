@@ -16,6 +16,10 @@ Singleton {
     return Qt.formatDateTime(dateObj, "yyyy-MM-dd hh:mm:ss");
   }
 
+  function format(date, format) {
+    return Qt.formatDateTime(new Date(date), format);
+  }
+
   function formatRelativeTime(pastTime) {
     let now = Date.now();
     let diff = now - pastTime;

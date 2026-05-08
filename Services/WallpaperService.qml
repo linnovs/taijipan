@@ -270,8 +270,12 @@ Singleton {
     _scanDirectory(Settings.data.wallpaper.directory);
   }
 
+  function getWallpaperForScreen(screenName) {
+    return currentWallpapers[screenName] || defaultWallpaper;
+  }
+
   function getWallpaperIndex(screenName) {
-    const currentWallpaper = currentWallpapers[screenName] || defaultWallpaper;
+    const currentWallpaper = getWallpaperForScreen(screenName);
     return wallpaperList.indexOf(currentWallpaper);
   }
 

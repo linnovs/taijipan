@@ -58,6 +58,9 @@ Singleton {
   readonly property int fontSizeMD: spacing * 3
   readonly property int fontSizeLG: spacing * 4
   readonly property int fontSizeXL: spacing * 5
+  readonly property int fontSizeXXL: spacing * 8
+  readonly property int fontSizeXXXL: spacing * 12
+  readonly property int fontSizeXXXXL: spacing * 16
 
   readonly property int barMarginV: spacing * 2
   readonly property int barMarginH: spacing * 2

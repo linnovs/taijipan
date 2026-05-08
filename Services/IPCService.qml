@@ -116,4 +116,11 @@ Singleton {
       WallpaperService.refreshWallpapers();
     }
   }
+
+  IpcHandler {
+    target: "lockscreen"
+    function lock(): void {
+      PanelService.lockscreen?.lock();
+    }
+  }
 }
