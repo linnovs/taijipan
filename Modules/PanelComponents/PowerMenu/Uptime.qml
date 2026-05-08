@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
 import qs.Services
 import qs.Commons
 
@@ -28,7 +27,6 @@ Item {
 
   Component.onCompleted: {
     UptimeService.registerComponent("PowerMenuUptime");
-    uptimeText.text = UptimeService.currentUptime;
   }
 
   Component.onDestruction: {

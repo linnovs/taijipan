@@ -44,4 +44,9 @@ Singleton {
     triggeredOnStart: true
     onTriggered: uptimeProcess.running = true
   }
+
+  Component.onCompleted: {
+    Logger.i("UptimeService", "Service initialized");
+    uptimeProcess.running = true;
+  }
 }
