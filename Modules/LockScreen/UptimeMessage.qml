@@ -9,7 +9,7 @@ Item {
     id: uptimeText
     font.family: Settings.data.ui.font
     font.pixelSize: Theme.fontSizeLG
-    color: Colors.mOnSurface
+    color: Qt.alpha(Colors.mOnSurface, 0.8)
   }
 
   implicitWidth: uptimeText.width
