@@ -24,6 +24,9 @@ Item {
 
   Component.onCompleted: {
     UptimeService.registerComponent("LockScreenUptime");
+    Qt.callLater(() => {
+      uptimeText.text = UptimeService.currentUptime;
+    });
   }
 
   Component.onDestruction: {

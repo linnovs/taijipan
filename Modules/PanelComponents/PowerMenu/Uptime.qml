@@ -27,6 +27,9 @@ Item {
 
   Component.onCompleted: {
     UptimeService.registerComponent("PowerMenuUptime");
+    Qt.callLater(() => {
+      uptimeText.text = UptimeService.currentUptime;
+    });
   }
 
   Component.onDestruction: {
