@@ -32,6 +32,7 @@ Singleton {
         property list<string> left: ["H"]
         property list<string> right: ["L"]
         property list<string> enter: ["Return", "Enter"]
+        property list<string> esc: ["Esc"]
       }
     }
 

@@ -105,7 +105,7 @@ PanelWindow {
   }
 
   Shortcut {
-    sequences: ["Esc"]
+    sequences: Settings.data.general.keybinds.esc || []
     enabled: root.isPanelOpenOnScreen && !PanelService.isKeybindRecording
     onActivated: PanelService.onEscapePressed()
   }
