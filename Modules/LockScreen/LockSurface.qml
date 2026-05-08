@@ -76,4 +76,19 @@ Item {
       passwordInput.forceActiveFocus();
     }
   }
+
+  NumberAnimation on opacity {
+    id: fadeAnimation
+    from: 0
+    to: 1
+    duration: Theme.animationSlowest
+  }
+
+  Timer {
+    id: fadeInTimer
+    interval: Theme.animationBuffer
+    running: true
+    repeat: false
+    onTriggered: fadeAnimation.running = true
+  }
 }
