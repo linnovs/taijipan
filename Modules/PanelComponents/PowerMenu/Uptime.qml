@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Io
+import qs.Services
 import qs.Commons
 
 Item {
@@ -9,29 +10,28 @@ Item {
   Layout.fillWidth: true
   Layout.preferredHeight: Theme.fontSizeMD + Theme.marginXS * 2
 
-  property string currentUptime: ""
-
-  Process {
-    id: uptimeProcess
-    command: ["uptime", "-p"]
-    stdout: StdioCollector {
-      onStreamFinished: root.currentUptime = text.trim().replace("up ", "")
-    }
-  }
-
-  Timer {
-    interval: 60 * 1000
-    repeat: true
-    running: true
-    triggeredOnStart: true
-    onTriggered: uptimeProcess.running = true
-  }
-
   Text {
+    id: uptimeText
     anchors.centerIn: parent
     text: currentUptime
     color: Colors.mOnSurface
     font.pointSize: Theme.fontSizeMD
     font.weight: Font.DemiBold
+  }
+
+  Connections {
+    target: UptimeService
+    function onUptimeChanged(uptime) {
+      uptimeText.text = uptime;
+    }
+  }
+
+  Component.onCompleted: {
+    UptimeService.registerComponent("PowerMenuUptime");
+    uptimeText.text = UptimeService.currentUptime;
+  }
+
+  Component.onDestruction: {
+    UptimeService.unregisterComponent("PowerMenuUptime");
   }
 }
