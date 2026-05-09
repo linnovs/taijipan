@@ -10,6 +10,8 @@ Item {
   required property LockContext context
   required property ShellScreen screen
 
+  opacity: 0
+
   TextInput {
     id: passwordInput
     visible: false
@@ -65,6 +67,18 @@ Item {
     anchors.bottomMargin: Theme.marginMD
   }
 
+  signal fadeOutFinished
+
+  NumberAnimation {
+    id: fadeOutAnimation
+    target: root
+    property: "opacity"
+    from: 1
+    to: 0
+    duration: Theme.animationFast
+    onStopped: root.fadeOutFinished()
+  }
+
   Connections {
     target: context
     function onIsUnlockingChanged() {
@@ -75,10 +89,15 @@ Item {
       passwordInput.text = "";
       passwordInput.forceActiveFocus();
     }
+    function onUnlocked() {
+      fadeOutAnimation.running = true;
+    }
   }
 
-  NumberAnimation on opacity {
+  NumberAnimation {
     id: fadeAnimation
+    target: root
+    property: "opacity"
     from: 0
     to: 1
     duration: Theme.animationSlowest

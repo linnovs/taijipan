@@ -37,7 +37,6 @@ Loader {
   sourceComponent: Item {
     LockContext {
       id: lockContext
-      onUnlocked: root.unlock()
     }
 
     WlSessionLock {
@@ -52,6 +51,9 @@ Loader {
           LockSurface {
             context: lockContext
             screen: lockSurface.screen
+            onFadeOutFinished: {
+              root.unlock();
+            }
           }
         }
 
