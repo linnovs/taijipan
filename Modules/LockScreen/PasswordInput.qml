@@ -124,7 +124,8 @@ Rectangle {
     id: shakeAnimation
     from: root.x - 5
     to: root.x + 5
-    duration: Theme.animationFastest
+    duration: Theme.animationFast
+    easing.type: Easing.InOutBounce
     loops: 5
     running: isError
     onStopped: root.x = originalX
