@@ -9,9 +9,12 @@ Rectangle {
   property bool isError: false
   property int originalX: 0
 
+  property color nonErrorBorderColor: passwordInput.activeFocus ? Colors.mPrimary : Qt.alpha(Colors.mOutline, 0.3)
+  property color currentBorderColor: isError ? Colors.mError : nonErrorBorderColor
+
   radius: Theme.radiusRound
   color: Colors.mSurface
-  border.color: isError ? Colors.mError : (passwordInput.activeFocus ? Colors.mPrimary : Qt.alpha(Colors.mOutline, 0.3))
+  border.color: currentBorderColor
   border.width: passwordInput.activeFocus ? 2 : 1
 
   MouseArea {
