@@ -46,7 +46,6 @@ Scope {
     onCompleted: result => {
       if (result === PamResult.Success) {
         root.unlocked();
-        return;
       } else {
         root.message = "Authentication failed";
         root.isErrorMessage = true;
