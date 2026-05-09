@@ -12,7 +12,6 @@ Item {
   Text {
     id: uptimeText
     anchors.centerIn: parent
-    text: currentUptime
     color: Colors.mOnSurface
     font.pointSize: Theme.fontSizeMD
     font.weight: Font.DemiBold
