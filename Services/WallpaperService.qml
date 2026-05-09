@@ -201,6 +201,7 @@ Singleton {
     currentWallpapers[screenName] = wallpaperPath;
     saveStateDebounce.restart();
     root.wallpaperChanged(screenName, wallpaperPath);
+    Logger.i("WallpaperService", "Set wallpaper for screen", screenName, "to", Paths.replaceHomeWithTilde(wallpaperPath));
 
     if (slideshowTimer.running)
       slideshowTimer.restart();
