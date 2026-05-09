@@ -51,9 +51,7 @@ Loader {
           LockSurface {
             context: lockContext
             screen: lockSurface.screen
-            onFadeOutFinished: {
-              root.unlock();
-            }
+            onFadeOutFinished: root.unlock()
           }
         }
 
