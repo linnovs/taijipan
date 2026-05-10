@@ -34,6 +34,7 @@ Singleton {
         property list<string> enter: ["Return", "Enter"]
         property list<string> esc: ["Esc"]
       }
+      property bool lockOnSuspend: true
     }
 
     property JsonObject osd: JsonObject {

@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
 import qs.Services
 import qs.Widgets
 import qs.Commons
@@ -10,16 +9,10 @@ Rectangle {
 
   property string icon
   property string title
-  property string command
+  property string action
 
   color: Colors.mSurface
   radius: Theme.radiusMD
-
-  Process {
-    id: actionProcess
-    running: false
-    command: ["sh", "-c", root.command]
-  }
 
   ColumnLayout {
     id: buttonLayout
@@ -61,7 +54,7 @@ Rectangle {
       titleText.color = containsMouse ? Colors.mInverseOnSurface : Colors.mOnSurface;
     }
     onClicked: {
-      actionProcess.running = true;
+      SessionService.executeAction(root.action);
       PanelService.closePanel();
     }
   }

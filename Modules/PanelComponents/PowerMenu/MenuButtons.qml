@@ -6,38 +6,31 @@ Item {
   readonly property var actionMetadatas: {
     "lock": {
       "icon": "lock",
-      "title": "Lock",
-      "command": "qs ipc call lockscreen lock"
+      "title": "Lock"
     },
     "suspend": {
       "icon": "bedtime",
-      "title": "Suspend",
-      "command": "systemctl suspend"
+      "title": "Suspend"
     },
     "hibernate": {
       "icon": "mode_standby",
-      "title": "Hibernate",
-      "command": "systemctl hibernate"
+      "title": "Hibernate"
     },
     "reboot": {
       "icon": "restart_alt",
-      "title": "Reboot",
-      "command": "systemctl reboot"
+      "title": "Reboot"
     },
     "rebootToUEFI": {
       "icon": "reset_tv",
-      "title": "Reboot to UEFI",
-      "command": "bootctl reboot-to-firmware"
+      "title": "Reboot to UEFI"
     },
     "logout": {
       "icon": "logout",
-      "title": "Logout",
-      "command": "loginctl terminate-user $USER"
+      "title": "Logout"
     },
     "shutdown": {
       "icon": "power_settings_new",
-      "title": "Shutdown",
-      "command": "systemctl poweroff"
+      "title": "Shutdown"
     }
   }
 
@@ -50,7 +43,10 @@ Item {
     for (let i = 0; i < fromSettings.length; i++) {
       let option = fromSettings[i];
       if (actionMetadatas[option.action]) {
-        options.push(actionMetadatas[option.action]);
+        let obj = Object.assign({}, actionMetadatas[option.action], {
+          action: option.action
+        });
+        options.push(obj);
       }
     }
 
@@ -75,7 +71,7 @@ Item {
       delegate: ActionButton {
         icon: modelData.icon
         title: modelData.title
-        command: modelData.command
+        action: modelData.action
       }
     }
   }
