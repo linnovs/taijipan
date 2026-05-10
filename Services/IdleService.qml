@@ -24,7 +24,7 @@ Singleton {
   }
 
   function init() {
-    Logger.i("IdleService", "Initialize IdleService");
+    Logger.i("IdleService", "Initialize service");
     Logger.i("IdleService", "Idle suspend", suspendIdleMonitor.enabled ? "enabled" : "disabled", "- Timeout (mins):", suspendIdleMonitor.timeout / (60 * 1000));
   }
 }

@@ -281,7 +281,7 @@ Singleton {
   }
 
   function init() {
-    Logger.i("WallpaperService", "Loaded wallpaper service");
+    Logger.i("WallpaperService", "Initialize service");
 
     Qt.callLater(() => {
       if (typeof Settings !== "undefined" && Paths.stateDir) {

@@ -58,7 +58,7 @@ Singleton {
     createCacheDirectories();
     clearCache();
     checkMagickProcess.running = true;
-    Logger.i("ImageCacheService", "Loaded image cache service");
+    Logger.i("ImageCacheService", "Initialize service");
   }
 
   function generateCacheKey(sourceImage, width, height, mtime) {

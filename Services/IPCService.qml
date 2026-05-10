@@ -56,7 +56,7 @@ Singleton {
   }
 
   function init() {
-    Logger.i("IPCService", "Initialize IPCService");
+    Logger.i("IPCService", "Initialize service");
   }
 
   function runOnScreen(callback) {
