@@ -46,7 +46,13 @@ BasePanel {
 
     Shortcut {
       sequence: "R"
-      onActivated: WallpaperService.refreshWallpapers()
+      context: Qt.ApplicationShortcut
+      onActivated: {
+        loading = true;
+        wallpaperModel.clear();
+        WallpaperService.refreshWallpapers();
+        Logger.d("WallpaperSwitcher", "Refresh triggered by user");
+      }
     }
   }
 
@@ -63,38 +69,40 @@ BasePanel {
   }
 
   Timer {
-    id: loadingDelayTimer
+    id: afterRefreshTimer
+    interval: Theme.animationBuffer
+    onTriggered: loading = false
+  }
+
+  Timer {
+    id: refreshTimer
     interval: Theme.animationBuffer
     onTriggered: {
+      const currentWallpaper = WallpaperService.getWallpaperForScreen(root.screen.name);
       for (let i = 0; i < wallpaperModel.count; i++) {
-        if (wallpaperModel.get(i).index === WallpaperService.getWallpaperIndex(root.screen.name)) {
+        if (wallpaperModel.get(i).wallpaperPath === currentWallpaper) {
           selectedWallpaperIndex = i;
-          break;
+          afterRefreshTimer.restart();
+          return;
         }
       }
-      loading = false;
     }
   }
 
   Connections {
     target: WallpaperService
     function onScanFinished() {
-      wallpaperModel.clear();
-      loading = true;
-
       let count = WallpaperService.wallpaperList.length;
-      WallpaperService.wallpaperList.forEach(function (wallpaperPath, index) {
-        Logger.d("WallpaperSwitcher", "Found wallpaper:", Paths.replaceHomeWithTilde(wallpaperPath));
+      WallpaperService.wallpaperList.forEach(function (wallpaperPath) {
         ImageCacheService.getThumbnail(wallpaperPath, function (cached) {
           wallpaperModel.append({
             wallpaperPath: wallpaperPath,
-            cachedPath: cached !== "" ? cached : wallpaperPath,
-            index: index
+            cachedPath: cached !== "" ? cached : wallpaperPath
           });
 
           count--;
           if (count === 0) {
-            loadingDelayTimer.restart();
+            refreshTimer.restart();
           }
         });
       });
