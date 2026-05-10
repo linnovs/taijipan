@@ -36,10 +36,6 @@ Rectangle {
     anchors.rightMargin: Theme.marginSM
     anchors.verticalCenter: parent.verticalCenter
 
-    HoverHandler {
-      id: eyeHoverHandler
-    }
-
     MouseArea {
       anchors.fill: parent
       acceptedButtons: Qt.LeftButton
@@ -71,7 +67,6 @@ Rectangle {
       spacing: Theme.spacing
 
       Row {
-        id: passwordDisplay
         anchors.verticalCenter: parent.verticalCenter
         visible: !showPassword
         spacing: Theme.marginXXS
