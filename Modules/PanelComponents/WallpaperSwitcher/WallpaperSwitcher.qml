@@ -70,13 +70,13 @@ BasePanel {
 
   Timer {
     id: afterRefreshTimer
-    interval: Theme.animationBuffer
+    interval: Theme.timerDelay
     onTriggered: loading = false
   }
 
   Timer {
     id: refreshTimer
-    interval: Theme.animationBuffer
+    interval: Theme.timerDelay
     onTriggered: {
       const currentWallpaper = WallpaperService.getWallpaperForScreen(root.screen.name);
       for (let i = 0; i < wallpaperModel.count; i++) {
