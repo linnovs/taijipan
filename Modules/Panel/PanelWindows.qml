@@ -14,6 +14,7 @@ PanelWindow {
   }
 
   readonly property bool isPanelOpenOnScreen: PanelService.openedPanel !== null && PanelService.openedPanel.screen === screen
+  readonly property bool isPanelClosing: PanelService.openedPanel && PanelService.openedPanel.isClosing
 
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
@@ -42,6 +43,14 @@ PanelWindow {
 
     return "transparent";
   }
+
+  Behavior on color {
+    ColorAnimation {
+      duration: isPanelClosing ? Theme.animationFast : Theme.animationNormal
+      easing.type: Easing.OutQuad
+    }
+  }
+
   mask: Region {
     id: clickableMask
 
