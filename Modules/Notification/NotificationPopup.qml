@@ -104,7 +104,7 @@ Item {
 
       Behavior on width {
         NumberAnimation {
-          duration: Theme.animationBuffer
+          duration: Theme.animationFastest
           easing.type: Easing.Linear
         }
       }
