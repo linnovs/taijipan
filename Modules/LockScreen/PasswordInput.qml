@@ -4,22 +4,22 @@ import qs.Widgets
 import qs.Commons
 
 Rectangle {
-  required property TextInput passwordInput
+  required property TextInput input
   property bool showPassword: false
   property bool isError: false
   property int originalX: 0
 
-  property color nonErrorBorderColor: passwordInput.activeFocus ? Colors.mPrimary : Qt.alpha(Colors.mOutline, 0.3)
+  property color nonErrorBorderColor: input.activeFocus ? Colors.mPrimary : Qt.alpha(Colors.mOutline, 0.3)
   property color currentBorderColor: isError ? Colors.mError : nonErrorBorderColor
 
   radius: Theme.radiusRound
   color: Colors.mSurface
   border.color: currentBorderColor
-  border.width: passwordInput.activeFocus ? 2 : 1
+  border.width: input.activeFocus ? 2 : 1
 
   MouseArea {
     anchors.fill: parent
-    onClicked: passwordInput.forceActiveFocus()
+    onClicked: input.forceActiveFocus()
   }
 
   TextIcon {
@@ -59,7 +59,7 @@ Rectangle {
 
     Text {
       anchors.centerIn: parent
-      visible: passwordInput.text.length === 0
+      visible: input.text.length === 0
       text: "PASSWORD or FIDO2"
       color: Qt.alpha(Colors.mSurfaceVariant, 0.8)
     }
@@ -78,7 +78,7 @@ Rectangle {
 
         Repeater {
           model: ScriptModel {
-            values: Array(passwordInput.text.length)
+            values: Array(input.text.length)
           }
           TextIcon {
             icon: "circle"
@@ -90,7 +90,7 @@ Rectangle {
       Text {
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
-        text: passwordInput.text
+        text: input.text
         visible: showPassword
         font.family: Settings.data.ui.font
         font.pixelSize: Theme.fontSizeLG
@@ -102,11 +102,11 @@ Rectangle {
         width: 2
         height: parent.height
         color: Colors.mOnSurface
-        visible: passwordInput.activeFocus && passwordInput.text.length > 0
+        visible: input.activeFocus && input.text.length > 0
 
         SequentialAnimation on opacity {
           loops: Animation.Infinite
-          running: passwordInput.activeFocus
+          running: input.activeFocus
           NumberAnimation {
             to: 0
             duration: Theme.animationSlowest

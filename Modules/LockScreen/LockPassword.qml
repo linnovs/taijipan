@@ -6,7 +6,7 @@ import qs.Commons
 Item {
   id: root
 
-  required property TextInput passwordInput
+  required property TextInput input
   required property LockContext context
 
   RainbowGradient {
@@ -25,7 +25,7 @@ Item {
       id: passwordField
       Layout.fillWidth: true
       Layout.preferredHeight: Theme.marginXL
-      passwordInput: root.passwordInput
+      input: root.input
       isError: context.isErrorMessage
 
       Rectangle {

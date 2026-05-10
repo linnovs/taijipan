@@ -61,7 +61,7 @@ Item {
 
     LockPassword {
       Layout.alignment: Qt.AlignHCenter
-      passwordInput: passwordInput
+      input: passwordInput
       context: root.context
     }
 
