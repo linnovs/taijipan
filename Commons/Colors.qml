@@ -126,7 +126,7 @@ Singleton {
   Timer {
     id: colorReloadDebounceTimer
     running: false
-    interval: Theme.animationBuffer
+    interval: Theme.timerDebounce
     onTriggered: {
       if (colorsFileView.path !== undefined) {
         Logger.i("Colors", "Reload colors after detected external change to file");
