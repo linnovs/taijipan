@@ -102,6 +102,11 @@ PanelWindow {
       objectName: "powerMenu-" + (root.screen?.name || "unknown")
       enableBackdrop: true
     }
+
+    IdleInhibitor {
+      window: root
+      enabled: IdleInhibitorService.isIdleInhibited
+    }
   }
 
   Shortcut {

@@ -74,6 +74,7 @@ ShellRoot {
         Qt.callLater(() => {
           IPCService.init();
           IdleService.init();
+          IdleInhibitorService.init();
         });
 
         Logger.i("Shell", "All services loaded, shell initialization complete");
