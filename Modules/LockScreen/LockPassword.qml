@@ -52,5 +52,5 @@ Item {
   }
 
   implicitWidth: Theme.widthMD
-  implicitHeight: Theme.heightSM
+  implicitHeight: Theme.marginXL
 }

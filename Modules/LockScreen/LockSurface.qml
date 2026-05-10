@@ -42,10 +42,21 @@ Item {
 
   ColumnLayout {
     anchors.centerIn: parent
-    implicitHeight: screen.height * 0.5
 
     LockClock {
       Layout.alignment: Qt.AlignHCenter
+    }
+
+    Item {
+      Layout.preferredHeight: Theme.heightMD
+    }
+
+    LockUser {
+      Layout.alignment: Qt.AlignHCenter
+    }
+
+    Item {
+      Layout.preferredHeight: Theme.marginXXS
     }
 
     LockPassword {
