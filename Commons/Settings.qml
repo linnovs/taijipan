@@ -57,7 +57,7 @@ Singleton {
       property string sortBy: "name"
       property bool recursive: false
       property bool enableSlideshow: false
-      property int slideshowInterval: 300
+      property int slideshowInterval: 5
     }
 
     property JsonObject ui: JsonObject {

@@ -249,7 +249,7 @@ Singleton {
 
   Timer {
     id: slideshowTimer
-    interval: Settings.data.wallpaper.slideshowInterval * 1000
+    interval: Settings.data.wallpaper.slideshowInterval * 1000 * 60
     running: Settings.data.wallpaper.enableSlideshow
     repeat: true
     onTriggered: setNextWallpaper()
@@ -282,6 +282,7 @@ Singleton {
 
   function init() {
     Logger.i("WallpaperService", "Initialize service");
+    Logger.i("WallpaperService", "Slideshow", Settings.data.wallpaper.enableSlideshow ? "enabled" : "disabled", "- Interval", Settings.data.wallpaper.slideshowInterval, "minutes");
 
     Qt.callLater(() => {
       if (typeof Settings !== "undefined" && Paths.stateDir) {
@@ -313,8 +314,8 @@ Singleton {
       }
     }
     function onSlideshowIntervalChanged() {
-      Logger.d("WallpaperService", "Wallpaper slideshow interval changed to", Settings.data.wallpaper.slideshowInterval, "seconds");
-      slideshowTimer.interval = Settings.data.wallpaper.slideshowInterval * 1000;
+      Logger.d("WallpaperService", "Wallpaper slideshow interval changed to", Settings.data.wallpaper.slideshowInterval, "minutes");
+      slideshowTimer.interval = Settings.data.wallpaper.slideshowInterval * 1000 * 60;
       if (Settings.data.wallpaper.enableSlideshow) {
         slideshowTimer.restart();
       }
