@@ -40,6 +40,9 @@ Singleton {
   readonly property real shadowBlur: 1.0
   readonly property real shadowOpacity: 1.0
 
+  readonly property int timerDelay: 50
+  readonly property int timerDebounce: 200
+
   readonly property int animationBuffer: 200
   readonly property int animationSlowest: 700
   readonly property int animationSlow: 600

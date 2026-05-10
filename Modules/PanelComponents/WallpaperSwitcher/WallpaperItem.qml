@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 
 Item {
+  id: root
   z: PathView.zindex || 1
   scale: PathView.scale || 1
   opacity: PathView.opacity || 1
@@ -9,7 +10,7 @@ Item {
   property bool isCurrent: PathView.isCurrentItem
   readonly property string wallpaperPath: model.wallpaperPath
 
-  signal selected(real x, real y)
+  signal clicked(real x, real y)
 
   Rectangle {
     color: "transparent"
@@ -39,7 +40,7 @@ Item {
     MouseArea {
       anchors.fill: parent
       acceptedButtons: Qt.LeftButton
-      onClicked: mouse => selected(mouse.x, mouse.y)
+      onClicked: mouse => root.clicked(mouse.x, mouse.y)
       z: 10
     }
   }

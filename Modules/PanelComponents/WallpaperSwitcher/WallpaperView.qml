@@ -89,12 +89,12 @@ PathView {
 
   Timer {
     id: selectedTime
-    interval: Theme.animationFast + Theme.animationBuffer
+    interval: Theme.animationFast + Theme.timerDelay
     onTriggered: handleEnter()
   }
 
   delegate: WallpaperItem {
-    onSelected: (x, y) => {
+    onClicked: (x, y) => {
       const pos = mapToItem(root, x, y);
       currentIndex = root.indexAt(pos.x, pos.y);
       selectedTime.restart();
