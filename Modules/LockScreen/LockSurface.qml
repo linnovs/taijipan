@@ -14,11 +14,24 @@ Item {
 
   TextInput {
     id: passwordInput
+    width: 0
+    height: 0
+    enabled: !context.isUnlocking
+    echoMode: TextInput.Password
+    passwordMaskDelay: 0
     visible: false
 
     onTextChanged: {
       if (context.password !== text)
         context.password = text;
+    }
+
+    Connections {
+      target: context
+      function onPasswordChanged() {
+        if (passwordInput.text !== context.password)
+          passwordInput.text = context.password;
+      }
     }
 
     Keys.onPressed: function (event) {
@@ -32,7 +45,7 @@ Item {
       }
     }
 
-    Component.onCompleted: forceActiveFocus()
+    Component.onCompleted: passwordInput.forceActiveFocus()
   }
 
   Background {
