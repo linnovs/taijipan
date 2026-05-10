@@ -46,19 +46,14 @@ Loader {
         id: lockSurface
         color: Colors.mBackground
 
-        Component {
-          id: lockSurfaceDelegate
-          LockSurface {
+        Loader {
+          anchors.fill: parent
+          active: lockSurface.screen !== null
+          sourceComponent: LockSurface {
             context: lockContext
             screen: lockSurface.screen
             onFadeOutFinished: root.unlock()
           }
-        }
-
-        Loader {
-          anchors.fill: parent
-          active: lockSurface.screen !== null
-          sourceComponent: lockSurfaceDelegate
         }
       }
 
