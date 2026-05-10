@@ -109,11 +109,11 @@ Rectangle {
           running: passwordInput.activeFocus
           NumberAnimation {
             to: 0
-            duration: Theme.animationSlowest + Theme.animationBuffer
+            duration: Theme.animationSlowest
           }
           NumberAnimation {
             to: 1
-            duration: Theme.animationSlowest + Theme.animationBuffer
+            duration: Theme.animationSlowest
           }
         }
       }

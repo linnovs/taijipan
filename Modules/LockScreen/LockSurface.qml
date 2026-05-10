@@ -111,12 +111,12 @@ Item {
     property: "opacity"
     from: 0
     to: 1
-    duration: Theme.animationSlowest
+    duration: Theme.animationNormal
   }
 
   Timer {
     id: fadeInTimer
-    interval: Theme.animationBuffer
+    interval: Theme.timerDelay
     running: true
     repeat: false
     onTriggered: fadeAnimation.running = true

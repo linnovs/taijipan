@@ -11,7 +11,7 @@ Loader {
 
   Timer {
     id: unloadAfterUnlockTimer
-    interval: 250
+    interval: Theme.timerRenderDelay
     onTriggered: active = false
   }
 
