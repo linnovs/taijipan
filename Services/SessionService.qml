@@ -80,6 +80,9 @@ Singleton {
       Logger.i("SessionService", "Shut down system");
       pendingCommands.push(["systemctl", "poweroff"]);
       break;
+    default:
+      Logger.w("SessionService", "Unknown action:", action);
+      return;
     }
   }
 }
