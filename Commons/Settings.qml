@@ -111,6 +111,11 @@ Singleton {
       property real backgroundBlur: 0.6
       property real backgroundTint: 0.6
     }
+
+    property JsonObject idle: JsonObject {
+      property bool enabled: false
+      property int suspendAfter: 30
+    }
   }
 
   readonly property alias data: settingsAdapter
