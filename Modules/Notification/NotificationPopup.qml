@@ -45,7 +45,7 @@ Item {
 
   Timer {
     id: dismissTimer
-    interval: Theme.animationBuffer
+    interval: Theme.animationNormal + Theme.timerDelay
     onTriggered: NotificationService.dismissPopup(notificationId)
   }
 
