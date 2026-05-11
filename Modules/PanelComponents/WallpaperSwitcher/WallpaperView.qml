@@ -31,7 +31,7 @@ PathView {
 
   function handleEnter() {
     WallpaperService.changeWallpaper(currentItem.wallpaperPath);
-    PanelService.closePanel();
+    PanelService.closeOpenedPanel();
   }
 
   path: Path {

@@ -59,7 +59,7 @@ Singleton {
     }
   }
 
-  function closePanel() {
+  function closeOpenedPanel() {
     if (openedPanel && openedPanel.close) {
       openedPanel.close();
     }

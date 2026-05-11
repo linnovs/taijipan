@@ -122,7 +122,7 @@ PanelWindow {
       acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
       onClicked: {
         if (root.isAnyPanelVisible) {
-          PanelService.closePanel();
+          PanelService.closeOpenedPanel();
         }
       }
       z: 0

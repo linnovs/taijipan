@@ -55,7 +55,7 @@ Rectangle {
     }
     onClicked: {
       SessionService.executeAction(root.action);
-      PanelService.closePanel();
+      PanelService.closeOpenedPanel();
     }
   }
 
