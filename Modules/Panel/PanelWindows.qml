@@ -86,6 +86,14 @@ PanelWindow {
       if (!panel || panel.screen !== root.screen)
         return null;
       let region = panel.panelRegion;
+      return (region && region.visible) ? panel.panelBackground : null;
+    }
+
+    readonly property var closingPanelBg: {
+      let panel = PanelService.closingPanel;
+      if (!panel || panel.screen !== root.screen)
+        return null;
+      let region = panel.panelRegion;
       return (region && region.visible) ? region : null;
     }
   }
@@ -96,7 +104,15 @@ PanelWindow {
       y: backgroundBlur.panelBg ? backgroundBlur.panelBg.y : 0
       width: backgroundBlur.panelBg ? backgroundBlur.panelBg.width : 0
       height: backgroundBlur.panelBg ? backgroundBlur.panelBg.height : 0
-      radius: Theme.radiusLG
+      radius: backgroundBlur.panelBg ? backgroundBlur.panelBg.radius : Theme.radiusLG
+    }
+
+    Region {
+      x: backgroundBlur.closingPanelBg ? backgroundBlur.closingPanelBg.x : 0
+      y: backgroundBlur.closingPanelBg ? backgroundBlur.closingPanelBg.y : 0
+      width: backgroundBlur.closingPanelBg ? backgroundBlur.closingPanelBg.width : 0
+      height: backgroundBlur.closingPanelBg ? backgroundBlur.closingPanelBg.height : 0
+      radius: backgroundBlur.closingPanelBg ? backgroundBlur.closingPanelBg.radius : Theme.radiusLG
     }
 
     Region {

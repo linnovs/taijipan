@@ -37,6 +37,13 @@ Item {
           return (p && p.screen === root.windowRoot.screen) ? p : null;
         }
       }
+
+      PanelBackground {
+        panel: {
+          let p = PanelService.closingPanel;
+          return (p && p.screen === root.windowRoot.screen) ? p : null;
+        }
+      }
     }
 
     DropShadow {
