@@ -42,6 +42,7 @@ Singleton {
 
   readonly property int timerDelay: 50
   readonly property int timerDebounce: 200
+  readonly property int timerDebounceLong: 500
   readonly property int timerRenderDelay: 250
 
   readonly property int animationSlowest: 700

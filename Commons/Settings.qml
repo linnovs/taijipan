@@ -123,7 +123,7 @@ Singleton {
   Timer {
     id: reloadDebounceTimer
     running: false
-    interval: 200
+    interval: Theme.timerDebounce
     onTriggered: {
       if (createdDirectories && settingsFileView.path !== undefined) {
         Logger.i("Settings", "Reload settings after detected external change to file");
@@ -135,7 +135,7 @@ Singleton {
   Timer {
     id: saveDebounceTimer
     running: false
-    interval: 500
+    interval: Theme.timerDebounceLong
     onTriggered: settingsFileView.writeAdapter()
   }
 
