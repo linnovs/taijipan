@@ -116,6 +116,8 @@ PanelWindow {
     }
 
     Region {
+      x: 0
+      y: 0
       width: root.isBackdropEnabled ? root.width : 0
       height: root.isBackdropEnabled ? root.height : 0
     }
