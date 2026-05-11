@@ -15,17 +15,20 @@ PanelWindow {
 
   readonly property bool isPanelOpenOnScreen: PanelService.openedPanel !== null && PanelService.openedPanel.screen === screen
   readonly property bool isPanelClosing: PanelService.openedPanel && PanelService.openedPanel.isClosing
+  readonly property bool isAnyPanelVisible: PanelService.isAnyPanelVisible
+  readonly property bool isCurrentPanelExclusive: PanelService.openedPanel && PanelService.openedPanel.exclusiveKeyboardFocus
+  readonly property bool isBackdropEnabled: PanelService.isAnyPanelVisible && PanelService.openedPanel && PanelService.openedPanel.enableBackdrop
 
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
   WlrLayershell.namespace: "taijipan-panel-" + (screen?.name || "unknown")
   WlrLayershell.keyboardFocus: {
-    if (!PanelService.isAnyPanelVisible) {
+    if (!root.isAnyPanelVisible) {
       return WlrKeyboardFocus.None;
     }
 
     if (root.isPanelOpenOnScreen) {
-      return PanelService.openedPanel.exclusiveKeyboardFocus ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand;
+      return root.isCurrentPanelExclusive ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand;
     }
 
     return WlrKeyboardFocus.OnDemand;
@@ -37,7 +40,7 @@ PanelWindow {
   anchors.left: true
 
   color: {
-    if (PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop) {
+    if (root.isBackdropEnabled) {
       return Qt.alpha(Colors.mShadow, Settings.data.general.dimmerOpacity || 0.8);
     }
 
@@ -67,34 +70,36 @@ PanelWindow {
 
     Region {
       id: panelMaskRegion
-      width: PanelService.isAnyPanelVisible ? root.width : 0
-      height: PanelService.isAnyPanelVisible ? root.height : 0
+      width: root.isAnyPanelVisible ? root.width : 0
+      height: root.isAnyPanelVisible ? root.height : 0
       intersection: Intersection.Subtract
     }
 
     regions: [barMaskRegion, panelMaskRegion]
   }
 
-  Region {
-    id: backdropRegion
-    width: PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop ? root.width : 0
-    height: PanelService.isAnyPanelVisible && PanelService.openedPanel.enableBackdrop ? root.height : 0
+  BackgroundEffect.blurRegion: Region {
+    width: root.isBackdropEnabled ? root.width : 0
+    height: root.isBackdropEnabled ? root.height : 0
   }
-  BackgroundEffect.blurRegion: backdropRegion
 
   Item {
     id: container
     width: root.width
     height: root.height
 
-    Backgrounds {}
+    Backgrounds {
+      anchors.fill: parent
+      windowRoot: root
+      z: 0
+    }
 
     MouseArea {
       anchors.fill: parent
-      enabled: PanelService.isAnyPanelVisible
+      enabled: root.isAnyPanelVisible
       acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
       onClicked: {
-        if (PanelService.isAnyPanelVisible) {
+        if (root.isAnyPanelVisible) {
           PanelService.closePanel();
         }
       }
