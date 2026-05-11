@@ -54,6 +54,14 @@ PanelWindow {
     }
   }
 
+  Item {
+    id: barPlaceholder
+    x: 0
+    y: 0
+    width: screen ? screen.width : 0
+    height: Theme.barHeight
+  }
+
   mask: Region {
     id: clickableMask
 
@@ -65,6 +73,10 @@ PanelWindow {
 
     Region {
       id: barMaskRegion
+      x: barPlaceholder.x
+      y: barPlaceholder.y
+      width: barPlaceholder.width
+      height: barPlaceholder.height
       intersection: Intersection.Subtract
     }
 
