@@ -47,6 +47,7 @@ Item {
 
   property PanelPositionObj panelPosition: PanelPositionObj {}
   property PanelSize panelSize: PanelSize {}
+  property bool scaleAnimation: false
   property real radius: Theme.radiusLG
 
   opacity: {
@@ -100,6 +101,8 @@ Item {
   Item {
     id: panelContainer
 
+    property alias background: panelContainer
+
     readonly property int leftMargin: panelSize.preferredWidth ? panelSize.leftMargin : Theme.marginXL
     readonly property int rightMargin: panelSize.preferredWidth ? panelSize.rightMargin : Theme.marginXL
     readonly property int topMargin: panelSize.preferredWidth ? panelSize.topMargin : Theme.marginXL
@@ -119,38 +122,48 @@ Item {
     scale: root.isClosing ? 0.8 : 1.0
     opacity: root.isClosing ? 0.0 : 1.0
 
-    width: contentWidth
-    height: contentHeight
+    width: root.isClosing ? 0 : contentWidth
+    height: root.isClosing ? 0 : contentHeight
 
     property real posX: {
       if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.horizontalCenter) {
-        return (parent.width - width) / 2;
+        return root.isClosing ? (parent.width - contentWidth / 2) / 2 : (parent.width - width) / 2;
       }
-      return panelPosition.x;
+      return root.isClosing ? panelPosition.x + contentWidth / 2 : panelPosition.x;
     }
     property real posY: {
       if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.verticalCenter) {
-        return (parent.height - height) / 2;
+        return root.isClosing ? (parent.height - contentHeight / 2) / 2 : (parent.height - height) / 2;
       }
       if (panelPosition.placement === BasePanel.Placement.Top) {
-        return 0;
+        return root.isClosing ? contentHeight / 2 : 0;
       }
       if (panelPosition.placement === BasePanel.Placement.Bottom) {
-        return parent.height - height;
+        return root.isClosing ? parent.height - contentHeight / 2 : parent.height - height;
       }
-      return panelPosition.y;
+      return root.isClosing ? panelPosition.y - contentHeight / 2 : panelPosition.y;
     }
     x: posX + panelPosition.margins.left - panelPosition.margins.right
     y: posY + panelPosition.margins.top - panelPosition.margins.bottom
 
-    Behavior on scale {
+    Behavior on x {
+      enabled: !root.scaleAnimation
       NumberAnimation {
         duration: root.isClosing ? Theme.animationFast : Theme.animationNormal
         easing.type: Easing.OutBack
       }
     }
 
-    Behavior on opacity {
+    Behavior on y {
+      enabled: !root.scaleAnimation
+      NumberAnimation {
+        duration: root.isClosing ? Theme.animationFast : Theme.animationNormal
+        easing.type: Easing.OutBack
+      }
+    }
+
+    Behavior on scale {
+      enabled: root.scaleAnimation
       NumberAnimation {
         duration: root.isClosing ? Theme.animationFast : Theme.animationNormal
         easing.type: Easing.OutBack
@@ -184,8 +197,8 @@ Item {
     active: isOpen && panelComponent !== null
     x: panelContainer.x + panelSize.leftMargin
     y: panelContainer.y + panelSize.topMargin
-    width: panelContainer.width - panelSize.leftMargin - panelSize.rightMargin
-    height: panelContainer.height - panelSize.topMargin - panelSize.bottomMargin
+    width: isClosing ? 0 : panelContainer.width - panelSize.leftMargin - panelSize.rightMargin
+    height: isClosing ? 0 : panelContainer.height - panelSize.topMargin - panelSize.bottomMargin
     scale: panelContainer.scale
     opacity: panelContainer.opacity
     sourceComponent: root.panelComponent
