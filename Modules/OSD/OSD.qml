@@ -74,7 +74,7 @@ Loader {
 
   Timer {
     id: deactiveTimer
-    interval: Theme.animationNormal + Theme.animationBuffer
+    interval: Theme.animationNormal + Theme.timerDelay
     onTriggered: {
       root.active = false;
     }

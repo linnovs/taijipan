@@ -114,7 +114,7 @@ Singleton {
 
   Timer {
     id: transactionTimer
-    interval: Theme.animationSlowest + Theme.animationBuffer
+    interval: Theme.animationSlowest + Theme.timerDelay
     onTriggered: root.isTransitioning = false
   }
 
