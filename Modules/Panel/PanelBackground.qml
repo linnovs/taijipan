@@ -7,14 +7,14 @@ ShapePath {
 
   property var panel: null
   readonly property var panelRegion: panel?.panelRegion ?? null
-  readonly property var panelBg: (panelRegion && panelRegion.visible) ? panelRegion : null
+  readonly property var panelBackground: (panelRegion && panelRegion.visible) ? panel.panelBackground : null
   readonly property real radius: panel ? panel.radius : 0
 
-  readonly property real panelX: panelBg ? panelBg.x : 0
-  readonly property real panelY: panelBg ? panelBg.y : 0
-  readonly property real panelWidth: panelBg ? panelBg.width : 0
-  readonly property real panelHeight: panelBg ? panelBg.height : 0
-  readonly property bool isPanelVisible: panel && panelBg && panelWidth > 0 && panelHeight > 0
+  readonly property real panelX: panelBackground ? panelBackground.x : 0
+  readonly property real panelY: panelBackground ? panelBackground.y : 0
+  readonly property real panelWidth: panelBackground ? panelBackground.width : 0
+  readonly property real panelHeight: panelBackground ? panelBackground.height : 0
+  readonly property bool isPanelVisible: panel && panelBackground && panelWidth > 0 && panelHeight > 0
 
   strokeWidth: -1
   capStyle: ShapePath.RoundCap

@@ -97,6 +97,7 @@ Item {
 
   property alias panelContent: contentLoader.item
   property alias panelRegion: panelContainer
+  property alias panelBackground: panelContainer.background
 
   Item {
     id: panelContainer
