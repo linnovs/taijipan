@@ -13,6 +13,10 @@ BasePanel {
   panelPosition.margins.bottom: screen.height * 0.05
   panelSize.preferredWidth: screen ? screen.width : 400
   panelSize.preferredHeight: ImageCacheService.thumbnailSize
+  panelSize.topMargin: Theme.marginMD
+  panelSize.leftMargin: Theme.marginMD
+  panelSize.rightMargin: Theme.marginMD
+  panelSize.bottomMargin: Theme.marginMD
 
   property ListModel wallpaperModel: ListModel {}
   property bool loading: true

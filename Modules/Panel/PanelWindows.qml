@@ -78,9 +78,31 @@ PanelWindow {
     regions: [barMaskRegion, panelMaskRegion]
   }
 
+  QtObject {
+    id: backgroundBlur
+
+    readonly property var panelBg: {
+      let panel = PanelService.openedPanel;
+      if (!panel || panel.screen !== root.screen)
+        return null;
+      let region = panel.panelRegion;
+      return (region && region.visible) ? region : null;
+    }
+  }
+
   BackgroundEffect.blurRegion: Region {
-    width: root.isBackdropEnabled ? root.width : 0
-    height: root.isBackdropEnabled ? root.height : 0
+    Region {
+      x: backgroundBlur.panelBg ? backgroundBlur.panelBg.x : 0
+      y: backgroundBlur.panelBg ? backgroundBlur.panelBg.y : 0
+      width: backgroundBlur.panelBg ? backgroundBlur.panelBg.width : 0
+      height: backgroundBlur.panelBg ? backgroundBlur.panelBg.height : 0
+      radius: Theme.radiusLG
+    }
+
+    Region {
+      width: root.isBackdropEnabled ? root.width : 0
+      height: root.isBackdropEnabled ? root.height : 0
+    }
   }
 
   Item {

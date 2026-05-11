@@ -23,26 +23,31 @@ Item {
   }
 
   component PanelMarginObj: QtObject {
-    property int top
-    property int right
-    property int bottom
-    property int left
+    property real top
+    property real right
+    property real bottom
+    property real left
   }
   component PanelPositionObj: QtObject {
-    property int x
-    property int y
+    property real x
+    property real y
     property int placement: -1
     property bool horizontalCenter
     property bool verticalCenter
     property PanelMarginObj margins: PanelMarginObj {}
   }
   component PanelSize: QtObject {
-    property int preferredWidth
-    property int preferredHeight
+    property real preferredWidth
+    property real preferredHeight
+    property real topMargin: 0
+    property real rightMargin: 0
+    property real bottomMargin: 0
+    property real leftMargin: 0
   }
 
   property PanelPositionObj panelPosition: PanelPositionObj {}
   property PanelSize panelSize: PanelSize {}
+  property real radius: Theme.radiusLG
 
   opacity: {
     if (isClosing) {
@@ -90,20 +95,25 @@ Item {
   }
 
   property alias panelContent: contentLoader.item
+  property alias panelRegion: panelContainer
 
   Item {
     id: panelContainer
 
-    readonly property int leftMargin: Theme.marginXL
-    readonly property int rightMargin: Theme.marginXL
-    readonly property int topMargin: Theme.marginXL
-    readonly property int bottomMargin: Theme.marginXL
+    readonly property int leftMargin: panelSize.preferredWidth ? panelSize.leftMargin : Theme.marginXL
+    readonly property int rightMargin: panelSize.preferredWidth ? panelSize.rightMargin : Theme.marginXL
+    readonly property int topMargin: panelSize.preferredWidth ? panelSize.topMargin : Theme.marginXL
+    readonly property int bottomMargin: panelSize.preferredWidth ? panelSize.bottomMargin : Theme.marginXL
 
     readonly property int contentWidth: {
-      return panelSize.preferredWidth || (panelContent ? panelContent.implicitWidth : 0) + leftMargin + rightMargin;
+      if (panelSize.preferredWidth)
+        return panelSize.preferredWidth + leftMargin + rightMargin;
+      return (panelContent ? panelContent.implicitWidth : 0) + leftMargin + rightMargin;
     }
     readonly property int contentHeight: {
-      return panelSize.preferredHeight || (panelContent ? panelContent.implicitHeight : 0) + topMargin + bottomMargin;
+      if (panelSize.preferredHeight)
+        return panelSize.preferredHeight + topMargin + bottomMargin;
+      return (panelContent ? panelContent.implicitHeight : 0) + topMargin + bottomMargin;
     }
 
     scale: root.isClosing ? 0.8 : 1.0
@@ -172,10 +182,10 @@ Item {
   Loader {
     id: contentLoader
     active: isOpen && panelComponent !== null
-    x: panelContainer.x
-    y: panelContainer.y
-    width: panelContainer.width
-    height: panelContainer.height
+    x: panelContainer.x + panelSize.leftMargin
+    y: panelContainer.y + panelSize.topMargin
+    width: panelContainer.width - panelSize.leftMargin - panelSize.rightMargin
+    height: panelContainer.height - panelSize.topMargin - panelSize.bottomMargin
     scale: panelContainer.scale
     opacity: panelContainer.opacity
     sourceComponent: root.panelComponent
