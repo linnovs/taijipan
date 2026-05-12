@@ -88,6 +88,7 @@ Item {
           let p = PanelService.openedPanel;
           return (p && p.screen === root.windowRoot.screen) ? p : null;
         }
+        backgroundColor: root.backgroundColor
       }
 
       PanelBackground {
@@ -95,6 +96,7 @@ Item {
           let p = PanelService.closingPanel;
           return (p && p.screen === root.windowRoot.screen) ? p : null;
         }
+        backgroundColor: root.backgroundColor
       }
     }
 

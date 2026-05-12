@@ -1,11 +1,11 @@
 import QtQuick
 import QtQuick.Shapes
-import qs.Commons
 
 ShapePath {
   id: root
 
   property var panel: null
+  property color backgroundColor: "transparent"
   readonly property var panelRegion: panel?.panelRegion ?? null
   readonly property var panelBackground: (panelRegion && panelRegion.visible) ? panel.panelBackground : null
   readonly property real radius: panel ? panel.radius : 0
@@ -22,7 +22,7 @@ ShapePath {
   startX: isPanelVisible ? panelX + radius : 0
   startY: isPanelVisible ? panelY : 0
 
-  fillColor: isPanelVisible ? Colors.mSurface : "transparent"
+  fillColor: isPanelVisible ? backgroundColor : "transparent"
 
   // top edge
   PathLine {
