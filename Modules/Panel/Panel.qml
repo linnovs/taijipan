@@ -23,6 +23,19 @@ Variants {
     }
 
     Loader {
+      id: barLoader
+      active: panelWindow.panelLoaded
+      asynchronous: false
+      sourceComponent: BarWindows {
+        screen: windowLoader.screen
+      }
+
+      onLoaded: {
+        Logger.d("Panel", "BarWindow created for", windowLoader.screen?.name);
+      }
+    }
+
+    Loader {
       id: barExclusionLoader
       active: panelWindow.panelLoaded
       asynchronous: false

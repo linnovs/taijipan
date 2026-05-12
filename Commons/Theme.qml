@@ -66,13 +66,15 @@ Singleton {
   readonly property int fontSizeXXXL: spacing * 12
   readonly property int fontSizeXXXXL: spacing * 16
 
-  readonly property int barMarginV: spacing * 2
-  readonly property int barMarginH: spacing * 2
-  readonly property int barHeight: spacing * 8
+  readonly property int barSectionMinimumWidth: spacing * 64
 
   readonly property int powerMenuIconSize: spacing * 32
   readonly property int powerMenuButtonIconSize: spacing * 16
 
   readonly property int notificationAppIconSize: spacing * 4
   readonly property int notificationImageSize: spacing * 18
+
+  function pixelAlignCenter(containerSize: real, elementSize: real): real {
+    return Math.round((containerSize - elementSize) / 2);
+  }
 }

@@ -59,7 +59,7 @@ PanelWindow {
     x: 0
     y: 0
     width: screen ? screen.width : 0
-    height: Theme.barHeight
+    height: Settings.data.ui.bar.height * Theme.spacing
   }
 
   mask: Region {
@@ -142,6 +142,7 @@ PanelWindow {
 
     Backgrounds {
       anchors.fill: parent
+      bar: barPlaceholder
       windowRoot: root
       z: 0
     }

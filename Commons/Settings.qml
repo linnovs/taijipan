@@ -62,6 +62,18 @@ Singleton {
 
     property JsonObject ui: JsonObject {
       property string font: defaultTextMetrics.font.family
+      property JsonObject bar: JsonObject {
+        property real opacity: 0.94
+        property real height: 8
+        property real widgetSpacing: 1
+        property real topMarginSpacing: 1
+        property real leftMarginSpacing: 1
+        property real bottomMarginSpacing: 1
+        property real rightMarginSpacing: 1
+      }
+      property JsonObject panel: JsonObject {
+        property real opacity: 0.94
+      }
     }
 
     property JsonObject notification: JsonObject {
@@ -115,6 +127,14 @@ Singleton {
     property JsonObject idle: JsonObject {
       property bool enabled: false
       property int suspendAfter: 30
+    }
+
+    property JsonObject bar: JsonObject {
+      property JsonObject widgets: JsonObject {
+        property list<var> left: []
+        property list<var> center: []
+        property list<var> right: []
+      }
     }
   }
 

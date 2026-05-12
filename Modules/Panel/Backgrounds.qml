@@ -15,6 +15,58 @@ Item {
   readonly property color backgroundColor: Colors.mSurface
 
   Item {
+    id: barBackgroundContainer
+    anchors.fill: parent
+    layer.enabled: true
+    opacity: Settings.data.ui.bar.opacity
+
+    Shape {
+      id: barBackgroundShape
+      anchors.fill: parent
+      preferredRendererType: Shape.CurveRenderer
+      asynchronous: true
+      enabled: false
+
+      Component.onCompleted: {
+        Logger.d("PanelBackgrounds", "Bar Background shape initialized for screen:", windowRoot?.screen?.name);
+      }
+
+      ShapePath {
+        strokeWidth: -1
+        fillColor: root.backgroundColor
+        PathRectangle {
+          width: root.windowRoot.width
+          height: Theme.spacing * Settings.data.ui.bar.topMarginSpacing
+        }
+      }
+
+      BarBackground {
+        section: "left"
+        screen: root.windowRoot.screen
+        fillColor: root.backgroundColor
+      }
+
+      BarBackground {
+        section: "center"
+        screen: root.windowRoot.screen
+        fillColor: root.backgroundColor
+      }
+
+      BarBackground {
+        section: "right"
+        screen: root.windowRoot.screen
+        fillColor: root.backgroundColor
+      }
+    }
+
+    DropShadow {
+      anchors.fill: parent
+      source: barBackgroundShape
+      autoPaddingEnabled: true
+    }
+  }
+
+  Item {
     id: panelBackgroundContainer
     anchors.fill: parent
     layer.enabled: true
