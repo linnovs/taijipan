@@ -8,6 +8,7 @@ PathView {
 
   property ShellScreen screen
   property real preferredHeight
+  property int selectedWallpaperIndex: -1
 
   property ListModel wallpaperModel
   property real baseWidth: screen.width / pathItemCount
@@ -15,6 +16,7 @@ PathView {
   model: wallpaperModel
   pathItemCount: 7
   cacheItemCount: 5
+  currentIndex: selectedWallpaperIndex
   preferredHighlightBegin: 0.5 - (1 / pathItemCount) / 2
   preferredHighlightEnd: 0.5 + (1 / pathItemCount) / 2
   highlightMoveDuration: Theme.animationFast
@@ -30,6 +32,7 @@ PathView {
   }
 
   function handleEnter() {
+    selectedWallpaperIndex = currentIndex;
     WallpaperService.changeWallpaper(currentItem.wallpaperPath);
     PanelService.closeOpenedPanel();
   }

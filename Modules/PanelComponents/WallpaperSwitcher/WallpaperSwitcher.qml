@@ -21,7 +21,7 @@ BasePanel {
   property ListModel wallpaperModel: ListModel {}
   property bool loading: true
   property var panelContentItem: null
-  property int selectedWallpaperIndex: -1
+  property int currentWallpaperIndex: -1
 
   panelComponent: Item {
     id: panelContent
@@ -33,7 +33,8 @@ BasePanel {
         screen: root.screen
         wallpaperModel: root.wallpaperModel
         preferredHeight: panelSize.preferredHeight
-        currentIndex: selectedWallpaperIndex
+        selectedWallpaperIndex: root.currentWallpaperIndex
+        onSelectedWallpaperIndexChanged: root.currentWallpaperIndex = currentIndex
       }
     }
 
@@ -85,7 +86,7 @@ BasePanel {
       const currentWallpaper = WallpaperService.getWallpaperForScreen(root.screen.name);
       for (let i = 0; i < wallpaperModel.count; i++) {
         if (wallpaperModel.get(i).wallpaperPath === currentWallpaper) {
-          selectedWallpaperIndex = i;
+          currentWallpaperIndex = i;
           afterRefreshTimer.restart();
           return;
         }
