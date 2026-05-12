@@ -108,6 +108,7 @@ Item {
     readonly property int rightMargin: panelSize.preferredWidth ? panelSize.rightMargin : Theme.marginXL
     readonly property int topMargin: panelSize.preferredWidth ? panelSize.topMargin : Theme.marginXL
     readonly property int bottomMargin: panelSize.preferredWidth ? panelSize.bottomMargin : Theme.marginXL
+    readonly property int radius: root.radius
 
     readonly property int contentWidth: {
       if (panelSize.preferredWidth)
