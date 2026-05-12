@@ -107,6 +107,12 @@ Singleton {
         WallpaperService.setNextWallpaper();
       }
     }
+    function get(): string {
+      if (Settings.data.wallpaper.enabled) {
+        return WallpaperService.getWallpaperForScreen(detectedScreen?.name);
+      }
+      return "";
+    }
     function set(path: string): void {
       if (Settings.data.wallpaper.enabled) {
         WallpaperService.changeWallpaper(path);
