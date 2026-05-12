@@ -12,10 +12,9 @@ ShapePath {
 
   strokeWidth: -1
 
-  property real sectionWidth: {
-    return Math.max(BarService.getSectionWidth(screen.name, section), Theme.barSectionMinimumWidth);
-  }
-  property real barHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
+  property real sectionWidth: BarService.getSectionWidth(screen.name, section)
+  property real defaultBarHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
+  property real barHeight: sectionWidth > 0 ? defaultBarHeight : 0
   property real barRadiusWidth: barHeight / 2
   property real barRadiusHeight: barHeight / 2
   property real barRadius: barHeight / 2
