@@ -57,6 +57,7 @@ Singleton {
 
   function init() {
     Logger.i("IPCService", "Initialize service");
+    isDetecting = true;
   }
 
   function runOnScreen(callback) {
