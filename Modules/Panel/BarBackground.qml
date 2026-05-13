@@ -17,43 +17,45 @@ ShapePath {
   readonly property int barRadiusWidth: barHeight / 2
   readonly property int barRadiusHeight: barHeight / 2
   readonly property int barRadius: barHeight / 2
-  readonly property int barExtraSpace: sectionWidth > 0 ? barRadiusWidth * 2 : 0
+  readonly property int barExtraSpace: sectionWidth > 0 ? barRadiusWidth : 0
 
   readonly property int trMultX: section === "right" ? 0 : -1
-  readonly property int trMultY: section === "right" ? 4 : 1
+  readonly property int trMultY: section === "right" ? 3 : 1
   readonly property int trRadius: section === "right" ? 0 : 1
   readonly property bool trClockwise: section === "right" ? false : false
 
-  readonly property int brMultX: section === "right" ? -2 : -1
-  readonly property int brMultY: section === "right" ? -2 : 1
-  readonly property int brRadius: section === "right" ? 2 : 1
+  readonly property int brMultX: section === "right" ? -1 : -1
+  readonly property int brMultY: section === "right" ? -1 : 1
+  readonly property int brRadius: section === "right" ? 1 : 1
   readonly property bool brClockwise: section === "right" ? false : true
 
-  readonly property int blMultX: section === "left" ? -2 : -1
-  readonly property int blMultY: section === "left" ? 2 : -1
-  readonly property int blRadius: section === "left" ? 2 : 1
+  readonly property int blMultX: section === "left" ? -1 : -1
+  readonly property int blMultY: section === "left" ? 1 : -1
+  readonly property int blRadius: section === "left" ? 1 : 1
   readonly property bool blClockwise: section === "left" ? false : true
 
   readonly property int tlMultX: section === "left" ? 0 : -1
-  readonly property int tlMultY: section === "left" ? -4 : -1
+  readonly property int tlMultY: section === "left" ? 0 : -1
   readonly property int tlRadius: section === "left" ? 0 : 1
   readonly property bool tlClockwise: section === "left" ? false : false
 
   readonly property int topEdgeLength: {
     switch (section) {
     case "left":
-    case "right":
-      return sectionWidth + barExtraSpace + barRadiusWidth * 2;
+      return sectionWidth + barRadiusWidth * 2 + barExtraSpace * 2;
     case "center":
-      return sectionWidth + barExtraSpace + barRadiusWidth * 4;
+      return sectionWidth + barExtraSpace * 2 + barRadiusWidth * 4;
+    case "right":
+      return sectionWidth + barRadiusWidth * 2 + barExtraSpace * 2;
     }
   }
   readonly property int bottomEdgeLength: {
     switch (section) {
     case "left":
-    case "right":
-      return -sectionWidth - barExtraSpace + barRadiusWidth * 2;
+      return -sectionWidth - barExtraSpace;
     case "center":
+      return -sectionWidth - barExtraSpace * 2;
+    case "right":
       return -sectionWidth - barExtraSpace;
     }
   }
@@ -61,11 +63,12 @@ ShapePath {
   readonly property int startPosX: {
     switch (section) {
     case "left":
-      return 0;
+      return Theme.spacing * Settings.data.ui.bar.leftMarginSpacing;
     case "center":
-      return screen.width / 2 - sectionWidth / 2 - barRadiusWidth * 2;
+      return Theme.pixelAlignCenter(screen.width, sectionWidth + barExtraSpace * 2 + barRadiusWidth * 4);
     case "right":
-      return screen.width - sectionWidth - barRadiusWidth * 2;
+      const rightMargin = Theme.spacing * Settings.data.ui.bar.rightMarginSpacing;
+      return screen.width - sectionWidth - barExtraSpace * 2 - barRadiusWidth * 2 - rightMargin;
     }
   }
 

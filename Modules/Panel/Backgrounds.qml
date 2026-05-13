@@ -31,13 +31,9 @@ Item {
         Logger.d("PanelBackgrounds", "Bar Background shape initialized for screen:", windowRoot?.screen?.name);
       }
 
-      ShapePath {
-        strokeWidth: -1
+      FrameBackground {
+        screen: root.windowRoot.screen
         fillColor: root.backgroundColor
-        PathRectangle {
-          width: root.windowRoot.width
-          height: Theme.spacing * Settings.data.ui.bar.topMarginSpacing
-        }
       }
 
       BarBackground {
