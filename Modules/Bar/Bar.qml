@@ -98,6 +98,8 @@ Item {
         width: parent.width
         height: parent.height
 
+        property int sectionExtraSpace: (Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing - Settings.data.ui.bar.bottomMarginSpacing)) / 2
+
         Item {
           anchors.fill: parent
           clip: true
@@ -105,7 +107,7 @@ Item {
           RowLayout {
             id: leftSection
             anchors.left: parent.left
-            anchors.leftMargin: Theme.spacing * Settings.data.ui.bar.leftMarginSpacing
+            anchors.leftMargin: Theme.spacing * Settings.data.ui.bar.leftMarginSpacing + bar.sectionExtraSpace
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "left", implicitWidth)
@@ -126,11 +128,10 @@ Item {
               }
             }
           }
-
           RowLayout {
             id: centerSection
-            anchors.horizontalCenter: parent.horizontalCenter
             y: Theme.pixelAlignCenter(parent.height, height)
+            x: Theme.pixelAlignCenter(parent.width, width)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "center", implicitWidth)
 
@@ -154,7 +155,7 @@ Item {
           RowLayout {
             id: rightSection
             anchors.right: parent.right
-            anchors.rightMargin: Theme.spacing * Settings.data.ui.bar.rightMarginSpacing
+            anchors.rightMargin: Theme.spacing * Settings.data.ui.bar.rightMarginSpacing + bar.sectionExtraSpace
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "right", implicitWidth)
