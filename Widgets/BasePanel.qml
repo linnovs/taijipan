@@ -23,32 +23,32 @@ Item {
   }
 
   component PanelMarginObj: QtObject {
-    property real top
-    property real right
-    property real bottom
-    property real left
+    property int top
+    property int right
+    property int bottom
+    property int left
   }
   component PanelPositionObj: QtObject {
-    property real x
-    property real y
+    property int x
+    property int y
     property int placement: -1
     property bool horizontalCenter
     property bool verticalCenter
     property PanelMarginObj margins: PanelMarginObj {}
   }
   component PanelSize: QtObject {
-    property real preferredWidth
-    property real preferredHeight
-    property real topMargin: 0
-    property real rightMargin: 0
-    property real bottomMargin: 0
-    property real leftMargin: 0
+    property int preferredWidth
+    property int preferredHeight
+    property int topMargin: 0
+    property int rightMargin: 0
+    property int bottomMargin: 0
+    property int leftMargin: 0
   }
 
   property PanelPositionObj panelPosition: PanelPositionObj {}
   property PanelSize panelSize: PanelSize {}
   property bool scaleAnimation: false
-  property real radius: Theme.radiusLG
+  property int radius: Theme.radiusLG
 
   opacity: {
     if (isClosing) {
@@ -127,13 +127,13 @@ Item {
     width: root.isClosing ? 0 : contentWidth
     height: root.isClosing ? 0 : contentHeight
 
-    property real posX: {
+    property int posX: {
       if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.horizontalCenter) {
         return root.isClosing ? (parent.width - contentWidth / 2) / 2 : (parent.width - width) / 2;
       }
       return root.isClosing ? panelPosition.x + contentWidth / 2 : panelPosition.x;
     }
-    property real posY: {
+    property int posY: {
       if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.verticalCenter) {
         return root.isClosing ? (parent.height - contentHeight / 2) / 2 : (parent.height - height) / 2;
       }

@@ -7,11 +7,11 @@ PathView {
   id: root
 
   property ShellScreen screen
-  property real preferredHeight
+  property int preferredHeight
   property int selectedWallpaperIndex: -1
 
   property ListModel wallpaperModel
-  property real baseWidth: screen.width / pathItemCount
+  property int baseWidth: screen.width / pathItemCount
 
   model: wallpaperModel
   pathItemCount: 7

@@ -46,7 +46,7 @@ Item {
   }
 
   readonly property real aspectRatio: img.implicitWidth > 0 ? img.implicitWidth / img.implicitHeight : 16 / 9
-  readonly property real targetWidth: preferredHeight * aspectRatio
+  readonly property int targetWidth: preferredHeight * aspectRatio
 
   width: targetWidth
   height: preferredHeight

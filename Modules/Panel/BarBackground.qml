@@ -8,38 +8,38 @@ ShapePath {
 
   required property string section
   required property ShellScreen screen
-  required property real sectionWidth
+  required property int sectionWidth
 
   strokeWidth: -1
 
-  readonly property real defaultBarHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
-  readonly property real barHeight: sectionWidth > 0 ? defaultBarHeight : 0
-  readonly property real barRadiusWidth: barHeight / 2
-  readonly property real barRadiusHeight: barHeight / 2
-  readonly property real barRadius: barHeight / 2
-  readonly property real barExtraSpace: sectionWidth > 0 ? barRadiusWidth : 0
+  readonly property int defaultBarHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
+  readonly property int barHeight: sectionWidth > 0 ? defaultBarHeight : 0
+  readonly property int barRadiusWidth: barHeight / 2
+  readonly property int barRadiusHeight: barHeight / 2
+  readonly property int barRadius: barHeight / 2
+  readonly property int barExtraSpace: sectionWidth > 0 ? barRadiusWidth * 2 : 0
 
-  readonly property real trMultX: section === "right" ? 0 : -1
-  readonly property real trMultY: section === "right" ? 4 : 1
-  readonly property real trRadius: section === "right" ? 0 : 1
+  readonly property int trMultX: section === "right" ? 0 : -1
+  readonly property int trMultY: section === "right" ? 4 : 1
+  readonly property int trRadius: section === "right" ? 0 : 1
   readonly property bool trClockwise: section === "right" ? false : false
 
-  readonly property real brMultX: section === "right" ? -2 : -1
-  readonly property real brMultY: section === "right" ? -2 : 1
-  readonly property real brRadius: section === "right" ? 2 : 1
+  readonly property int brMultX: section === "right" ? -2 : -1
+  readonly property int brMultY: section === "right" ? -2 : 1
+  readonly property int brRadius: section === "right" ? 2 : 1
   readonly property bool brClockwise: section === "right" ? false : true
 
-  readonly property real blMultX: section === "left" ? -2 : -1
-  readonly property real blMultY: section === "left" ? 2 : -1
-  readonly property real blRadius: section === "left" ? 2 : 1
+  readonly property int blMultX: section === "left" ? -2 : -1
+  readonly property int blMultY: section === "left" ? 2 : -1
+  readonly property int blRadius: section === "left" ? 2 : 1
   readonly property bool blClockwise: section === "left" ? false : true
 
-  readonly property real tlMultX: section === "left" ? 0 : -1
-  readonly property real tlMultY: section === "left" ? -4 : -1
-  readonly property real tlRadius: section === "left" ? 0 : 1
+  readonly property int tlMultX: section === "left" ? 0 : -1
+  readonly property int tlMultY: section === "left" ? -4 : -1
+  readonly property int tlRadius: section === "left" ? 0 : 1
   readonly property bool tlClockwise: section === "left" ? false : false
 
-  readonly property real topEdgeLength: {
+  readonly property int topEdgeLength: {
     switch (section) {
     case "left":
     case "right":
@@ -48,7 +48,7 @@ ShapePath {
       return sectionWidth + barExtraSpace + barRadiusWidth * 4;
     }
   }
-  readonly property real bottomEdgeLength: {
+  readonly property int bottomEdgeLength: {
     switch (section) {
     case "left":
     case "right":
@@ -58,7 +58,7 @@ ShapePath {
     }
   }
 
-  readonly property real startPosX: {
+  readonly property int startPosX: {
     switch (section) {
     case "left":
       return 0;

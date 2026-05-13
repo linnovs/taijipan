@@ -61,9 +61,9 @@ PanelWindow {
     width: screen ? screen.width : 0
     height: Settings.data.ui.bar.height * Theme.spacing
 
-    property real leftBarWidth: 0
-    property real centerBarWidth: 0
-    property real rightBarWidth: 0
+    property int leftBarWidth: 0
+    property int centerBarWidth: 0
+    property int rightBarWidth: 0
 
     Connections {
       target: BarService

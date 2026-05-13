@@ -8,12 +8,12 @@ ShapePath {
   property color backgroundColor: "transparent"
   readonly property var panelRegion: panel?.panelRegion ?? null
   readonly property var panelBackground: (panelRegion && panelRegion.visible) ? panel.panelBackground : null
-  readonly property real radius: panel ? panel.radius : 0
+  readonly property int radius: panel ? panel.radius : 0
 
-  readonly property real panelX: panelBackground ? panelBackground.x : 0
-  readonly property real panelY: panelBackground ? panelBackground.y : 0
-  readonly property real panelWidth: panelBackground ? panelBackground.width : 0
-  readonly property real panelHeight: panelBackground ? panelBackground.height : 0
+  readonly property int panelX: panelBackground ? panelBackground.x : 0
+  readonly property int panelY: panelBackground ? panelBackground.y : 0
+  readonly property int panelWidth: panelBackground ? panelBackground.width : 0
+  readonly property int panelHeight: panelBackground ? panelBackground.height : 0
   readonly property bool isPanelVisible: panel && panelBackground && panelWidth > 0 && panelHeight > 0
 
   strokeWidth: -1
