@@ -35,6 +35,9 @@ Singleton {
     return readyBars[screenName] || false;
   }
 
+  // sectionSizeChanged emitted when a widget's size changes and the bar needs to update the section's total width
+  signal sectionSizeChanged(string screenName, string section, real width)
+
   function registerWidget(screenName, section, index, widgetName, widget) {
     const key = `${screenName}|${section}|${index}|${widgetName}`;
     widgets[key] = {
@@ -54,21 +57,5 @@ Singleton {
     delete widgets[key];
     widgets = Object.assign({}, widgets); // Trigger reactivity
     Logger.d("BarService", "Unregistered widget:", key);
-  }
-
-  function getSectionWidth(screenName, section) {
-    let totalWidth = 0;
-    let secWidgets = Object.values(widgets).filter(w => w.key.startsWith(`${screenName}|${section}|`)).sort((a, b) => a.index - b.index);
-    if (secWidgets.length === 0)
-      return 0;
-
-    for (let i = 0; i < secWidgets.length; i++) {
-      totalWidth += secWidgets[i].widget.width;
-      if (i > 0 && i !== secWidgets.length - 1) {
-        totalWidth += Settings.data.ui.bar.widgetSpacing * Theme.spacing;
-      }
-    }
-
-    return totalWidth;
   }
 }

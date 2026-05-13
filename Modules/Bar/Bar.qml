@@ -108,6 +108,7 @@ Item {
             anchors.leftMargin: Theme.spacing * Settings.data.ui.bar.leftMarginSpacing
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
+            onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "left", implicitWidth)
 
             Repeater {
               model: root.leftWidgetsModel
@@ -131,6 +132,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
+            onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "center", implicitWidth)
 
             Repeater {
               model: root.centerWidgetsModel
@@ -155,6 +157,7 @@ Item {
             anchors.rightMargin: Theme.spacing * Settings.data.ui.bar.rightMarginSpacing
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
+            onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "right", implicitWidth)
 
             Repeater {
               model: root.rightWidgetsModel

@@ -60,6 +60,22 @@ PanelWindow {
     y: 0
     width: screen ? screen.width : 0
     height: Settings.data.ui.bar.height * Theme.spacing
+
+    property real leftBarWidth: 0
+    property real centerBarWidth: 0
+    property real rightBarWidth: 0
+
+    Connections {
+      target: BarService
+      function onSectionSizeChanged(screenName, section, width) {
+        if (screenName !== screen.name || section !== "left")
+          return;
+        const propName = `${section}BarWidth`;
+        if (barPlaceholder.hasOwnProperty(propName)) {
+          barPlaceholder[propName] = width;
+        }
+      }
+    }
   }
 
   mask: Region {
