@@ -49,18 +49,18 @@ Singleton {
     }
   }
 
-  function callStack() {
-    let stack = _getStackTrace();
-    i("Debug", "-".repeat(52));
-    i("Debug", "Call stack:");
+  function callStack(stack) {
+    stack = stack || _getStackTrace();
+    d("Debug", "-".repeat(52));
+    d("Debug", "Call stack:");
     // Split the stack into lines and log each one
     let stackLines = stack.split("\n");
     for (let j = 0; j < stackLines.length; j++) {
       let line = stackLines[j].trim();
       if (line.length > 0) {
-        i("Debug", `- ${line}`);
+        d("Debug", `- ${line}`);
       }
     }
-    i("Debug", "-".repeat(52));
+    d("Debug", "-".repeat(52));
   }
 }
