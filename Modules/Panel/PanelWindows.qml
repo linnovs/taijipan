@@ -68,12 +68,11 @@ PanelWindow {
     Connections {
       target: BarService
       function onSectionSizeChanged(screenName, section, width) {
-        if (screenName !== screen.name || section !== "left")
+        if (screenName !== screen.name)
           return;
         const propName = `${section}BarWidth`;
-        if (barPlaceholder.hasOwnProperty(propName)) {
+        if (barPlaceholder.hasOwnProperty(propName))
           barPlaceholder[propName] = width;
-        }
       }
     }
   }
