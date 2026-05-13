@@ -43,18 +43,21 @@ Item {
       BarBackground {
         section: "left"
         screen: root.windowRoot.screen
+        sectionWidth: root.bar.leftBarWidth
         fillColor: root.backgroundColor
       }
 
       BarBackground {
         section: "center"
         screen: root.windowRoot.screen
+        sectionWidth: root.bar.centerBarWidth
         fillColor: root.backgroundColor
       }
 
       BarBackground {
         section: "right"
         screen: root.windowRoot.screen
+        sectionWidth: root.bar.rightBarWidth
         fillColor: root.backgroundColor
       }
     }

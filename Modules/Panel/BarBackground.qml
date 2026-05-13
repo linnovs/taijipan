@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
 import Quickshell
-import qs.Services
 import qs.Commons
 
 ShapePath {
@@ -9,56 +8,57 @@ ShapePath {
 
   required property string section
   required property ShellScreen screen
+  required property real sectionWidth
 
   strokeWidth: -1
 
-  property real sectionWidth: BarService.getSectionWidth(screen.name, section)
-  property real defaultBarHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
-  property real barHeight: sectionWidth > 0 ? defaultBarHeight : 0
-  property real barRadiusWidth: barHeight / 2
-  property real barRadiusHeight: barHeight / 2
-  property real barRadius: barHeight / 2
+  readonly property real defaultBarHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
+  readonly property real barHeight: sectionWidth > 0 ? defaultBarHeight : 0
+  readonly property real barRadiusWidth: barHeight / 2
+  readonly property real barRadiusHeight: barHeight / 2
+  readonly property real barRadius: barHeight / 2
+  readonly property real barExtraSpace: sectionWidth > 0 ? barRadiusWidth : 0
 
-  property real trMultX: section === "right" ? 0 : -1
-  property real trMultY: section === "right" ? 4 : 1
-  property real trRadius: section === "right" ? 0 : 1
-  property bool trClockwise: section === "right" ? false : false
+  readonly property real trMultX: section === "right" ? 0 : -1
+  readonly property real trMultY: section === "right" ? 4 : 1
+  readonly property real trRadius: section === "right" ? 0 : 1
+  readonly property bool trClockwise: section === "right" ? false : false
 
-  property real brMultX: section === "right" ? -2 : -1
-  property real brMultY: section === "right" ? -2 : 1
-  property real brRadius: section === "right" ? 2 : 1
-  property bool brClockwise: section === "right" ? false : true
+  readonly property real brMultX: section === "right" ? -2 : -1
+  readonly property real brMultY: section === "right" ? -2 : 1
+  readonly property real brRadius: section === "right" ? 2 : 1
+  readonly property bool brClockwise: section === "right" ? false : true
 
-  property real blMultX: section === "left" ? -2 : -1
-  property real blMultY: section === "left" ? 2 : -1
-  property real blRadius: section === "left" ? 2 : 1
-  property bool blClockwise: section === "left" ? false : true
+  readonly property real blMultX: section === "left" ? -2 : -1
+  readonly property real blMultY: section === "left" ? 2 : -1
+  readonly property real blRadius: section === "left" ? 2 : 1
+  readonly property bool blClockwise: section === "left" ? false : true
 
-  property real tlMultX: section === "left" ? 0 : -1
-  property real tlMultY: section === "left" ? -4 : -1
-  property real tlRadius: section === "left" ? 0 : 1
-  property bool tlClockwise: section === "left" ? false : false
+  readonly property real tlMultX: section === "left" ? 0 : -1
+  readonly property real tlMultY: section === "left" ? -4 : -1
+  readonly property real tlRadius: section === "left" ? 0 : 1
+  readonly property bool tlClockwise: section === "left" ? false : false
 
-  property real topEdgeLength: {
+  readonly property real topEdgeLength: {
     switch (section) {
     case "left":
     case "right":
-      return sectionWidth + barRadiusWidth * 2;
+      return sectionWidth + barExtraSpace + barRadiusWidth * 2;
     case "center":
-      return sectionWidth + barRadiusWidth * 4;
+      return sectionWidth + barExtraSpace + barRadiusWidth * 4;
     }
   }
-  property real bottomEdgeLength: {
+  readonly property real bottomEdgeLength: {
     switch (section) {
     case "left":
     case "right":
-      return -sectionWidth + barRadiusWidth * 2;
+      return -sectionWidth - barExtraSpace + barRadiusWidth * 2;
     case "center":
-      return -sectionWidth;
+      return -sectionWidth - barExtraSpace;
     }
   }
 
-  startX: {
+  readonly property real startPosX: {
     switch (section) {
     case "left":
       return 0;
@@ -68,6 +68,8 @@ ShapePath {
       return screen.width - sectionWidth - barRadiusWidth * 2;
     }
   }
+
+  startX: startPosX
   startY: Theme.spacing * Settings.data.ui.bar.topMarginSpacing
 
   // top edge
