@@ -65,6 +65,18 @@ Item {
     }
   }
 
+  Connections {
+    target: BarService
+    function onSectionSizeChanged(screenName) {
+      if (screenName !== root.windowRoot.screen.name)
+        return;
+      barBackgroundContainer.layer.enabled = false;
+      Qt.callLater(() => {
+        barBackgroundContainer.layer.enabled = true;
+      });
+    }
+  }
+
   Item {
     id: panelBackgroundContainer
     anchors.fill: parent
