@@ -9,9 +9,10 @@ BasePanel {
 
   exclusiveKeyboardFocus: true
 
+  panelPosition.horizontalCenter: true
   panelPosition.placement: BasePanel.Placement.Bottom
   panelPosition.margins.bottom: screen.height * 0.05
-  panelSize.preferredWidth: screen ? screen.width : 400
+  panelSize.preferredWidth: screen ? screen.width * 0.8 : 400
   panelSize.preferredHeight: ImageCacheService.thumbnailSize
   panelSize.topMargin: Theme.marginMD
   panelSize.leftMargin: Theme.marginMD
@@ -25,6 +26,7 @@ BasePanel {
 
   panelComponent: Item {
     id: panelContent
+    clip: true
 
     Loader {
       id: wallpaperViewLoader
@@ -32,6 +34,7 @@ BasePanel {
       sourceComponent: WallpaperView {
         screen: root.screen
         wallpaperModel: root.wallpaperModel
+        preferredWidth: panelSize.preferredWidth
         preferredHeight: panelSize.preferredHeight
         selectedWallpaperIndex: root.currentWallpaperIndex
         onSelectedWallpaperIndexChanged: root.currentWallpaperIndex = currentIndex

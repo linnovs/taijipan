@@ -7,11 +7,12 @@ PathView {
   id: root
 
   property ShellScreen screen
+  property int preferredWidth
   property int preferredHeight
   property int selectedWallpaperIndex: -1
 
   property ListModel wallpaperModel
-  property int baseWidth: screen.width / pathItemCount
+  property int baseWidth: preferredWidth / pathItemCount
 
   model: wallpaperModel
   pathItemCount: 7
@@ -55,7 +56,7 @@ PathView {
 
     // middle point in center
     PathLine {
-      x: screen.width / 2
+      x: preferredWidth / 2
       y: preferredHeight / 2
     }
     PathAttribute {
@@ -73,7 +74,7 @@ PathView {
 
     // end point on the right
     PathLine {
-      x: screen.width + baseWidth * 1.5
+      x: preferredWidth + baseWidth * 1.5
       y: preferredHeight / 2
     }
     PathAttribute {
