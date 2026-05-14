@@ -129,19 +129,19 @@ Item {
 
     property int posX: {
       if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.horizontalCenter) {
-        return root.isClosing ? Theme.pixelAlignCenter(parent.width, contentWidth / 2) : Theme.pixelAlignCenter(parent.width, width);
+        return root.isClosing ? Theme.pixelAlignCenter(root.width + contentWidth, contentWidth) : Theme.pixelAlignCenter(root.width, width);
       }
       return root.isClosing ? panelPosition.x + contentWidth / 2 : panelPosition.x;
     }
     property int posY: {
       if (panelPosition.placement === BasePanel.Placement.Center || panelPosition.verticalCenter) {
-        return root.isClosing ? Theme.pixelAlignCenter(parent.height, contentHeight / 2) : Theme.pixelAlignCenter(parent.height, height);
+        return root.isClosing ? Theme.pixelAlignCenter(root.height + contentHeight, contentHeight) : Theme.pixelAlignCenter(root.height, height);
       }
       if (panelPosition.placement === BasePanel.Placement.Top) {
         return root.isClosing ? contentHeight / 2 : 0;
       }
       if (panelPosition.placement === BasePanel.Placement.Bottom) {
-        return root.isClosing ? parent.height - contentHeight / 2 : parent.height - height;
+        return root.isClosing ? root.height - contentHeight / 2 : root.height - height;
       }
       return root.isClosing ? panelPosition.y - contentHeight / 2 : panelPosition.y;
     }
