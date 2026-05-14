@@ -26,16 +26,13 @@ BasePanel {
 
   panelComponent: Item {
     id: panelContent
-    clip: true
 
     Loader {
       id: wallpaperViewLoader
+      anchors.fill: parent
       active: !WallpaperService.isScanning && !loading
       sourceComponent: WallpaperView {
-        screen: root.screen
         wallpaperModel: root.wallpaperModel
-        preferredWidth: panelSize.preferredWidth
-        preferredHeight: panelSize.preferredHeight
         selectedWallpaperIndex: root.currentWallpaperIndex
         onSelectedWallpaperIndexChanged: root.currentWallpaperIndex = currentIndex
       }

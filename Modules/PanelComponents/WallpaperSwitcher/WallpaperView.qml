@@ -1,25 +1,22 @@
 import QtQuick
-import Quickshell
 import qs.Services
 import qs.Commons
 
 PathView {
   id: root
+  clip: true
 
-  property ShellScreen screen
-  property int preferredWidth
-  property int preferredHeight
   property int selectedWallpaperIndex: -1
 
   property ListModel wallpaperModel
-  property int baseWidth: preferredWidth / pathItemCount
+  property int baseWidth: width / pathItemCount
 
   model: wallpaperModel
   pathItemCount: 7
   cacheItemCount: 5
   currentIndex: selectedWallpaperIndex
-  preferredHighlightBegin: 0.5 - (1 / pathItemCount) / 2
-  preferredHighlightEnd: 0.5 + (1 / pathItemCount) / 2
+  preferredHighlightBegin: 0.5
+  preferredHighlightEnd: 0.5
   highlightMoveDuration: Theme.animationFast
 
   function handleLeft() {
@@ -39,25 +36,24 @@ PathView {
   }
 
   path: Path {
-    startX: -baseWidth / 2
-    startY: preferredHeight / 2
+    startX: 0
+    startY: root.height / 2
     PathAttribute {
       name: "zindex"
-      value: 1
+      value: 50
     }
     PathAttribute {
       name: "scale"
-      value: 0.6
+      value: 0.1
     }
     PathAttribute {
       name: "opacity"
       value: 0.7
     }
 
-    // middle point in center
     PathLine {
-      x: preferredWidth / 2
-      y: preferredHeight / 2
+      x: root.width / 2
+      y: root.height / 2
     }
     PathAttribute {
       name: "zindex"
@@ -65,25 +61,24 @@ PathView {
     }
     PathAttribute {
       name: "scale"
-      value: 1
+      value: 1.0
     }
     PathAttribute {
       name: "opacity"
-      value: 1
+      value: 1.0
     }
 
-    // end point on the right
     PathLine {
-      x: preferredWidth + baseWidth * 1.5
-      y: preferredHeight / 2
+      x: root.width
+      y: root.height / 2
     }
     PathAttribute {
       name: "zindex"
-      value: 1
+      value: 50
     }
     PathAttribute {
       name: "scale"
-      value: 0.6
+      value: 0.1
     }
     PathAttribute {
       name: "opacity"
