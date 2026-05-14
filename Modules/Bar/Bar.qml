@@ -93,12 +93,13 @@ Item {
       Item {
         id: bar
 
-        x: 0
-        y: 0
-        width: parent.width
-        height: parent.height
+        property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
+        property int sectionPadding: Theme.spacing * Settings.data.ui.bar.sectionPadding
+        property int widgetSpacing: Theme.spacing * Settings.data.ui.bar.widgetSpacing
 
-        property int sectionExtraSpace: (Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMargin - Settings.data.ui.bar.bottomMargin)) / 2
+        x: frameThickness
+        width: parent.width - frameThickness * 2
+        height: parent.height - frameThickness
 
         Item {
           anchors.fill: parent
@@ -107,9 +108,10 @@ Item {
           RowLayout {
             id: leftSection
             anchors.left: parent.left
-            anchors.leftMargin: Theme.spacing * Settings.data.ui.bar.leftMargin + bar.sectionExtraSpace
+            anchors.leftMargin: bar.sectionPadding
             y: Theme.pixelAlignCenter(parent.height, height)
-            spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
+            spacing: bar.widgetSpacing
+            height: parent.height
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "left", implicitWidth)
 
             Repeater {
@@ -128,11 +130,13 @@ Item {
               }
             }
           }
+
           RowLayout {
             id: centerSection
-            y: Theme.pixelAlignCenter(parent.height, height)
             x: Theme.pixelAlignCenter(parent.width, width)
-            spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
+            y: Theme.pixelAlignCenter(parent.height, height)
+            spacing: bar.widgetSpacing
+            height: parent.height
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "center", implicitWidth)
 
             Repeater {
@@ -155,9 +159,10 @@ Item {
           RowLayout {
             id: rightSection
             anchors.right: parent.right
-            anchors.rightMargin: Theme.spacing * Settings.data.ui.bar.rightMargin + bar.sectionExtraSpace
+            anchors.rightMargin: bar.sectionPadding
             y: Theme.pixelAlignCenter(parent.height, height)
-            spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
+            spacing: bar.widgetSpacing
+            height: parent.height
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "right", implicitWidth)
 
             Repeater {

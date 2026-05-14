@@ -18,6 +18,7 @@ PanelWindow {
   readonly property bool isAnyPanelVisible: PanelService.isAnyPanelVisible
   readonly property bool isCurrentPanelExclusive: PanelService.openedPanel && PanelService.openedPanel.exclusiveKeyboardFocus
   readonly property bool isBackdropEnabled: PanelService.isAnyPanelVisible && PanelService.openedPanel && PanelService.openedPanel.enableBackdrop
+  readonly property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
 
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
@@ -56,21 +57,51 @@ PanelWindow {
 
   Item {
     id: barPlaceholder
-    x: 0
-    y: 0
-    width: screen ? screen.width : 0
+
+    property int barSectionPadding: Theme.spacing * Settings.data.ui.bar.sectionPadding
+
+    property int barContentWidthLeft: 0
+    property int barContentWidthCenter: 0
+    property int barContentWidthRight: 0
+
+    x: root.frameThickness
+    y: root.frameThickness
+    width: screen ? screen.width - root.frameThickness * 2 : 0
     height: Settings.data.ui.bar.height * Theme.spacing
 
-    property int leftBarWidth: 0
-    property int centerBarWidth: 0
-    property int rightBarWidth: 0
+    Item {
+      id: barLeftSectionPlaceholder
+      width: barPlaceholder.barContentWidthLeft + barPlaceholder.barSectionPadding * 2
+      height: barPlaceholder.height
+    }
+    property alias barSectionLeft: barLeftSectionPlaceholder
+
+    Item {
+      id: barCenterSectionPlaceholder
+      x: Theme.pixelAlignCenter(barPlaceholder.width, width)
+      width: barPlaceholder.barContentWidthCenter + barPlaceholder.barSectionPadding * 2
+      height: barPlaceholder.height
+    }
+    property alias barSectionCenter: barCenterSectionPlaceholder
+
+    Item {
+      id: barRightSectionPlaceholder
+      x: barPlaceholder.width - width
+      width: barPlaceholder.barContentWidthRight + barPlaceholder.barSectionPadding * 2
+      height: barPlaceholder.height
+    }
+    property alias barSectionRight: barRightSectionPlaceholder
 
     Connections {
       target: BarService
       function onSectionSizeChanged(screenName, section, width) {
         if (screenName !== screen.name)
           return;
-        const propName = `${section}BarWidth`;
+        const propName = {
+          left: "barContentWidthLeft",
+          center: "barContentWidthCenter",
+          right: "barContentWidthRight"
+        }[section];
         if (barPlaceholder.hasOwnProperty(propName))
           barPlaceholder[propName] = width;
       }
@@ -108,6 +139,43 @@ PanelWindow {
   QtObject {
     id: backgroundBlur
 
+    readonly property var barBg: ({
+        leftSection: {
+          x: 0,
+          width: barPlaceholder.x + barPlaceholder.barSectionLeft.width + Theme.barRadius,
+          height: barPlaceholder.y + barPlaceholder.barSectionLeft.height
+        },
+        leftCenterGap: {
+          x: barPlaceholder.x + barPlaceholder.barSectionLeft.width + Theme.barRadius,
+          y: root.frameThickness,
+          width: barPlaceholder.barSectionCenter.x - barPlaceholder.barSectionCenter.width - Theme.barRadius * 2,
+          height: barPlaceholder.height + root.frameThickness
+        },
+        centerSection: {
+          x: barPlaceholder.x + barPlaceholder.barSectionCenter.x - Theme.barRadius,
+          width: barPlaceholder.barSectionCenter.width + Theme.barRadius * 2,
+          height: barPlaceholder.y + barPlaceholder.barSectionCenter.height
+        },
+        centerRightGap: {
+          x: barPlaceholder.x + barPlaceholder.barSectionCenter.x + barPlaceholder.barSectionCenter.width + Theme.barRadius,
+          y: root.frameThickness,
+          width: barPlaceholder.barSectionRight.x - barPlaceholder.barSectionCenter.x - barPlaceholder.barSectionCenter.width - Theme.barRadius * 2,
+          height: barPlaceholder.height + root.frameThickness
+        },
+        rightSection: {
+          x: barPlaceholder.x + barPlaceholder.barSectionRight.x - Theme.barRadius,
+          width: barPlaceholder.barSectionRight.width + root.frameThickness + Theme.barRadius,
+          height: barPlaceholder.y + barPlaceholder.barSectionRight.height
+        }
+      })
+
+    readonly property var frameRegion: ({
+        x: root.frameThickness,
+        y: root.frameThickness + barPlaceholder.height,
+        width: root.width - root.frameThickness * 2,
+        height: root.height - barPlaceholder.height - root.frameThickness * 2
+      })
+
     readonly property var panelBg: {
       let panel = PanelService.openedPanel;
       if (!panel || panel.screen !== root.screen)
@@ -126,6 +194,72 @@ PanelWindow {
   }
 
   BackgroundEffect.blurRegion: Region {
+    // bar bar
+    Region {
+      Region {
+        x: backgroundBlur.barBg.leftSection.x
+        width: backgroundBlur.barBg.leftSection.width
+        height: backgroundBlur.barBg.leftSection.height
+        bottomRightRadius: Theme.barRadius
+      }
+      Region {
+        x: backgroundBlur.barBg.leftCenterGap.x
+        width: backgroundBlur.barBg.leftCenterGap.width
+        height: backgroundBlur.barBg.leftCenterGap.height
+        Region {
+          x: backgroundBlur.barBg.leftCenterGap.x
+          y: backgroundBlur.barBg.leftCenterGap.y
+          width: backgroundBlur.barBg.leftCenterGap.width
+          height: backgroundBlur.barBg.leftCenterGap.height
+          topLeftRadius: Theme.barRadius
+          topRightRadius: Theme.barRadius
+          intersection: Intersection.Subtract
+        }
+      }
+      Region {
+        x: backgroundBlur.barBg.centerSection.x
+        width: backgroundBlur.barBg.centerSection.width
+        height: backgroundBlur.barBg.centerSection.height
+        bottomLeftRadius: Theme.barRadius
+        bottomRightRadius: Theme.barRadius
+      }
+      Region {
+        x: backgroundBlur.barBg.centerRightGap.x
+        width: backgroundBlur.barBg.centerRightGap.width
+        height: backgroundBlur.barBg.centerRightGap.height
+        Region {
+          x: backgroundBlur.barBg.centerRightGap.x
+          y: backgroundBlur.barBg.centerRightGap.y
+          width: backgroundBlur.barBg.centerRightGap.width
+          height: backgroundBlur.barBg.centerRightGap.height
+          topLeftRadius: Theme.barRadius
+          topRightRadius: Theme.barRadius
+          intersection: Intersection.Subtract
+        }
+      }
+      Region {
+        x: backgroundBlur.barBg.rightSection.x
+        width: backgroundBlur.barBg.rightSection.width
+        height: backgroundBlur.barBg.rightSection.height
+        bottomLeftRadius: Theme.barRadius
+      }
+    }
+
+    // frame blur
+    Region {
+      y: barPlaceholder.y + barPlaceholder.height
+      width: root.width
+      height: root.height
+      Region {
+        x: backgroundBlur.frameRegion.x
+        y: backgroundBlur.frameRegion.y
+        width: backgroundBlur.frameRegion.width
+        height: backgroundBlur.frameRegion.height
+        intersection: Intersection.Subtract
+        radius: Theme.barRadius
+      }
+    }
+
     Region {
       x: backgroundBlur.panelBg ? backgroundBlur.panelBg.x : 0
       y: backgroundBlur.panelBg ? backgroundBlur.panelBg.y : 0

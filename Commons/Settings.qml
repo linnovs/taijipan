@@ -62,16 +62,15 @@ Singleton {
     property JsonObject ui: JsonObject {
       property string font: defaultTextMetrics.font.family
       property JsonObject bar: JsonObject {
-        property real opacity: 0.94
+        property real opacity: 0.8
         property real height: 8
+        property real sectionPadding: 2
         property real widgetSpacing: 1
-        property real topMargin: 1
-        property real leftMargin: 1
-        property real bottomMargin: 1
-        property real rightMargin: 1
+        property real bottomPadding: 2
       }
+      property real frameThickness: 2
       property JsonObject panel: JsonObject {
-        property real opacity: 0.94
+        property real opacity: 0.8
       }
     }
 

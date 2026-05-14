@@ -8,28 +8,31 @@ ShapePath {
 
   required property ShellScreen screen
 
-  readonly property int topEdgeMargin: Theme.spacing * Settings.data.ui.bar.topMargin
-  readonly property int leftEdgeMargin: Theme.spacing * Settings.data.ui.bar.leftMargin
-  readonly property int bottomEdgeMargin: Theme.spacing * Settings.data.ui.bar.bottomMargin
-  readonly property int rightEdgeMargin: Theme.spacing * Settings.data.ui.bar.rightMargin
-  readonly property int innerBorderRadius: Theme.spacing * Settings.data.ui.bar.height / 2
+  readonly property int thickness: Theme.spacing * Settings.data.ui.frameThickness
+  readonly property int barHeight: Theme.spacing * Settings.data.ui.bar.height
 
   strokeWidth: -1
 
-  // inner shape which is the cutout area
+  // full screen
   PathRectangle {
-    x: leftEdgeMargin
-    y: topEdgeMargin
-    width: screen.width - leftEdgeMargin - rightEdgeMargin
-    height: screen.height - topEdgeMargin - bottomEdgeMargin
-    radius: innerBorderRadius
-    topLeftRadius: 0
-    topRightRadius: 0
+    width: root.screen.width
+    height: root.screen.height
   }
 
-  // outer shape which is the full area of the screen
+  // inner bar cutout
   PathRectangle {
-    width: screen.width
-    height: screen.height
+    x: root.thickness
+    y: root.thickness
+    width: root.screen.width - root.thickness * 2
+    height: root.barHeight
+  }
+
+  // inner frame cutout
+  PathRectangle {
+    x: root.thickness
+    y: root.thickness + root.barHeight
+    width: root.screen.width - root.thickness * 2
+    height: root.screen.height - root.barHeight - root.thickness * 2
+    radius: Theme.barRadius
   }
 }

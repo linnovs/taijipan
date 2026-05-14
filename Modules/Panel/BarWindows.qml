@@ -27,6 +27,7 @@ PanelWindow {
 
   implicitWidth: screen.width
   implicitHeight: Settings.data.ui.bar.height * Theme.spacing
+  margins.top: Settings.data.ui.frameThickness * Theme.spacing
 
   Loader {
     anchors.fill: parent

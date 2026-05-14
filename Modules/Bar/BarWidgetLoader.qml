@@ -29,8 +29,6 @@ Item {
   }
   property RegisterState registerState: RegisterState {}
 
-  property int defaultWidgetHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMargin - Settings.data.ui.bar.bottomMargin)
-
   function loadWidget() {
     if (!BarWidgetService.hasWidget(widgetName))
       return;
@@ -83,8 +81,8 @@ Item {
     Component.onDestruction: root.unregisterWidget()
   }
 
-  Layout.preferredWidth: (loader.item && loader.item.visible) ? loader.item.implicitWidth : defaultWidgetHeight
-  Layout.preferredHeight: defaultWidgetHeight
+  Layout.preferredWidth: (loader.item && loader.item.visible) ? loader.item.implicitWidth : 0
+  Layout.preferredHeight: (loader.item && loader.item.visible) ? parent.height : 0
 
   Component.onCompleted: {
     if (!BarWidgetService.hasWidget(widgetName)) {

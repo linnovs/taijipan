@@ -8,124 +8,75 @@ ShapePath {
 
   required property string section
   required property ShellScreen screen
-  required property int sectionWidth
+  required property var bar
+
+  readonly property var barSection: bar ? bar[`barSection${section}`] : null
+  readonly property int barRadiusPadding: bar ? Theme.barRadius : 0
+
+  readonly property bool enableRightCorner: section !== "Right"
+  readonly property bool enableLeftCorner: section !== "Left"
 
   strokeWidth: -1
 
-  readonly property int defaultBarHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing)
-  readonly property int barHeight: sectionWidth > 0 ? defaultBarHeight : 0
-  readonly property int barRadiusWidth: barHeight / 2
-  readonly property int barRadiusHeight: barHeight / 2
-  readonly property int barRadius: barHeight / 2
-  readonly property int barExtraSpace: sectionWidth > 0 ? barRadiusWidth : 0
-
-  readonly property int trMultX: section === "right" ? 0 : -1
-  readonly property int trMultY: section === "right" ? 3 : 1
-  readonly property int trRadius: section === "right" ? 0 : 1
-  readonly property bool trClockwise: section === "right" ? false : false
-
-  readonly property int brMultX: section === "right" ? -1 : -1
-  readonly property int brMultY: section === "right" ? -1 : 1
-  readonly property int brRadius: section === "right" ? 1 : 1
-  readonly property bool brClockwise: section === "right" ? false : true
-
-  readonly property int blMultX: section === "left" ? -1 : -1
-  readonly property int blMultY: section === "left" ? 1 : -1
-  readonly property int blRadius: section === "left" ? 1 : 1
-  readonly property bool blClockwise: section === "left" ? false : true
-
-  readonly property int tlMultX: section === "left" ? 0 : -1
-  readonly property int tlMultY: section === "left" ? 0 : -1
-  readonly property int tlRadius: section === "left" ? 0 : 1
-  readonly property bool tlClockwise: section === "left" ? false : false
-
-  readonly property int topEdgeLength: {
-    switch (section) {
-    case "left":
-      return sectionWidth + barRadiusWidth * 2 + barExtraSpace * 2;
-    case "center":
-      return sectionWidth + barExtraSpace * 2 + barRadiusWidth * 4;
-    case "right":
-      return sectionWidth + barRadiusWidth * 2 + barExtraSpace * 2;
-    }
-  }
-  readonly property int bottomEdgeLength: {
-    switch (section) {
-    case "left":
-      return -sectionWidth - barExtraSpace;
-    case "center":
-      return -sectionWidth - barExtraSpace * 2;
-    case "right":
-      return -sectionWidth - barExtraSpace;
-    }
-  }
-
-  readonly property int startPosX: {
-    switch (section) {
-    case "left":
-      return Theme.spacing * Settings.data.ui.bar.leftMarginSpacing;
-    case "center":
-      return Theme.pixelAlignCenter(screen.width, sectionWidth + barExtraSpace * 2 + barRadiusWidth * 4);
-    case "right":
-      const rightMargin = Theme.spacing * Settings.data.ui.bar.rightMarginSpacing;
-      return screen.width - sectionWidth - barExtraSpace * 2 - barRadiusWidth * 2 - rightMargin;
-    }
-  }
-
-  startX: startPosX
-  startY: Theme.spacing * Settings.data.ui.bar.topMarginSpacing
+  startX: root.bar.x + root.barSection.x
+  startY: root.bar.y + root.barSection.y
 
   // top edge
   PathLine {
-    relativeX: topEdgeLength
+    relativeX: root.barSection.width + (root.enableRightCorner ? root.barRadiusPadding * 2 : 0)
     relativeY: 0
   }
 
   // top-right corner
   PathArc {
-    relativeX: barRadiusWidth * trMultX
-    relativeY: barRadiusHeight * trMultY
-    radiusX: barRadius * trRadius
-    radiusY: barRadius * trRadius
-    direction: trClockwise ? PathArc.Clockwise : PathArc.Counterclockwise
+    relativeX: root.enableRightCorner ? -root.barRadiusPadding : 0
+    relativeY: root.enableRightCorner ? root.barRadiusPadding : 0
+    radiusX: root.barRadiusPadding
+    radiusY: root.barRadiusPadding
+    direction: PathArc.Counterclockwise
   }
 
-  // top-left corner
+  // bottom-right corner
   PathArc {
-    relativeX: barRadiusWidth * brMultX
-    relativeY: barRadiusHeight * brMultY
-    radiusX: barRadius * brRadius
-    radiusY: barRadius * brRadius
-    direction: brClockwise ? PathArc.Clockwise : PathArc.Counterclockwise
+    relativeX: root.enableRightCorner ? -root.barRadiusPadding : 0
+    relativeY: root.enableRightCorner ? root.barRadiusPadding : 0
+    radiusX: root.barRadiusPadding
+    radiusY: root.barRadiusPadding
+    direction: PathArc.Clockwise
+  }
+
+  // right edge
+  PathLine {
+    relativeX: 0
+    relativeY: !root.enableRightCorner ? root.bar.height : 0
   }
 
   // bottom edge
   PathLine {
-    relativeX: bottomEdgeLength
+    relativeX: -root.barSection.width
     relativeY: 0
   }
 
   // bottom-left corner
   PathArc {
-    relativeX: barRadiusWidth * blMultX
-    relativeY: barRadiusHeight * blMultY
-    radiusX: barRadius * blRadius
-    radiusY: barRadius * blRadius
-    direction: blClockwise ? PathArc.Clockwise : PathArc.Counterclockwise
+    relativeX: root.enableLeftCorner ? -root.barRadiusPadding : 0
+    relativeY: root.enableLeftCorner ? -root.barRadiusPadding : 0
+    radiusX: root.barRadiusPadding
+    radiusY: root.barRadiusPadding
+    direction: PathArc.Clockwise
   }
 
-  // bottom-right corner
+  // top-left corner
   PathArc {
-    relativeX: barRadiusWidth * tlMultX
-    relativeY: barRadiusHeight * tlMultY
-    radiusX: barRadius * tlRadius
-    radiusY: barRadius * tlRadius
-    direction: tlClockwise ? PathArc.Clockwise : PathArc.Counterclockwise
+    relativeX: root.enableLeftCorner ? -root.barRadiusPadding : 0
+    relativeY: root.enableLeftCorner ? -root.barRadiusPadding : 0
+    radiusX: root.barRadiusPadding
+    radiusY: root.barRadiusPadding
+    direction: PathArc.Counterclockwise
   }
 
-  // closing the path
   PathLine {
-    x: root.startX
-    y: root.startY
+    x: startX
+    y: startY
   }
 }

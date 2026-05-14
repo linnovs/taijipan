@@ -66,6 +66,8 @@ Singleton {
   readonly property int fontSizeXXXL: spacing * 12
   readonly property int fontSizeXXXXL: spacing * 16
 
+  readonly property int barRadius: (Settings.data.ui.bar.height * spacing) / 2
+
   readonly property int powerMenuIconSize: spacing * 32
   readonly property int powerMenuButtonIconSize: spacing * 16
 
