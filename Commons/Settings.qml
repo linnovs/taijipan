@@ -65,10 +65,10 @@ Singleton {
         property real opacity: 0.94
         property real height: 8
         property real widgetSpacing: 1
-        property real topMarginSpacing: 1
-        property real leftMarginSpacing: 1
-        property real bottomMarginSpacing: 1
-        property real rightMarginSpacing: 1
+        property real topMargin: 1
+        property real leftMargin: 1
+        property real bottomMargin: 1
+        property real rightMargin: 1
       }
       property JsonObject panel: JsonObject {
         property real opacity: 0.94

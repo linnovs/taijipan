@@ -98,7 +98,7 @@ Item {
         width: parent.width
         height: parent.height
 
-        property int sectionExtraSpace: (Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing - Settings.data.ui.bar.bottomMarginSpacing)) / 2
+        property int sectionExtraSpace: (Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMargin - Settings.data.ui.bar.bottomMargin)) / 2
 
         Item {
           anchors.fill: parent
@@ -107,7 +107,7 @@ Item {
           RowLayout {
             id: leftSection
             anchors.left: parent.left
-            anchors.leftMargin: Theme.spacing * Settings.data.ui.bar.leftMarginSpacing + bar.sectionExtraSpace
+            anchors.leftMargin: Theme.spacing * Settings.data.ui.bar.leftMargin + bar.sectionExtraSpace
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "left", implicitWidth)
@@ -155,7 +155,7 @@ Item {
           RowLayout {
             id: rightSection
             anchors.right: parent.right
-            anchors.rightMargin: Theme.spacing * Settings.data.ui.bar.rightMarginSpacing + bar.sectionExtraSpace
+            anchors.rightMargin: Theme.spacing * Settings.data.ui.bar.rightMargin + bar.sectionExtraSpace
             y: Theme.pixelAlignCenter(parent.height, height)
             spacing: Settings.data.ui.bar.widgetSpacing * Theme.spacing
             onImplicitWidthChanged: BarService.sectionSizeChanged(root.screen.name, "right", implicitWidth)

@@ -29,7 +29,7 @@ Item {
   }
   property RegisterState registerState: RegisterState {}
 
-  property int defaultWidgetHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMarginSpacing - Settings.data.ui.bar.bottomMarginSpacing)
+  property int defaultWidgetHeight: Theme.spacing * (Settings.data.ui.bar.height - Settings.data.ui.bar.topMargin - Settings.data.ui.bar.bottomMargin)
 
   function loadWidget() {
     if (!BarWidgetService.hasWidget(widgetName))
