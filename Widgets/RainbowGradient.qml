@@ -1,11 +1,22 @@
 import QtQuick
+import QtQuick.Shapes
+import qs.Commons
 
 Item {
   id: root
-  property int animationDuration: 700
+  anchors.fill: parent
+
+  property int animationDuration: Theme.animationSlowest
+  property bool horizontal: true
+  property int angle: 0
   property int index: 0
 
   readonly property list<color> colors: ["red", "orange", "yellow", "green", "blue", "green", "yellow", "orange"]
+  readonly property int actualAngle: horizontal && angle === 0 ? 90 : angle
+  readonly property real radians: actualAngle * Math.PI / 180
+  readonly property real length: Math.abs(width * Math.sin(radians)) + Math.abs(height * Math.cos(radians))
+  readonly property point center: Qt.point(width / 2, height / 2)
+  readonly property point delta: Qt.point((Math.sin(radians) * length) / 2, (Math.cos(radians) * length) / 2)
 
   Timer {
     running: true
@@ -14,9 +25,13 @@ Item {
     onTriggered: root.index++
   }
 
-  Gradient {
+  LinearGradient {
     id: rainbowGradient
-    orientation: Gradient.Horizontal
+    x1: center.x - delta.x
+    y1: center.y - delta.x
+    x2: center.x + delta.x
+    y2: center.y + delta.y
+
     GradientStop {
       position: 0.0
       color: root.colors[root.index % root.colors.length]

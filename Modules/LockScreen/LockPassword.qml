@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Shapes
 import QtQuick.Layouts
 import qs.Widgets
 import qs.Commons
@@ -8,10 +9,6 @@ Item {
 
   required property TextInput input
   required property LockContext context
-
-  RainbowGradient {
-    id: rainbowGradient
-  }
 
   RowLayout {
     anchors.fill: parent
@@ -28,14 +25,24 @@ Item {
       input: root.input
       isError: context.isErrorMessage
 
-      Rectangle {
-        anchors.centerIn: passwordField
-        width: passwordField.width + 2
-        height: passwordField.height + 2
-        radius: Theme.radiusRound
-        gradient: rainbowGradient.gradient
-        visible: context.isUnlocking
+      RainbowGradient {
+        id: rainbowGradient
+        angle: 45
+      }
+
+      Shape {
+        anchors.centerIn: parent
         z: -1
+        visible: context.isUnlocking
+        ShapePath {
+          fillGradient: rainbowGradient.gradient
+          strokeWidth: -1
+          PathRectangle {
+            width: passwordField.width + 2
+            height: passwordField.height + 2
+            radius: Theme.radiusRound
+          }
+        }
       }
     }
 
