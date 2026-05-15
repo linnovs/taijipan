@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQuick
 import Quickshell
+import qs.Modules.BarWidgets.Workspace
 import qs.Commons
 
 Singleton {
@@ -10,7 +11,14 @@ Singleton {
     return Quickshell.shellPath("Modules/BarWidgets/" + name + "/" + name + ".qml");
   }
 
-  property var widgets: ({})
+  Component {
+    id: workspaceComponent
+    Workspace {}
+  }
+
+  property var widgets: ({
+      "Workspace": workspaceComponent
+    })
 
   function hasWidget(name) {
     return name in widgets;

@@ -75,6 +75,7 @@ ShellRoot {
           IPCService.init();
           IdleService.init();
           IdleInhibitorService.init();
+          NiriService.init();
         });
 
         Logger.i("Shell", "All services loaded, shell initialization complete");
