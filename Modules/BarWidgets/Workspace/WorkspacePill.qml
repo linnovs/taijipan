@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import qs.Services
 import qs.Commons
 
@@ -28,14 +27,14 @@ Rectangle {
 
   Behavior on color {
     ColorAnimation {
-      duration: Theme.animationFastest
+      duration: Theme.animationFast
       easing.type: Easing.InOutQuad
     }
   }
 
-  Behavior on Layout.preferredWidth {
+  Behavior on implicitWidth {
     NumberAnimation {
-      duration: Theme.animationFastest
+      duration: Theme.animationFast
       easing.type: Easing.OutBack
     }
   }
