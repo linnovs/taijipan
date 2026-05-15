@@ -37,7 +37,7 @@ PathView {
 
   path: Path {
     startX: 0
-    startY: root.height / 2
+    startY: -root.height / 2
     PathAttribute {
       name: "zindex"
       value: 50
@@ -51,9 +51,11 @@ PathView {
       value: 0.7
     }
 
-    PathLine {
+    PathQuad {
       x: root.width / 2
       y: root.height / 2
+      controlX: 0
+      controlY: root.height / 2
     }
     PathAttribute {
       name: "zindex"
@@ -68,9 +70,11 @@ PathView {
       value: 1.0
     }
 
-    PathLine {
+    PathQuad {
       x: root.width
-      y: root.height / 2
+      y: -root.height / 2
+      controlX: root.width
+      controlY: root.height / 2
     }
     PathAttribute {
       name: "zindex"
