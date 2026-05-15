@@ -70,6 +70,9 @@ Singleton {
         property real bottomPadding: 2
       }
       property real frameThickness: 2
+      property JsonObject tooltip: JsonObject {
+        property real opacity: 0.8
+      }
       property JsonObject panel: JsonObject {
         property real opacity: 0.8
       }

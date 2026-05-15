@@ -11,6 +11,19 @@ Variants {
     property bool panelLoaded: false
 
     Loader {
+      id: tooltipLoader
+      active: panelWindow.panelLoaded
+      asynchronous: false
+      sourceComponent: TooltipWindows {
+        screen: windowLoader.screen
+      }
+
+      onLoaded: {
+        Logger.d("Panel", "Tooltip loaded for screen:", windowLoader.screen?.name);
+      }
+    }
+
+    Loader {
       id: windowLoader
       asynchronous: false
 
