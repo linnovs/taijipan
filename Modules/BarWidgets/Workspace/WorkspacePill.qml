@@ -6,6 +6,10 @@ import qs.Commons
 Rectangle {
   required property var model
 
+  property int activeWidth
+  property int inactiveWidth
+  property int pillHeight
+
   implicitWidth: model.isActive ? activeWidth : inactiveWidth
   implicitHeight: pillHeight
   radius: Theme.radiusRound

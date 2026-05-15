@@ -11,7 +11,7 @@ BaseBarWidget {
   property int pillSpacing: Theme.spacing * 2
   property int pillHeight: root.implicitHeight * 0.45
   property int inactiveWidth: pillHeight
-  property int activeWidth: root.implicitHeight * 0.85
+  property int activeWidth: pillHeight * 2
   property int currentIdx: -1
 
   widgetSource: Row {
@@ -19,7 +19,11 @@ BaseBarWidget {
 
     Repeater {
       model: currentWorkspaces
-      delegate: WorkspacePill {}
+      delegate: WorkspacePill {
+        activeWidth: root.activeWidth
+        inactiveWidth: root.inactiveWidth
+        pillHeight: root.pillHeight
+      }
     }
   }
 
