@@ -86,8 +86,6 @@ Loader {
         height: popupContainer.implicitHeight
         intersection: Intersection.Subtract
       }
-
-      regions: [popupRegion]
     }
   }
 }
