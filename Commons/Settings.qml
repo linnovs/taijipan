@@ -64,6 +64,7 @@ Singleton {
       property JsonObject bar: JsonObject {
         property real opacity: 0.8
         property real height: 8
+        property real fontSize: 12
         property real sectionPadding: 2
         property real widgetSpacing: 1
         property real bottomPadding: 2
