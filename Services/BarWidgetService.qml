@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import qs.Modules.BarWidgets.Workspace
+import qs.Modules.BarWidgets.DateTime
 import qs.Commons
 
 Singleton {
@@ -16,8 +17,14 @@ Singleton {
     Workspace {}
   }
 
+  Component {
+    id: dateTimeComponent
+    DateTime {}
+  }
+
   property var widgets: ({
-      "Workspace": workspaceComponent
+      "Workspace": workspaceComponent,
+      "DateTime": dateTimeComponent
     })
 
   function hasWidget(name) {
