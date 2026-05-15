@@ -98,12 +98,12 @@ Item {
         property int widgetSpacing: Theme.spacing * Settings.data.ui.bar.widgetSpacing
 
         x: frameThickness
+        y: frameThickness
         width: parent.width - frameThickness * 2
         height: parent.height - frameThickness
 
         Item {
           anchors.fill: parent
-          clip: true
 
           RowLayout {
             id: leftSection
