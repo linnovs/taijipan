@@ -10,20 +10,21 @@ Item {
   property string title
   property string description
   property point position
+  property point adjustedPosition: root.parent.mapFromGlobal(position.x, position.y)
 
   x: {
-    if (position.x + implicitWidth > windowRoot.width)
+    if (adjustedPosition.x + implicitWidth > windowRoot.width)
       return windowRoot.width - implicitWidth;
-    else if (position.x - implicitWidth / 2 < 0)
+    else if (adjustedPosition.x - implicitWidth / 2 < 0)
       return 0;
     else
-      return position.x - implicitWidth / 2;
+      return adjustedPosition.x - implicitWidth / 2;
   }
   y: {
-    if (position.y + implicitHeight > windowRoot.height)
+    if (adjustedPosition.y + implicitHeight > windowRoot.height)
       return windowRoot.height - implicitHeight;
     else
-      return position.y;
+      return adjustedPosition.y + Theme.marginXXS;
   }
 
   Behavior on x {

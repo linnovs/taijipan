@@ -78,6 +78,10 @@ Singleton {
       }
     }
 
+    property JsonObject tooltip: JsonObject {
+      property int ttl: 300
+    }
+
     property JsonObject notification: JsonObject {
       property bool isOverlay: true
       property int defaultTTL: 5
