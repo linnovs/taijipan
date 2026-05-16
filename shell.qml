@@ -1,4 +1,3 @@
-//@ pragma UseQApplication
 import QtQuick
 import Quickshell
 import qs.Modules.Panel
@@ -6,7 +5,6 @@ import qs.Modules.OSD
 import qs.Modules.Wallpaper
 import qs.Modules.Notification
 import qs.Modules.LockScreen
-import qs.Modules.SysTray
 import qs.Services
 import qs.Commons
 
@@ -87,8 +85,6 @@ ShellRoot {
       Wallpaper {}
       Notification {}
       LockScreen {}
-
-      SysTray {}
     }
   }
 }

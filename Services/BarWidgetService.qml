@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import qs.Modules.BarWidgets.Workspace
 import qs.Modules.BarWidgets.DateTime
+import qs.Modules.BarWidgets.Systray
 import qs.Commons
 
 Singleton {
@@ -22,9 +23,15 @@ Singleton {
     DateTime {}
   }
 
+  Component {
+    id: systrayComponent
+    Systray {}
+  }
+
   property var widgets: ({
       "Workspace": workspaceComponent,
-      "DateTime": dateTimeComponent
+      "DateTime": dateTimeComponent,
+      "Systray": systrayComponent
     })
 
   function hasWidget(name) {
