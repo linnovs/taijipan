@@ -11,18 +11,19 @@ Item {
   property string description
   property point position
   property point adjustedPosition: root.parent.mapFromGlobal(position.x, position.y)
+  property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
 
   x: {
-    if (adjustedPosition.x + implicitWidth > windowRoot.width)
-      return windowRoot.width - implicitWidth;
+    if (adjustedPosition.x + implicitWidth / 2 > windowRoot.width - frameThickness * 2)
+      return windowRoot.width - implicitWidth - frameThickness * 2 - Theme.marginXXS;
     else if (adjustedPosition.x - implicitWidth / 2 < 0)
-      return 0;
+      return Theme.marginXXS;
     else
       return adjustedPosition.x - implicitWidth / 2;
   }
   y: {
-    if (adjustedPosition.y + implicitHeight > windowRoot.height)
-      return windowRoot.height - implicitHeight;
+    if (adjustedPosition.y + implicitHeight > windowRoot.height - frameThickness * 2)
+      return windowRoot.height - implicitHeight - frameThickness * 2;
     else
       return adjustedPosition.y + Theme.marginXXS;
   }
