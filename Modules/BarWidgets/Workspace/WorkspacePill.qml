@@ -15,34 +15,20 @@ Rectangle {
   implicitHeight: pillHeight
   radius: Theme.radiusRound
 
-  property string tooltipId
-
   HoverHandler {
     id: hover
     margin: Theme.marginXS
     onHoveredChanged: {
-      if (!tooltipId)
+      if (!model.name)
         return;
 
       if (hover.hovered) {
         const atPoint = root.mapToGlobal(Qt.point(0, root.height + Theme.marginXXS));
-        TooltipService.show(tooltipId, atPoint.x, atPoint.y);
+        TooltipService.showTooltip(model.name, "", root.screen.name, atPoint.x, atPoint.y);
       } else {
-        TooltipService.hide(tooltipId);
+        TooltipService.hideTooltip(root.screen.name);
       }
     }
-  }
-
-  Component.onCompleted: {
-    if (!model.name)
-      return;
-    tooltipId = TooltipService.registerTooltip(model.name, "", screen.name);
-  }
-
-  Component.onDestruction: {
-    if (!tooltipId)
-      return;
-    TooltipService.unregisterTooltip(model.name, "", screen.name);
   }
 
   property color wsColor: model.isActive && model.isFocused ? Colors.mPrimary : Colors.mSurfaceVariant
