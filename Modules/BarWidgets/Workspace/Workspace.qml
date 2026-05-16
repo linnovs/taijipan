@@ -20,6 +20,8 @@ BaseBarWidget {
     Repeater {
       model: currentWorkspaces
       delegate: WorkspacePill {
+        widgetRoot: root
+        screen: root.screen
         activeWidth: root.activeWidth
         inactiveWidth: root.inactiveWidth
         pillHeight: root.pillHeight

@@ -6,6 +6,7 @@ Rectangle {
   id: root
   required property var model
   property var screen
+  property var widgetRoot
 
   property int activeWidth
   property int inactiveWidth
@@ -19,14 +20,11 @@ Rectangle {
     id: hover
     margin: Theme.marginXS
     onHoveredChanged: {
-      if (!model.name)
-        return;
-
       if (hover.hovered) {
-        const atPoint = root.mapToGlobal(Qt.point(0, root.height + Theme.marginXXS));
-        TooltipService.showTooltip(model.name, "", root.screen.name, atPoint.x, atPoint.y);
+        const atPoint = widgetRoot.mapToGlobal(root.x + root.width / 2, widgetRoot.height);
+        TooltipService.show(`ws-${model.id}`, model.name || `Workspace ${model.idx}`, "", root.screen.name, atPoint.x, atPoint.y);
       } else {
-        TooltipService.hideTooltip(root.screen.name);
+        TooltipService.hide(`ws-${model.id}`, root.screen.name);
       }
     }
   }
