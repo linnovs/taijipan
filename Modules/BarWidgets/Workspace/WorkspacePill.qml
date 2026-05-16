@@ -17,7 +17,8 @@ Rectangle {
     id: hover
   }
 
-  color: hover.hovered ? Colors.mSecondary : model.isActive && model.isFocused ? Colors.mPrimary : Colors.mSurfaceVariant
+  property color wsColor: model.isActive && model.isFocused ? Colors.mPrimary : Colors.mSurfaceVariant
+  color: hover.hovered ? Colors.mSecondary : wsColor
 
   MouseArea {
     anchors.fill: parent
