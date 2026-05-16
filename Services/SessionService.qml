@@ -8,6 +8,11 @@ Singleton {
   id: root
 
   function _printActionOutput(action, command, text, isError) {
+    if (text.length === 0) {
+      Logger.d("SessionService", action, "with empty response - Command:", JSON.stringify(command));
+      return;
+    }
+
     Logger.d("SessionService", "-".repeat(52));
     Logger.d("SessionService", "Action:", action, "- Command:", JSON.stringify(command));
     Logger.d("SessionService", isError ? "- Error Output:" : "- Output:");
@@ -24,26 +29,46 @@ Singleton {
     id: actionProcess
     property string action
     stdout: StdioCollector {
-      onStreamFinished: _printActionOutput(this.action, this.command, this.text, false)
+      onStreamFinished: _printActionOutput(actionProcess.action, actionProcess.command, text, false)
     }
     stderr: StdioCollector {
-      onStreamFinished: _printActionOutput(this.action, this.command, this.text, true)
+      onStreamFinished: {
+        if (text === "")
+          return;
+        _printActionOutput(actionProcess.action, actionProcess.command, text, true);
+      }
     }
   }
 
-  property var pendingCommands: ([])
+  property ListModel pendingActions: ListModel {}
+  readonly property bool hasPendingAction: pendingActions.count
 
   Timer {
     id: actionDelayTimer
-    interval: 250
-    running: pendingCommands.length > 0
+    interval: Theme.timerDebounceLong
+    running: root.hasPendingAction
     onTriggered: {
-      if (actionProcess.running || pendingCommands.length === 0)
+      if (actionProcess.running || !root.hasPendingAction)
         return;
 
-      actionProcess.command = pendingCommands.shift();
+      const pendingAction = root.pendingActions.get(0);
+      const command = JSON.parse(pendingAction.command);
+
+      Logger.i("SessionService", "Execute pending command:", pendingAction.command, "for action", pendingAction.action);
+      actionProcess.action = pendingAction.action;
+      actionProcess.command = command;
       actionProcess.running = true;
+
+      root.pendingActions.remove(0);
     }
+  }
+
+  function scheduleAction(action, command) {
+    Logger.d("SessionService", "Schedule action", action, "with command", JSON.stringify(command));
+    root.pendingActions.append({
+      action,
+      command: JSON.stringify(command)
+    });
   }
 
   function executeAction(action) {
@@ -55,30 +80,30 @@ Singleton {
     case "suspend":
       if (Settings.data.general.lockOnSuspend) {
         Logger.i("SessionService", "Lock on suspend is enabled, lock screen before suspend");
-        PanelService.lockScreen?.lock();
+        PanelService.lockscreen?.lock();
       }
       Logger.i("SessionService", "Suspend system");
-      pendingCommands.push(["systemctl", "suspend"]);
+      root.scheduleAction(action, ["systemctl", "suspend"]);
       break;
     case "hibernate":
       Logger.i("SessionService", "Hibernate system");
-      pendingCommands.push(["systemctl", "suspend"]);
+      root.scheduleAction(action, ["systemctl", "hibernate"]);
       break;
     case "reboot":
       Logger.i("SessionService", "Reboot system");
-      pendingCommands.push(["systemctl", "reboot"]);
+      root.scheduleAction(action, ["systemctl", "reboot"]);
       break;
     case "rebootToUEFI":
       Logger.i("SessionService", "Reboot to UEFI");
-      pendingCommands.push(["bootctl", "reboot-to-firmware"]);
+      root.scheduleAction(action, ["bootctl", "reboot-to-firmware"]);
       break;
     case "logout":
       Logger.i("SessionService", "Log out");
-      pendingCommands.push(["loginctl", "terminate-user", "$USER"]);
+      root.scheduleAction(action, ["loginctl", "terminate-user", "$USER"]);
       break;
     case "shutdown":
       Logger.i("SessionService", "Shut down system");
-      pendingCommands.push(["systemctl", "poweroff"]);
+      root.scheduleAction(action, ["systemctl", "poweroff"]);
       break;
     default:
       Logger.w("SessionService", "Unknown action:", action);
