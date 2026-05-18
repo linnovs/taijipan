@@ -34,6 +34,7 @@ Rectangle {
 
   MouseArea {
     anchors.fill: parent
+    anchors.margins: -Theme.marginXS
     acceptedButtons: Qt.LeftButton
     onClicked: NiriService.focusWorkspace(model.id)
   }
