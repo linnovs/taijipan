@@ -86,7 +86,7 @@ Item {
   Rectangle {
     id: background
     anchors.fill: parent
-    radius: Theme.radiusXL
+    radius: Theme.radiusSM
     color: Qt.alpha(Colors.mSurface, Settings.data.ui.tooltip.opacity)
   }
 
@@ -119,6 +119,6 @@ Item {
     }
   }
 
-  implicitWidth: content.implicitWidth + Theme.marginXS * 2
-  implicitHeight: content.implicitHeight + Theme.marginXS * 2
+  implicitWidth: content.implicitWidth + Theme.marginXXS * 2
+  implicitHeight: content.implicitHeight + Theme.marginXXS * 2
 }
