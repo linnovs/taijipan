@@ -12,7 +12,7 @@ Rectangle {
   property int inactiveWidth
   property int pillHeight
 
-  implicitWidth: model.isActive ? activeWidth : inactiveWidth
+  implicitWidth: model.isActive && model.isFocused ? activeWidth : inactiveWidth
   implicitHeight: pillHeight
   radius: Theme.radiusRound
 
