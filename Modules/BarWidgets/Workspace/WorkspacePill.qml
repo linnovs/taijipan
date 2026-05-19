@@ -29,7 +29,8 @@ Rectangle {
     }
   }
 
-  property color wsColor: model.isActive && model.isFocused ? Colors.mPrimary : Colors.mSurfaceVariant
+  property color activeColor: model.isFocused ? Colors.mPrimary : Colors.mSecondary
+  property color wsColor: model.isActive ? activeColor : Colors.mSurfaceVariant
   color: hover.hovered ? Colors.mSecondary : wsColor
 
   MouseArea {
