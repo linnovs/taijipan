@@ -23,7 +23,7 @@ Item {
       id: weekdayText
       Layout.alignment: Qt.AlignHCenter
       font.family: anuratiFont.name
-      font.pointSize: Theme.fontSizeXXXXL
+      font.pointSize: Theme.fontSize4XL
       font.letterSpacing: Theme.marginMD
       font.weight: Font.Bold
       color: Colors.mOnSurface

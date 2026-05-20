@@ -63,8 +63,8 @@ Singleton {
   readonly property int fontSizeLG: spacing * 4
   readonly property int fontSizeXL: spacing * 5
   readonly property int fontSizeXXL: spacing * 8
-  readonly property int fontSizeXXXL: spacing * 12
-  readonly property int fontSizeXXXXL: spacing * 16
+  readonly property int fontSize3XL: spacing * 12
+  readonly property int fontSize4XL: spacing * 16
 
   readonly property int barRadius: (Settings.data.ui.bar.height * spacing) / 2
 
