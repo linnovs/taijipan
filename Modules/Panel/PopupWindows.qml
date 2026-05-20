@@ -43,7 +43,6 @@ PanelWindow {
   }
 
   function showContextMenu(model, globalPos, callback) {
-    Logger.d("PopupWindows", "Showing context menu at global position:", globalPos, "with model:", model);
     contextMenuCallback = callback;
     visible = true;
 
