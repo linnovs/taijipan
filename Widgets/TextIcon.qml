@@ -31,4 +31,5 @@ Text {
   color: Colors.mOnSurface
   verticalAlignment: Text.AlignVCenter
   horizontalAlignment: Text.AlignHCenter
+  renderType: Text.CurveRendering
 }
