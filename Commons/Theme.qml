@@ -7,19 +7,27 @@ Singleton {
 
   readonly property int spacing: 4
 
-  readonly property int widthXXS: spacing * 32
-  readonly property int widthXS: spacing * 64
-  readonly property int widthSM: spacing * 96
-  readonly property int widthMD: spacing * 128
-  readonly property int widthLG: spacing * 160
-  readonly property int widthXL: spacing * 192
+  readonly property int widthXXS: spacing * 32 * 1
+  readonly property int widthXS: spacing * 32 * 2
+  readonly property int widthSM: spacing * 32 * 3
+  readonly property int widthMD: spacing * 32 * 4
+  readonly property int widthLG: spacing * 32 * 5
+  readonly property int widthXL: spacing * 32 * 6
+  readonly property int widthXXL: spacing * 32 * 7
+  readonly property int width3XL: spacing * 32 * 8
+  readonly property int width4XL: spacing * 32 * 9
+  readonly property int width5XL: spacing * 32 * 10
 
   readonly property int heightXXS: spacing * 14
-  readonly property int heightXS: spacing * 36
-  readonly property int heightSM: spacing * 54
-  readonly property int heightMD: spacing * 72
-  readonly property int heightLG: spacing * 90
-  readonly property int heightXL: spacing * 108
+  readonly property int heightXS: spacing * 28
+  readonly property int heightSM: spacing * 43
+  readonly property int heightMD: spacing * 57
+  readonly property int heightLG: spacing * 71
+  readonly property int heightXL: spacing * 85
+  readonly property int heightXXL: spacing * 100
+  readonly property int height3XL: spacing * 114
+  readonly property int height4XL: spacing * 128
+  readonly property int height5XL: spacing * 142
 
   readonly property int radiusXS: 2
   readonly property int radiusSM: 4
