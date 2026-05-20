@@ -12,8 +12,6 @@ Item {
   required property int count
 
   property Component widgetSource
-  property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
-  property int barHeight: Theme.spacing * Settings.data.ui.bar.height
 
   component WidgetSize: QtObject {
     property int x
@@ -23,9 +21,9 @@ Item {
   }
   property WidgetSize widgetRawSize: WidgetSize {
     x: 0
-    y: -root.frameThickness
+    y: -Theme.frameThickness
     width: root.implicitWidth
-    height: root.barHeight + root.frameThickness
+    height: Theme.barHeight + Theme.frameThickness
   }
 
   Loader {
@@ -36,7 +34,7 @@ Item {
   }
 
   implicitWidth: widgetLoader.item.implicitWidth ?? 0
-  implicitHeight: root.barHeight - root.frameThickness
+  implicitHeight: Theme.barHeight - Theme.frameThickness
 
   Component.onCompleted: {
     Logger.d("BarWidget", `Widget(${name}) initialized on screen:`, screen.name, "- section:", section, "- index:", index, "- count:", count);

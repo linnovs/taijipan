@@ -93,14 +93,13 @@ Item {
       Item {
         id: bar
 
-        property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
         property int sectionPadding: Theme.spacing * Settings.data.ui.bar.sectionPadding
         property int widgetSpacing: Theme.spacing * Settings.data.ui.bar.widgetSpacing
 
-        x: frameThickness
-        y: frameThickness
-        width: parent.width - frameThickness * 2
-        height: parent.height - frameThickness
+        x: Theme.frameThickness
+        y: Theme.frameThickness
+        width: parent.width - Theme.frameThickness * 2
+        height: parent.height - Theme.frameThickness
 
         Item {
           anchors.fill: parent

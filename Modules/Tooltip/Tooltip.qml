@@ -13,8 +13,6 @@ PopupWindow {
   property point position
   property bool isClosing: false
 
-  readonly property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
-
   property int targetWidth: 0
   property int targetHeight: 0
   property real targetX: {

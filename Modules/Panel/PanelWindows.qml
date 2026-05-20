@@ -18,7 +18,6 @@ PanelWindow {
   readonly property bool isAnyPanelVisible: PanelService.isAnyPanelVisible
   readonly property bool isCurrentPanelExclusive: PanelService.openedPanel && PanelService.openedPanel.exclusiveKeyboardFocus
   readonly property bool isBackdropEnabled: PanelService.isAnyPanelVisible && PanelService.openedPanel && PanelService.openedPanel.enableBackdrop
-  readonly property int frameThickness: Theme.spacing * Settings.data.ui.frame.thickness
 
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
@@ -59,7 +58,7 @@ PanelWindow {
     id: clickableMask
 
     x: 0
-    y: Theme.spacing * Settings.data.ui.bar.height
+    y: Theme.barHeight
     width: root.width
     height: root.height
     intersection: Intersection.Xor
@@ -75,13 +74,11 @@ PanelWindow {
   QtObject {
     id: backgroundBlur
 
-    readonly property int barHeight: Theme.spacing * Settings.data.ui.bar.height
-
     readonly property var frameRegion: ({
-        x: root.frameThickness,
-        y: root.frameThickness + barHeight,
-        width: root.width - root.frameThickness * 2,
-        height: root.height - barHeight - root.frameThickness * 2
+        x: Theme.frameThickness,
+        y: Theme.frameThickness + Theme.barHeight,
+        width: root.width - Theme.frameThickness * 2,
+        height: root.height - Theme.barHeight - Theme.frameThickness * 2
       })
 
     readonly property var panelBg: {
@@ -104,7 +101,7 @@ PanelWindow {
   BackgroundEffect.blurRegion: Region {
     // frame blur
     Region {
-      x: backgroundBlur.frameRegion.x
+      x: 0
       y: backgroundBlur.frameRegion.y
       width: root.width
       height: root.height

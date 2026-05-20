@@ -13,8 +13,6 @@ PanelWindow {
   WlrLayershell.namespace: "taijipan-tooltip-" + (screen?.name || "unknown")
   WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
-  property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
-
   anchors.top: true
   anchors.left: true
   anchors.bottom: true
@@ -27,10 +25,10 @@ PanelWindow {
 
   Loader {
     anchors.fill: parent
-    anchors.topMargin: frameThickness
-    anchors.leftMargin: frameThickness
-    anchors.bottomMargin: frameThickness
-    anchors.rightMargin: frameThickness
+    anchors.topMargin: Theme.frameThickness
+    anchors.leftMargin: Theme.frameThickness
+    anchors.bottomMargin: Theme.frameThickness
+    anchors.rightMargin: Theme.frameThickness
     active: tooltips.count > 0
     sourceComponent: Item {
       anchors.fill: parent

@@ -10,7 +10,6 @@ PopupWindow {
 
   property var anchorItem: null
   property ShellScreen attachedScreen: null
-  readonly property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
 
   color: "transparent"
 
@@ -22,11 +21,11 @@ PopupWindow {
     if (!anchorItem && !attachedScreen)
       return 0;
 
-    if (anchorItem.x + implicitWidth > attachedScreen.width - frameThickness - Theme.marginXXS)
-      return (attachedScreen.width - implicitWidth - frameThickness) - anchorItem.x - Theme.marginXXS;
+    if (anchorItem.x + implicitWidth > attachedScreen.width - Theme.frameThickness - Theme.marginXXS)
+      return (attachedScreen.width - implicitWidth - Theme.frameThickness) - anchorItem.x - Theme.marginXXS;
 
-    if (anchorItem.x < frameThickness)
-      return frameThickness + Theme.marginXXS;
+    if (anchorItem.x < Theme.frameThickness)
+      return Theme.frameThickness + Theme.marginXXS;
 
     return Theme.marginXXS;
   }

@@ -36,7 +36,7 @@ Loader {
       id: popupContainer
 
       anchors.horizontalCenter: parent.horizontalCenter
-      y: Settings.data.ui.bar.height * Theme.spacing + Settings.data.ui.frameThickness * Theme.spacing + Theme.marginXXS
+      y: Theme.barHeight + Theme.frameThickness + Theme.marginXXS
       spacing: Theme.marginXS
 
       Repeater {

@@ -8,24 +8,21 @@ ShapePath {
 
   required property ShellScreen screen
 
-  readonly property int thickness: Theme.spacing * Settings.data.ui.frame.thickness
-  readonly property int barHeight: Theme.spacing * Settings.data.ui.bar.height
-
   strokeWidth: -1
 
   // full screen
   PathRectangle {
-    y: thickness + barHeight
+    y: Theme.frameThickness + Theme.barHeight
     width: root.screen.width
     height: root.screen.height
   }
 
   // inner frame cutout
   PathRectangle {
-    x: root.thickness
-    y: root.thickness + root.barHeight
-    width: root.screen.width - root.thickness * 2
-    height: root.screen.height - root.barHeight - root.thickness * 2
+    x: Theme.frameThickness
+    y: Theme.frameThickness + Theme.barHeight
+    width: root.screen.width - Theme.frameThickness * 2
+    height: root.screen.height - Theme.barHeight - Theme.frameThickness * 2
     radius: Theme.barRadius
   }
 }
