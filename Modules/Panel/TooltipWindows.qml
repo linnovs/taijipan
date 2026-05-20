@@ -11,6 +11,7 @@ PanelWindow {
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
   WlrLayershell.namespace: "taijipan-tooltip-" + (screen?.name || "unknown")
+  WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
   property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
 
@@ -34,18 +35,26 @@ PanelWindow {
     sourceComponent: Item {
       anchors.fill: parent
 
+      Item {
+        id: anchorPoint
+        width: 1
+        height: 1
+      }
+
       Repeater {
         model: tooltips
         anchors.fill: parent
+
         Loader {
           active: model.screenName === root.screen.name
           sourceComponent: Tooltip {
+            anchor.item: anchorPoint
             windowRoot: root
             title: model.title
             description: model.description
-            position: Qt.point(model.positionX, model.positionY)
+            position: anchorPoint.mapFromGlobal(Qt.point(model.positionX, model.positionY))
             isClosing: model.isClosing
-            onClosed: tooltips.remove(index)
+            onTooltipClosed: tooltips.remove(index)
           }
         }
       }
