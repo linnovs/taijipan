@@ -15,16 +15,9 @@ ShapePath {
 
   // full screen
   PathRectangle {
+    y: thickness + barHeight
     width: root.screen.width
     height: root.screen.height
-  }
-
-  // inner bar cutout
-  PathRectangle {
-    x: root.thickness
-    y: root.thickness
-    width: root.screen.width - root.thickness * 2
-    height: root.barHeight
   }
 
   // inner frame cutout

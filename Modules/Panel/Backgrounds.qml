@@ -8,72 +8,31 @@ Item {
   id: root
   anchors.fill: parent
 
-  property var bar
-
   required property var windowRoot
 
   readonly property color backgroundColor: Colors.mSurface
 
   Item {
-    id: barBackgroundContainer
+    id: frameBackgroundContainer
     anchors.fill: parent
     layer.enabled: true
-    opacity: Settings.data.ui.bar.opacity
+    opacity: Settings.data.ui.frame.opacity
 
     Shape {
-      id: barBackgroundShape
+      id: frameBackgroundShape
       anchors.fill: parent
       preferredRendererType: Shape.CurveRenderer
       asynchronous: true
       enabled: false
 
       Component.onCompleted: {
-        Logger.d("PanelBackgrounds", "Bar Background shape initialized for screen:", windowRoot?.screen?.name);
+        Logger.d("PanelBackgrounds", "Frame Background shape initialized for screen:", windowRoot?.screen?.name);
       }
 
       FrameBackground {
         screen: root.windowRoot.screen
         fillColor: root.backgroundColor
       }
-
-      BarBackground {
-        section: "Left"
-        screen: root.windowRoot.screen
-        bar: root.bar
-        fillColor: root.backgroundColor
-      }
-
-      BarBackground {
-        section: "Center"
-        screen: root.windowRoot.screen
-        bar: root.bar
-        fillColor: root.backgroundColor
-      }
-
-      BarBackground {
-        section: "Right"
-        screen: root.windowRoot.screen
-        bar: root.bar
-        fillColor: root.backgroundColor
-      }
-    }
-
-    DropShadow {
-      anchors.fill: parent
-      source: barBackgroundShape
-      autoPaddingEnabled: true
-    }
-  }
-
-  Connections {
-    target: BarService
-    function onSectionSizeChanged(screenName) {
-      if (screenName !== root.windowRoot.screen.name)
-        return;
-      barBackgroundContainer.layer.enabled = false;
-      Qt.callLater(() => {
-        barBackgroundContainer.layer.enabled = true;
-      });
     }
   }
 
