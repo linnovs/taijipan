@@ -77,6 +77,11 @@ Singleton {
       property JsonObject panel: JsonObject {
         property real opacity: 0.8
       }
+      property JsonObject popup: JsonObject {
+        property JsonObject contextMenu: JsonObject {
+          property real opacity: 0.8
+        }
+      }
     }
 
     property JsonObject tooltip: JsonObject {

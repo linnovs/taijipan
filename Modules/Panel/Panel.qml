@@ -24,6 +24,19 @@ Variants {
     }
 
     Loader {
+      id: popupLoader
+      active: panelWindow.panelLoaded
+      asynchronous: false
+      sourceComponent: PopupWindows {
+        screen: windowLoader.screen
+      }
+
+      onLoaded: {
+        Logger.d("Panel", "Popup loaded for screen:", windowLoader.screen?.name);
+      }
+    }
+
+    Loader {
       id: windowLoader
       asynchronous: false
 

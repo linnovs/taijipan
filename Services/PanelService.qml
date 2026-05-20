@@ -8,6 +8,7 @@ Singleton {
 
   property var lockscreen: null
 
+  property var _popups: ({})
   property var _panels: ({})
   property var openedPanel: null
   property var closingPanel: null
@@ -76,5 +77,28 @@ Singleton {
     } else {
       Logger.w("PanelService", "Attempted to register a panel without an objectName");
     }
+  }
+
+  function registerPopupWindow(screen, popupWindow) {
+    if (!screen)
+      return;
+    const key = screen.name;
+    _popups[key] = popupWindow;
+    Logger.d("PanelService", "Registered popup window on screen:", key);
+  }
+
+  function unregisterPopupWindow(screen) {
+    if (!screen)
+      return;
+    const key = screen.name;
+    delete _popups[key];
+    Logger.d("PanelService", "Unregistered popup window on screen:", key);
+  }
+
+  function getPopupWindow(screen) {
+    if (!screen)
+      return;
+    const key = screen.name;
+    return _popups[key];
   }
 }
