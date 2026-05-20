@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import qs.Widgets
 import qs.Commons
 
@@ -31,6 +32,12 @@ PopupWindow {
   }
   anchor.rect.y: Theme.marginXXS
   visible: false
+
+  BackgroundEffect.blurRegion: Region {
+    width: implicitWidth
+    height: implicitHeight
+    radius: Theme.radiusMD
+  }
 
   signal triggered(string action, var item)
 
