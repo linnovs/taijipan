@@ -85,7 +85,7 @@ Singleton {
             handleWorkspacesUpdate(event.WorkspacesChanged.workspaces);
           } else if (event.WorkspaceActivated) {
             workspacesUpdateTimer.restart();
-          } else if (Settings.data.debug) {
+          } else if (Settings.data.debugNiri) {
             Logger.d("NiriService", "Received event:", JSON.stringify(event));
           }
         } catch (err) {
@@ -110,7 +110,7 @@ Singleton {
             } else if (data.Ok === "Handled") {} else if (Settings.data.debug) {
               Logger.d("NiriService", "Received unknown command result:", JSON.stringify(data.Ok));
             }
-          } else {
+          } else if (Settings.data.debugNiri) {
             Logger.w("NiriService", "Received command error:", JSON.stringify(data.Err));
           }
         } catch (err) {

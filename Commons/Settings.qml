@@ -22,6 +22,7 @@ Singleton {
 
     property bool rewriteNeeded: false
     property bool debug: false
+    property bool debugNiri: false
 
     property JsonObject general: JsonObject {
       property string userIcon: Paths.homePath(".face")
