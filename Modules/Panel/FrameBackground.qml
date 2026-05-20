@@ -8,7 +8,7 @@ ShapePath {
 
   required property ShellScreen screen
 
-  readonly property int thickness: Theme.spacing * Settings.data.ui.frameThickness
+  readonly property int thickness: Theme.spacing * Settings.data.ui.frame.thickness
   readonly property int barHeight: Theme.spacing * Settings.data.ui.bar.height
 
   strokeWidth: -1

@@ -18,7 +18,7 @@ PanelWindow {
   readonly property bool isAnyPanelVisible: PanelService.isAnyPanelVisible
   readonly property bool isCurrentPanelExclusive: PanelService.openedPanel && PanelService.openedPanel.exclusiveKeyboardFocus
   readonly property bool isBackdropEnabled: PanelService.isAnyPanelVisible && PanelService.openedPanel && PanelService.openedPanel.enableBackdrop
-  readonly property int frameThickness: Theme.spacing * Settings.data.ui.frameThickness
+  readonly property int frameThickness: Theme.spacing * Settings.data.ui.frame.thickness
 
   WlrLayershell.layer: WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
